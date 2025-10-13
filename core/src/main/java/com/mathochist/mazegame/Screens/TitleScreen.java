@@ -2,10 +2,14 @@ package com.mathochist.mazegame.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL32;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.UI.DefaultUISkin;
 
 public class TitleScreen extends DefaultScreen {
 
@@ -25,6 +29,19 @@ public class TitleScreen extends DefaultScreen {
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+
+        DefaultUISkin uiSkin = new DefaultUISkin();
+
+        // Add UI elements to the table using uiSkin
+        Button startButton = new Button(uiSkin.getSkin());
+        table.add(startButton).expand().width(300).height(100);
+        startButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                // game.setScreen(new GameScreen(game));
+                Gdx.app.log("TitleScreen", "Start button clicked - transition to GameScreen");
+            }
+        });
     }
 
     @Override
@@ -44,6 +61,14 @@ public class TitleScreen extends DefaultScreen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
 

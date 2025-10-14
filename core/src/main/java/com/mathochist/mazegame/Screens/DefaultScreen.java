@@ -4,10 +4,18 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
+/**
+    * A default screen implementation that provides
+    * empty method bodies for some Screen and InputProcessor methods.
+ */
 public abstract class DefaultScreen implements Screen, InputProcessor {
 
     protected Game game;
 
+    /**
+     * Constructor
+     * @param game The main game instance
+     */
     public DefaultScreen(Game game) {
         this.game = game;
     }

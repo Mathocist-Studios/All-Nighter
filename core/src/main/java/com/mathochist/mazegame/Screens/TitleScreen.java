@@ -1,6 +1,7 @@
 package com.mathochist.mazegame.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL32;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Main;
-import com.mathochist.mazegame.UI.HoverListener;
+import com.mathochist.mazegame.UI.ButtonHoverListener;
 import com.mathochist.mazegame.UI.MainMenuUISkin;
 
 /**
@@ -29,6 +30,7 @@ public class TitleScreen extends DefaultScreen {
     private TextureRegion backgroundTexture;
 
     private MainMenuUISkin uiSkin;
+    private Music backgroundMusic;
 
     public TitleScreen(Main game) {
         super(game);
@@ -41,6 +43,11 @@ public class TitleScreen extends DefaultScreen {
      */
     @Override
     public void show() {
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/title_screen.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.5f);
+        backgroundMusic.play();
 
         stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
@@ -112,10 +119,10 @@ public class TitleScreen extends DefaultScreen {
         });
 
         // Add hover listeners to buttons
-        startButton.addListener(new HoverListener());
-        settingsButton.addListener(new HoverListener());
-        creditsButton.addListener(new HoverListener());
-        exitButton.addListener(new HoverListener());
+        startButton.addListener(new ButtonHoverListener());
+        settingsButton.addListener(new ButtonHoverListener());
+        creditsButton.addListener(new ButtonHoverListener());
+        exitButton.addListener(new ButtonHoverListener());
 
         // offset buttons to the left
         buttonTable.left().padRight(300);
@@ -158,6 +165,7 @@ public class TitleScreen extends DefaultScreen {
     public void dispose() {
         stage.dispose();
         uiSkin.dispose();
+        batch.dispose();
     }
 
     public Table getTable() {

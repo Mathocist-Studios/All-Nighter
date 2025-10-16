@@ -2,18 +2,19 @@ package com.mathochist.mazegame.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL32;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Main;
-import com.mathochist.mazegame.UI.DefaultUISkin;
+import com.mathochist.mazegame.UI.HoverListener;
+import com.mathochist.mazegame.UI.MainMenuUISkin;
 
 /**
  * The TitleScreen class represents the title screen of the game.
@@ -27,7 +28,7 @@ public class TitleScreen extends DefaultScreen {
     private SpriteBatch batch;
     private TextureRegion backgroundTexture;
 
-    private DefaultUISkin uiSkin;
+    private MainMenuUISkin uiSkin;
 
     public TitleScreen(Main game) {
         super(game);
@@ -48,13 +49,28 @@ public class TitleScreen extends DefaultScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        uiSkin = new DefaultUISkin();
+        Table buttonTable = new Table();
+        table.addActor(buttonTable);
+
+        Table titleTable = new Table();
+        table.addActor(titleTable);
+
+        uiSkin = new MainMenuUISkin();
         batch = new SpriteBatch();
         // backgroundTexture = new TextureRegion(new Texture(Gdx.files.internal("ui/background.png")));
 
         // Add UI elements to the table using uiSkin
-        TextButton startButton = new TextButton("Start", uiSkin.getSkin());
-        table.add(startButton).expand().width(300).height(100);
+        Label presentsLabel = new Label("Mathochist Studios Presents", uiSkin.getSkin(), "presents_grey");
+        titleTable.add(presentsLabel).expand().padBottom(10);
+        titleTable.row();
+
+
+        Label titleLabel = new Label("All Nighter", uiSkin.getSkin());
+        titleTable.add(titleLabel).expand();
+
+
+        Button startButton = new Button(uiSkin.getSkin(), "start_button");
+        buttonTable.add(startButton).expand().width(95).height(33.333F).padBottom(5).align(Align.left);
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
@@ -62,6 +78,57 @@ public class TitleScreen extends DefaultScreen {
                 Gdx.app.log("TitleScreen", "Start button clicked - transition to GameScreen");
             }
         });
+        buttonTable.row();
+
+        Button settingsButton = new Button(uiSkin.getSkin(), "settings_button");
+        buttonTable.add(settingsButton).expand().width(126.666F).height(33.333F).padBottom(5).align(Align.left);
+        settingsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                // game.setScreen(new SettingsScreen(game));
+                Gdx.app.log("TitleScreen", "Settings button clicked - transition to SettingsScreen");
+            }
+        });
+        buttonTable.row();
+
+        Button creditsButton = new Button(uiSkin.getSkin(), "credits_button");
+        buttonTable.add(creditsButton).expand().width(115).height(33.333F).padBottom(5).align(Align.left);
+        creditsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                // game.setScreen(new CreditsScreen(game));
+                Gdx.app.log("TitleScreen", "Credits button clicked - transition to CreditsScreen");
+            }
+        });
+        buttonTable.row();
+
+        Button exitButton = new Button(uiSkin.getSkin(), "exit_button");
+        buttonTable.add(exitButton).expand().width(76.666F).height(33.333F).padBottom(5).align(Align.left);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
+        // Add hover listeners to buttons
+        startButton.addListener(new HoverListener());
+        settingsButton.addListener(new HoverListener());
+        creditsButton.addListener(new HoverListener());
+        exitButton.addListener(new HoverListener());
+
+        // offset buttons to the left
+        buttonTable.left().padRight(300);
+        buttonTable.bottom();
+
+        table.add(titleTable).expand().padTop(100);
+        table.row();
+
+        table.add(buttonTable).expand().padBottom(150);
+        table.row();
+
+        table.setDebug(false); // Set to true to see the table layout
+
     }
 
     /**

@@ -1,0 +1,97 @@
+
+main_menu_ui.png
+size: 2048, 2048
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+credits
+  rotate: false
+  xy: 515, 978
+  size: 345, 100
+  orig: 345, 100
+  offset: 0, 0
+  index: -1
+credits_hover
+  rotate: false
+  xy: 1029, 1492
+  size: 345, 100
+  orig: 345, 100
+  offset: 0, 0
+  index: -1
+exit
+  rotate: false
+  xy: 515, 876
+  size: 230, 100
+  orig: 230, 100
+  offset: 0, 0
+  index: -1
+exit_hover
+  rotate: false
+  xy: 1029, 1390
+  size: 230, 100
+  orig: 230, 100
+  offset: 0, 0
+  index: -1
+game_font
+  rotate: false
+  xy: 1, 1182
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+settings
+  rotate: false
+  xy: 1029, 1594
+  size: 380, 100
+  orig: 380, 100
+  offset: 0, 0
+  index: -1
+settings_hover
+  rotate: false
+  xy: 1, 464
+  size: 380, 100
+  orig: 380, 100
+  offset: 0, 0
+  index: -1
+start
+  rotate: false
+  xy: 1411, 1594
+  size: 285, 100
+  orig: 285, 100
+  offset: 0, 0
+  index: -1
+start_hover
+  rotate: false
+  xy: 1, 362
+  size: 285, 100
+  orig: 285, 100
+  offset: 0, 0
+  index: -1
+studios_presents
+  rotate: false
+  xy: 1, 566
+  size: 500, 100
+  orig: 500, 100
+  offset: 0, 0
+  index: -1
+title
+  rotate: false
+  xy: 515, 1080
+  size: 500, 100
+  orig: 500, 100
+  offset: 0, 0
+  index: -1
+vlarge_game_font1
+  rotate: false
+  xy: 1, 668
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+vlarge_game_font2
+  rotate: false
+  xy: 515, 1182
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1

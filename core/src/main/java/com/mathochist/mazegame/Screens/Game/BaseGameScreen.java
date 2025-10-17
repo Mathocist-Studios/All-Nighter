@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.DefaultScreen;
+import com.mathochist.mazegame.UI.Hud;
 
 public abstract class BaseGameScreen extends DefaultScreen {
 

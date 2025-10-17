@@ -1,4 +1,4 @@
-package com.mathochist.mazegame.Screens.Game;
+package com.mathochist.mazegame.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

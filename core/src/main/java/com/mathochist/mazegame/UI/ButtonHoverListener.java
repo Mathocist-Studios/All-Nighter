@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
  */
 public class ButtonHoverListener extends ClickListener {
 
-    private Sound hoverSound;
+    private final Sound hoverSound;
 
     public ButtonHoverListener() {
         hoverSound = Gdx.audio.newSound(Gdx.files.internal("audio/button.mp3"));

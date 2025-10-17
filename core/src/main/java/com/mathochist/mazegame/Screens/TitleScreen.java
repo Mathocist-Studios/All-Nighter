@@ -20,7 +20,7 @@ import com.mathochist.mazegame.UI.MainMenuUISkin;
 /**
  * The TitleScreen class represents the title screen of the game.
  * It extends DefaultScreen and implements the necessary methods to display
- * a stage with UI elements such as buttons.
+ * a stage with UI elements.
  */
 public class TitleScreen extends DefaultScreen {
 
@@ -30,7 +30,6 @@ public class TitleScreen extends DefaultScreen {
     private TextureRegion backgroundTexture;
 
     private MainMenuUISkin uiSkin;
-    private Music backgroundMusic;
 
     public TitleScreen(Main game) {
         super(game);
@@ -44,7 +43,7 @@ public class TitleScreen extends DefaultScreen {
     @Override
     public void show() {
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/title_screen.mp3"));
+        Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("audio/title_screen.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(0.5f);
         backgroundMusic.play();

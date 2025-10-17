@@ -1,8 +1,8 @@
 package com.mathochist.mazegame.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.mathochist.mazegame.Main;
 
 /**
     * A default screen implementation that provides
@@ -10,13 +10,13 @@ import com.badlogic.gdx.Screen;
  */
 public abstract class DefaultScreen implements Screen, InputProcessor {
 
-    protected Game game;
+    protected Main game;
 
     /**
      * Constructor
      * @param game The main game instance
      */
-    public DefaultScreen(Game game) {
+    public DefaultScreen(Main game) {
         this.game = game;
     }
 

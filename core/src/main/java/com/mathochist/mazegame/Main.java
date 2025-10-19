@@ -3,7 +3,6 @@ package com.mathochist.mazegame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mathochist.mazegame.Screens.TitleScreen;
-import com.mathochist.mazegame.World.GameMap;
 
 /**
  * The Main class serves as the entry point for the game application.
@@ -17,8 +16,6 @@ public class Main extends Game {
     public void create() {
         // Set title for the application window
         Gdx.graphics.setTitle("All Nighter");
-
-        GameMap gameMap = new GameMap(Gdx.files.internal("maps/library.json"));
 
         // Set aspect ratio to 16:9
         int width = Gdx.graphics.getWidth() * 2;

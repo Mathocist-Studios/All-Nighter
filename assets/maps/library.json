@@ -13,26 +13,27 @@
       "x": 18,
       "y": 11
     },
-    "background_music": "library_theme.mp3",
+    "background_music": "library/library_theme.mp3",
+    "texture_atlas": "library/library_atlas.atlas",
     "exit_points": [
       {
         "x": 30,
         "y": 19,
-        "target_map": "outside",
-        "target_x": 20,
-        "target_y": 1
+        "target_map": "maps/outside.json",
+        "target_x": 38,
+        "target_y": 14
       },
       {
         "x": 30,
         "y": 20,
-        "target_map": "outside",
+        "target_map": "maps/outside.json",
         "target_x": 38,
         "target_y": 15
       },
       {
         "x": 30,
         "y": 21,
-        "target_map": "outside",
+        "target_map": "maps/outside.json",
         "target_x": 38,
         "target_y": 16
       }
@@ -40,7 +41,7 @@
     "npcs": [
       {
         "name": "Librarian",
-        "sprite": "librarian_sprite.png",
+        "sprite": "librarian_sprite",
         "x": 10,
         "y": 15,
         "dialogue": [
@@ -51,15 +52,15 @@
     ]
   },
   "tiles": [
-    "library/floor.png",
-    "library/wall.png",
-    "library/bookshelf.png",
-    "library/table.png",
-    "library/chair_right.png",
-    "library/chair_left.png",
-    "library/exit_door.png"
+    "floor",
+    "wall",
+    "bookshelf",
+    "table",
+    "chair_right",
+    "chair_left",
+    "exit_door"
   ],
-  "collisionable_tiles": [1, 2, 3, 4, 5],
+  "collision_tiles": [1, 2, 3, 4, 5],
   "map_matrix": [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],

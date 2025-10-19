@@ -20,7 +20,13 @@ public class LibraryScreen extends BaseGameScreen {
         Gdx.gl.glClearColor(0f,0f,0f,1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        super.getCamera().update();
+        super.getPlayerBatch().setProjectionMatrix(super.getCamera().combined);
+
         super.getGameHud().render(delta);
+        super.getPlayerBatch().begin();
+        // Draw game elements here
+        super.getPlayerBatch().end();
     }
 
     @Override

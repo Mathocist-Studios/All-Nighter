@@ -3,8 +3,8 @@ package com.mathochist.mazegame.Screens.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.DefaultScreen;
 import com.mathochist.mazegame.UI.Hud;
@@ -12,23 +12,30 @@ import com.mathochist.mazegame.UI.Hud;
 public abstract class BaseGameScreen extends DefaultScreen {
 
     private OrthographicCamera camera;
+    private FitViewport viewport;
     private Hud gameHud;
 
     private static final float VIEWPORT_WIDTH = Gdx.graphics.getWidth();
     private static final float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
 
-    private Sprite playerSprite;
     private SpriteBatch playerBatch;
 
     public BaseGameScreen(Main game) {
         super(game);
+        // GDX setup
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
-
-        playerBatch = new SpriteBatch();
-
         Gdx.input.setInputProcessor(this);
 
+        // Camera setup
         gameHud = new Hud();
+        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Center camera
+        camera.update();
+        viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
+
+
+        // SpriteBatch setup
+        playerBatch = new SpriteBatch();
     }
 
     @Override
@@ -39,7 +46,9 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     @Override
     public void resize(int width, int height) {
-        // Default implementation (can be overridden by subclasses)
+        viewport.update(width, height);
+        camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Re-center camera
+        camera.update();
     }
 
     @Override

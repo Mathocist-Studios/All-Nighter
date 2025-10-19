@@ -39,9 +39,11 @@ public class Hud {
         hudBatch.setProjectionMatrix(hudCamera.combined);
 
         hudBatch.begin();
+
         // draw fps in top left corner
         font.draw(hudBatch, "Upper left, FPS=" + Gdx.graphics.getFramesPerSecond(), 2, hudCamera.viewportHeight - 2);
         font.draw(hudBatch, "Lower left", 2, font.getLineHeight() + 2);
+
         hudBatch.end();
     }
 

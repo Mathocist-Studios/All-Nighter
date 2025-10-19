@@ -18,7 +18,7 @@ public class GameWorld {
 
     }
 
-    public GameMap getCurrentMap() {
+    public GameMap getMap() {
         return currentMap;
     }
 
@@ -39,19 +39,19 @@ public class GameWorld {
         textureAtlas.dispose();
     }
 
-    public int pixelCoordsToTileIndex(int pixelCoord, int tileSize) {
-        return pixelCoord / tileSize;
-    }
-
-    public int[] getPlayerTilePosition(int playerXPixels, int playerYPixels) {
-        int tileX = pixelCoordsToTileIndex(playerXPixels, currentMap.getTileWidth());
-        int tileY = pixelCoordsToTileIndex(playerYPixels, currentMap.getTileHeight());
+    public int[] pixelCoordsToTileIndex(int pixelCoordX, int pixelCoordY) {
+        int tileX = pixelCoordX / currentMap.getTileWidth();
+        int tileY = pixelCoordY / currentMap.getTileHeight();
         return new int[]{tileX, tileY};
     }
 
+    public int[] getPlayerTilePosition(int playerXPixels, int playerYPixels) {
+        return pixelCoordsToTileIndex(playerXPixels, playerYPixels);
+    }
+
     public boolean isTileCollidable(int tileX, int tileY) {
-        // Logic to determine if a tile at (tileX, tileY) is collidable
-        return false;
+        int tileIndex = currentMap.getMapMatrix()[tileY][tileX];
+        return java.util.Arrays.stream(currentMap.getCollisionTiles()).anyMatch(tile -> tile == tileIndex);
     }
 
     public int[] getPixelBoundsOfTile(int tileX, int tileY) {

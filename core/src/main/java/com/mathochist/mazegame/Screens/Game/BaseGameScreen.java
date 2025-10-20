@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.DefaultScreen;
 import com.mathochist.mazegame.UI.Hud;
+import com.mathochist.mazegame.World.GameWorld;
 
 public abstract class BaseGameScreen extends DefaultScreen {
 
@@ -18,7 +20,9 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private static final float VIEWPORT_WIDTH = Gdx.graphics.getWidth();
     private static final float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
 
-    private SpriteBatch playerBatch;
+    private Player player;
+    private SpriteBatch playBatch;
+    private GameWorld world;
 
     public BaseGameScreen(Main game) {
         super(game);
@@ -33,9 +37,15 @@ public abstract class BaseGameScreen extends DefaultScreen {
         camera.update();
         viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
 
+        // Player and Batch setup
+        playBatch = new SpriteBatch();
+        player = new Player();
+        player.setX(50);
+        player.setY(50);
+    }
 
-        // SpriteBatch setup
-        playerBatch = new SpriteBatch();
+    public Player getPlayer() {
+        return player;
     }
 
     @Override
@@ -62,8 +72,8 @@ public abstract class BaseGameScreen extends DefaultScreen {
         return gameHud;
     }
 
-    public SpriteBatch getPlayerBatch() {
-        return playerBatch;
+    public void newTextBox(){
+
     }
 
     // Input Processing methods can be added here if needed
@@ -75,6 +85,18 @@ public abstract class BaseGameScreen extends DefaultScreen {
     @Override
     public boolean keyUp(int keycode) {
         return false;
+    }
+
+    public SpriteBatch getPlayBatch() {
+        return playBatch;
+    }
+
+    public void setWorld(GameWorld world) {
+        this.world = world;
+    }
+
+    public GameWorld getWorld() {
+        return this.world;
     }
 
 }

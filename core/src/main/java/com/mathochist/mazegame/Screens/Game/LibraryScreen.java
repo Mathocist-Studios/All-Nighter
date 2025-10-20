@@ -3,11 +3,14 @@ package com.mathochist.mazegame.Screens.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.World.GameWorld;
 
 public class LibraryScreen extends BaseGameScreen {
 
+
     public LibraryScreen(Main game) {
         super(game);
+        super.setWorld(new GameWorld(Gdx.files.internal("maps/library.json")));
     }
 
     @Override
@@ -21,18 +24,21 @@ public class LibraryScreen extends BaseGameScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         super.getCamera().update();
-        super.getPlayerBatch().setProjectionMatrix(super.getCamera().combined);
+        super.getPlayBatch().setProjectionMatrix(super.getCamera().combined);
 
         super.getGameHud().render(delta);
-        super.getPlayerBatch().begin();
+        super.getPlayBatch().begin();
+
         // Draw game elements here
-        super.getPlayerBatch().end();
+        super.getPlayer().update(delta);
+        super.getWorld().render();
+        super.getPlayBatch().end();
     }
 
     @Override
     public void dispose() {
         super.getGameHud().dispose();
-        super.getPlayerBatch().dispose();
+        super.getPlayBatch().dispose();
     }
 
 }

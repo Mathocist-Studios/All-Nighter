@@ -12,6 +12,8 @@ public abstract class DefaultScreen implements Screen, InputProcessor {
 
     protected Main game;
 
+    
+
     /**
      * Constructor
      * @param game The main game instance

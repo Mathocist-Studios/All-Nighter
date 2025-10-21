@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.mathochist.mazegame.Entities.Player;
 
 public class GameWorld {
 
@@ -21,6 +22,8 @@ public class GameWorld {
     private BitmapFont font = new BitmapFont();
     private GlyphLayout layout = new GlyphLayout();
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
+
+    private final int tileDrawYOffset = 48; // Adjust based on HUD height or other UI elements
 
     public GameWorld(FileHandle mapFile, SpriteBatch gameSpriteBatch) {
 
@@ -75,24 +78,27 @@ public class GameWorld {
         // Load texture atlas for the current map
         //this.textureAtlas = new TextureAtlas(Gdx.files.internal(this.currentMap.getTextureAtlasFile()));
 
-        mapArray = new Tile[currentMap.getMapWidth()][currentMap.getMapHeight()];
+        // replace declaration
+        // mapArray = new Tile[currentMap.getMapWidth()][currentMap.getMapHeight()];
+        mapArray = new Tile[currentMap.getMapHeight()][currentMap.getMapWidth()];
 
-        for (int i = 0; i < currentMap.getMapWidth(); i++) {
-            for (int j = 0; j < currentMap.getMapHeight(); j++) {
-                mapArray[i][j] = new Tile(
-                currentMap.getTilesetRegionNames()[currentMap.getMapMatrix()[j][i]],
-                false,
-                new Sprite(textures[0])
+        // fill loop: iterate rows (j) then cols (i) and write mapArray[j][i]
+        for (int j = 0; j < currentMap.getMapHeight(); j++) {
+            for (int i = 0; i < currentMap.getMapWidth(); i++) {
+                mapArray[j][i] = new Tile(
+                    currentMap.getTilesetRegionNames()[currentMap.getMapMatrix()[j][i]],
+                    false,
+                    new Sprite(textures[0])
                 );
-                for (int num: currentMap.getCollisionTiles()){
-                    if (currentMap.getMapMatrix()[j][i] == num){
-                        mapArray[i][j].SetCollidable(true);
+                for (int num: currentMap.getCollisionTiles()) {
+                    if (currentMap.getMapMatrix()[j][i] == num) {
+                        mapArray[j][i].SetCollidable(true);
                     }
                 }
-                mapArray[i][j].getSprite().setRegion(textures[currentMap.getMapMatrix()[j][i]]);
-                mapArray[i][j].getSprite().setPosition(
+                mapArray[j][i].getSprite().setRegion(textures[currentMap.getMapMatrix()[j][i]]);
+                mapArray[j][i].getSprite().setPosition(
                     i * currentMap.getTileWidth(),
-                     Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + 48)
+                    Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + tileDrawYOffset)
                 );
             }
         }
@@ -111,52 +117,102 @@ public class GameWorld {
         // Rendering logic for the game world goes here
         screenBatch.begin();
         // Draw tiles
-        for (int i = 0; i < currentMap.getMapWidth(); i++) {
-            for (int j = 0; j < currentMap.getMapHeight(); j++) {
-                mapArray[i][j].getSprite().draw(screenBatch);
-
+        for (int j = 0; j < currentMap.getMapHeight(); j++) {
+            for (int i = 0; i < currentMap.getMapWidth(); i++) {
+                mapArray[j][i].getSprite().draw(screenBatch);
 
                 // Draw coordinates
-                String coord = "(" + i + "," + j + ")";
-                float x = i * currentMap.getTileWidth();
-                float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + 48);
-
-                layout.setText(font, coord);
-                float textX = x + (currentMap.getTileWidth() - layout.width) / 2f;
-                float textY = y + currentMap.getTileHeight() - 4; // 4px padding from top
-
-                font.draw(screenBatch, coord, textX, textY);
+//                String coord = "(" + i + "," + j + ")";
+//                float x = i * currentMap.getTileWidth();
+//                float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + 48);
+//
+//                layout.setText(font, coord);
+//                float textX = x + (currentMap.getTileWidth() - layout.width) / 2f;
+//                float textY = y + currentMap.getTileHeight() - 4; // 4px padding from top
+//
+//                font.draw(screenBatch, coord, textX, textY);
             }
         }
         screenBatch.end();
 
+//        shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.setColor(new Color(0, 1, 0, 0.3f)); // semi-transparent green
+//        for (int i = 0; i < currentMap.getMapWidth(); i++) {
+//            for (int j = 0; j < currentMap.getMapHeight(); j++) {
+//                if (mapArray[i][j].isCollidable()) {
+//                    float x = i * currentMap.getTileWidth();
+//                    float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight());
+//                    shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
+//                }
+//            }
+//        }
+//        shapeRenderer.end();
+    }
+
+    // java
+    public void render_collision_layer(Player p) {
+        int[] playerTilePos = this.pixelCoordsToTileIndex(p.getX(), p.getY());
+        boolean[] collisionLayer = this.getCollisionLayer(p.getX(), p.getY());
         shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(new Color(0, 1, 0, 0.3f)); // semi-transparent green
-        for (int i = 0; i < currentMap.getMapWidth(); i++) {
-            for (int j = 0; j < currentMap.getMapHeight(); j++) {
-                if (mapArray[i][j].isCollidable()) {
-                    float x = i * currentMap.getTileWidth();
-                    float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight());
-                    shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
-                }
+        shapeRenderer.setColor(new Color(0, 1, 0, 0.4f)); // semi-transparent green
+
+        int px = playerTilePos[0];
+        int py = playerTilePos[1];
+
+        // Above (row index decreases)
+        if (collisionLayer[0]) {
+            int ty = py - 1;
+            if (ty >= 0) {
+                float x = px * currentMap.getTileWidth();
+                float y = Gdx.graphics.getHeight() - (ty * currentMap.getTileHeight() + tileDrawYOffset);
+                shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
+            }
+        }
+        // Below (row index increases)
+        if (collisionLayer[1]) {
+            int ty = py + 1;
+            if (ty < currentMap.getMapHeight()) {
+                float x = px * currentMap.getTileWidth();
+                float y = Gdx.graphics.getHeight() - (ty * currentMap.getTileHeight() + tileDrawYOffset);
+                shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
+            }
+        }
+        // Left
+        if (collisionLayer[2]) {
+            int tx = px - 1;
+            if (tx >= 0) {
+                float x = tx * currentMap.getTileWidth();
+                float y = Gdx.graphics.getHeight() - (py * currentMap.getTileHeight() + tileDrawYOffset);
+                shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
+            }
+        }
+        // Right
+        if (collisionLayer[3]) {
+            int tx = px + 1;
+            if (tx < currentMap.getMapWidth()) {
+                float x = tx * currentMap.getTileWidth();
+                float y = Gdx.graphics.getHeight() - (py * currentMap.getTileHeight() + tileDrawYOffset);
+                shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
             }
         }
         shapeRenderer.end();
     }
 
+
     public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels) {
-        int[] tileCoords = pixelCoordsToTileIndex(playerXPixels, playerYPixels);
-        Tile tile_above = mapArray[tileCoords[0]][tileCoords[1] + 1];
-        Tile tile_below = mapArray[tileCoords[0]][tileCoords[1] - 1];
-        Tile tile_left = mapArray[tileCoords[0] - 1][tileCoords[1]];
-        Tile tile_right = mapArray[tileCoords[0] + 1][tileCoords[1]];
-        return new boolean[]{
-            tile_above.isCollidable(),
-            tile_below.isCollidable(),
-            tile_left.isCollidable(),
-            tile_right.isCollidable()
-        };
+        int[] tileCoords = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels);
+        int tx = tileCoords[0]; // column
+        int ty = tileCoords[1]; // row
+        System.out.println("Player is on tile: (" + tx + ", " + ty + ")");
+
+        boolean above = (ty - 1 >= 0) && mapArray[ty - 1][tx].isCollidable();
+        boolean below = (ty + 1 < currentMap.getMapHeight()) && mapArray[ty + 1][tx].isCollidable();
+        boolean left  = (tx - 1 >= 0) && mapArray[ty][tx - 1].isCollidable();
+        boolean right = (tx + 1 < currentMap.getMapWidth()) && mapArray[ty][tx + 1].isCollidable();
+
+        return new boolean[]{ above, below, left, right };
     }
 
     public void dispose() {
@@ -164,8 +220,14 @@ public class GameWorld {
     }
 
     public int[] pixelCoordsToTileIndex(float pixelCoordX, float pixelCoordY) {
-        int tileX = (int) Math.floor(pixelCoordX / currentMap.getTileWidth());
-        int tileY = (int) Math.floor(pixelCoordY / currentMap.getTileHeight());
+        int tileX = (int) Math.ceil(pixelCoordX / currentMap.getTileWidth());
+        // convert pixel Y (bottom-left origin) to map row index (top-origin with tileDrawYOffset)
+        int tileY = (int) Math.floor((Gdx.graphics.getHeight() - tileDrawYOffset - pixelCoordY) / currentMap.getTileHeight());
+
+        // clamp to map bounds
+        tileX = Math.max(0, Math.min(tileX, currentMap.getMapWidth() - 1));
+        tileY = Math.max(0, Math.min(tileY, currentMap.getMapHeight() - 1));
+
         return new int[]{tileX, tileY};
     }
 

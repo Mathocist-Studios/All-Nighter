@@ -178,6 +178,8 @@ public class Player {
         this.y = camera.position.y - SPRITE_HEIGHT / 2f;
 
         this.render(game_delta);
+
+        this.world.render_collision_layer(this);
     }
 
     public void render(float delta) {

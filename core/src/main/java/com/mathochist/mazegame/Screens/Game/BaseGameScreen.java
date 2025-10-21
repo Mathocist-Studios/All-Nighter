@@ -21,7 +21,7 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private static final float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
 
     private Player player;
-    private SpriteBatch playBatch;
+    private SpriteBatch screenBatch;
     private GameWorld world;
 
     public BaseGameScreen(Main game) {
@@ -37,15 +37,16 @@ public abstract class BaseGameScreen extends DefaultScreen {
         camera.update();
         viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
 
-        // Player and Batch setup
-        playBatch = new SpriteBatch();
-        player = new Player();
-        player.setX(50);
-        player.setY(50);
+        // Batch setup
+        screenBatch = new SpriteBatch();
     }
 
     public Player getPlayer() {
         return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     @Override
@@ -72,23 +73,21 @@ public abstract class BaseGameScreen extends DefaultScreen {
         return gameHud;
     }
 
-    public void newTextBox(){
-
-    }
-
     // Input Processing methods can be added here if needed
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        player.getKeyBuffer().addKeyPressed(keycode);
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        return false;
+        player.getKeyBuffer().removeKeyPressed(keycode);
+        return true;
     }
 
-    public SpriteBatch getPlayBatch() {
-        return playBatch;
+    public SpriteBatch getScreenBatch() {
+        return screenBatch;
     }
 
     public void setWorld(GameWorld world) {

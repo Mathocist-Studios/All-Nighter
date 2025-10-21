@@ -81,6 +81,7 @@ public class TitleScreen extends DefaultScreen {
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                backgroundMusic.dispose();
                 game.setScreen(new LibraryScreen(game));
             }
         });

@@ -13,17 +13,11 @@ public class GameMap {
     private JsonReader jsonReader;
     private JsonValue mapData;
 
-    double tileWidth;
-    double tileHeight;
-
     public GameMap(FileHandle mapFile) {
 
         this.mapFile = mapFile;
         this.jsonReader = new JsonReader();
         this.mapData = jsonReader.parse(this.mapFile);
-
-        tileWidth = mapData.get("metadata").get("tilesets").getInt("tile_width");
-        tileHeight = mapData.get("metadata").get("tilesets").getInt("tile_height");
 
     }
 
@@ -48,27 +42,11 @@ public class GameMap {
     }
 
     public int getTileWidth() {
-        return (int) tileWidth;
-    }
-
-    public double getTileWidthDouble() {
-        return tileWidth;
+        return mapData.get("metadata").get("tilesets").getInt("tile_width");
     }
 
     public int getTileHeight() {
-        return (int) tileHeight;
-    }
-
-    public double getTileHeightDouble() {
-        return tileHeight;
-    }
-
-    public void setTileWidth(double width) {
-        this.tileWidth = width;
-    }
-
-    public void setTileHeight(double height) {
-        this.tileHeight = height;
+        return mapData.get("metadata").get("tilesets").getInt("tile_height");
     }
 
     public int getMapWidth() {

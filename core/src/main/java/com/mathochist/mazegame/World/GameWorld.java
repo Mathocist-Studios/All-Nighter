@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mathochist.mazegame.Entities.Player;
 
+import java.util.Arrays;
+
 public class GameWorld {
 
     private GameMap currentMap;
@@ -22,6 +24,10 @@ public class GameWorld {
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
     private int tileDrawYOffset = 48; // Adjust based on HUD height or other UI elements
+
+    // For resizing
+    private float deltaViewportWidth;
+    private float deltaViewportHeight;
 
     public GameWorld(FileHandle mapFile, SpriteBatch gameSpriteBatch) {
 
@@ -114,6 +120,21 @@ public class GameWorld {
             }
         }
         screenBatch.end();
+
+//        // Optionally whole render collision layer for debugging
+//        for (int j = 0; j < currentMap.getMapHeight(); j++) {
+//            for (int i = 0; i < currentMap.getMapWidth(); i++) {
+//                if (mapArray[j][i].isCollidable()) {
+//                    shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
+//                    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//                    shapeRenderer.setColor(new Color(1, 0, 0, 0.4f)); // semi-transparent red
+//                    float x = i * currentMap.getTileWidth();
+//                    float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + tileDrawYOffset);
+//                    shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
+//                    shapeRenderer.end();
+//                }
+//            }
+//        }
     }
 
     // java
@@ -168,7 +189,10 @@ public class GameWorld {
 
 
     public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels, float playerWidthPixels, float playerHeightPixels) {
-        float[] playerTilePos = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels);
+        // Adjust playerYPixels to account for viewport height changes
+        // dont look at this im tired
+        float[] playerTilePos = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels + deltaViewportHeight);
+        System.out.println(Arrays.toString(playerTilePos));;
         return new boolean[] {
             mapArray[(int) Math.floor(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable(),
             mapArray[(int) Math.ceil(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable(),
@@ -181,15 +205,9 @@ public class GameWorld {
     }
 
     public float[] pixelCoordsToTileIndex(float pixelCoordX, float pixelCoordY) {
-        float tileX = (pixelCoordX / currentMap.getTileWidth());
+        float tileX = ((pixelCoordX) / currentMap.getTileWidth());
         float tileY = ((Gdx.graphics.getHeight() - pixelCoordY - tileDrawYOffset) / currentMap.getTileHeight());
         return new float[]{tileX, tileY};
-    }
-
-    public int[] getPlayerTilePosition(float playerXPixels, float playerYPixels) {
-        int tileX = (int) (playerXPixels / currentMap.getTileWidth());
-        int tileY = (int) ((Gdx.graphics.getHeight() - playerYPixels - tileDrawYOffset) / currentMap.getTileHeight());
-        return new int[]{tileX, tileY};
     }
 
     public boolean isTileCollidable(int tileX, int tileY) {
@@ -210,9 +228,9 @@ public class GameWorld {
     }
 
     public void scaleWorld(float oldViewportWidth, float oldViewportHeight, float newViewportWidth, float newViewportHeight) {
-        float scaleX = newViewportWidth / oldViewportWidth;
-        float scaleY = newViewportHeight / oldViewportHeight;
-
+        deltaViewportWidth = newViewportWidth - oldViewportWidth;
+        deltaViewportHeight = newViewportHeight - oldViewportHeight;
+        System.out.println("Scaled world by deltaViewportWidth: " + deltaViewportWidth + ", deltaViewportHeight: " + deltaViewportHeight);
     }
 
 

@@ -136,7 +136,7 @@ public class Player {
         float deltaY = move[1] * delta_time * MOVE_SPEED;
 
         // Use player's position for collision, not camera
-        System.out.println("Player X: " + (x + SPRITE_WIDTH / 2f) + " Y: " + (y + SPRITE_HEIGHT / 2f));
+        // System.out.println("Player X: " + (x + SPRITE_WIDTH / 2f) + " Y: " + (y + SPRITE_HEIGHT / 2f));
         boolean[] collisionLayer = world.getCollisionLayer(x, y, SPRITE_WIDTH, SPRITE_HEIGHT);
         if (deltaY > 0 && collisionLayer[0]) { // moving up
             deltaY = 0;

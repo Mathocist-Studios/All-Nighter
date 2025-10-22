@@ -17,8 +17,8 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private FitViewport viewport;
     private Hud gameHud;
 
-    private static final float VIEWPORT_WIDTH = Gdx.graphics.getWidth();
-    private static final float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
+    private static float VIEWPORT_WIDTH = Gdx.graphics.getWidth();
+    private static float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
 
     private Player player;
     private SpriteBatch screenBatch;
@@ -58,8 +58,7 @@ public abstract class BaseGameScreen extends DefaultScreen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Re-center camera
-        camera.update();
+        world.scaleWorld(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, width, height);
     }
 
     @Override
@@ -96,6 +95,10 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     public GameWorld getWorld() {
         return this.world;
+    }
+
+    public FitViewport getViewport() {
+        return viewport;
     }
 
 }

@@ -6,13 +6,22 @@ import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.World.GameWorld;
 
+import java.util.Arrays;
+
 public class LibraryScreen extends BaseGameScreen {
 
 
     public LibraryScreen(Main game) {
         super(game);
         super.setWorld(new GameWorld(Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
-        super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld()));
+
+        int[] spawnPoint = super.getWorld().getSpawnPointPixels();
+        System.out.println(Arrays.toString(spawnPoint));
+
+        super.getCamera().position.set(spawnPoint[0], spawnPoint[1], 0);
+        super.getCamera().update();
+
+        super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPoint[0], spawnPoint[1]));
     }
 
     @Override

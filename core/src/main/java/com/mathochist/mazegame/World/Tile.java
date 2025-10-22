@@ -27,5 +27,10 @@ public class Tile {
 
     public Sprite getSprite() {
         return sprite;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        return "Tile [type=" + type + ", collidable=" + collidable + "]";
+    }
 }

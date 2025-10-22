@@ -32,11 +32,11 @@ public class Player {
     private OrthographicCamera camera;
     private GameWorld world;
 
-    private final static float MOVE_SPEED = 100; // pixels per second
-    private final static float SPRITE_WIDTH = 19;
-    private final static float SPRITE_HEIGHT = 25;
+    public final static float MOVE_SPEED = 100; // pixels per second
+    public final static float SPRITE_WIDTH = 19;
+    public final static float SPRITE_HEIGHT = 25;
 
-    public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world) {
+    public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, int startX, int startY) {
 
         this.camera = camera;
         this.screenBatch = batch;
@@ -71,8 +71,8 @@ public class Player {
         spriteSheet = new Texture("player.png");
 
         // Center player on screen
-        x = Gdx.graphics.getWidth() / 2f - SPRITE_WIDTH / 2f;
-        y = Gdx.graphics.getHeight() / 2f - SPRITE_HEIGHT / 2f;
+        x = startX;
+        y = startY;
 
         playerSprite = new Sprite(spriteSheet);
         keyBuffer = new KeyBuffer();
@@ -136,7 +136,8 @@ public class Player {
         float deltaY = move[1] * delta_time * MOVE_SPEED;
 
         // Use player's position for collision, not camera
-        boolean[] collisionLayer = world.getCollisionLayer(x + SPRITE_WIDTH / 2f, y + SPRITE_HEIGHT / 2f);
+        System.out.println("Player X: " + (x + SPRITE_WIDTH / 2f) + " Y: " + (y + SPRITE_HEIGHT / 2f));
+        boolean[] collisionLayer = world.getCollisionLayer(x, y, SPRITE_WIDTH, SPRITE_HEIGHT);
         if (deltaY > 0 && collisionLayer[0]) { // moving up
             deltaY = 0;
         }
@@ -172,8 +173,6 @@ public class Player {
 
         keyBuffer.clear();
 
-//        System.out.println(camera.position.x);
-//        System.out.println(camera.position.y);
         this.x = camera.position.x - SPRITE_WIDTH / 2f;
         this.y = camera.position.y - SPRITE_HEIGHT / 2f;
 

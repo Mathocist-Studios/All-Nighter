@@ -14,7 +14,7 @@
       "y": 10
     },
     "background_music": "library/library_theme.mp3",
-    "texture_atlas": "library/library_atlas.atlas",
+    "texture_atlas": "maps/library/Placeholder.atlas",
     "exit_points": [
       {
         "x": 30,
@@ -38,18 +38,25 @@
         "target_y": 16
       }
     ],
-    "npcs": [
-      {
-        "name": "Librarian",
-        "sprite": "librarian_sprite",
-        "x": 10,
-        "y": 15,
-        "dialogue": [
-          "Welcome to the library! Feel free to browse our collection of books.",
-          "Remember to keep your voice down while inside."
+    "map_entity_number": 2,
+    "map_objects": {
+      "com.mathochist.mazegame.World.Objects.Bookcase": {
+        "width": 2,
+        "height": 3,
+        "collidable": true,
+        "positions": [
+          [10, 3]
+        ]
+      },
+      "com.mathochist.mazegame.Entities.NPCs.Librarian": {
+        "width": 1,
+        "height": 1,
+        "collidable": false,
+        "positions": [
+          [15, 15]
         ]
       }
-    ]
+    }
   },
   "tiles": [
     "floor",

@@ -110,4 +110,12 @@ public class GameMap {
         return mapData.get("metadata").getString("texture_atlas");
     }
 
+    public JsonValue getObjectsLayer() {
+        return mapData.get("metadata").get("map_objects");
+    }
+
+    public int getNumberOfMapEntities() {
+        return mapData.get("metadata").getInt("map_entity_number");
+    }
+
 }

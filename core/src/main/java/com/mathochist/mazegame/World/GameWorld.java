@@ -3,23 +3,27 @@ package com.mathochist.mazegame.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.World.Objects.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GameWorld {
 
     private GameMap currentMap;
     private TextureAtlas textureAtlas;
-    private Texture[] textures;
+    private TextureRegion[] tileTextures;
 
     private SpriteBatch screenBatch;
 
     private Tile[][] mapArray;
+    private MapEntity[] mapEntities;
 
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
@@ -34,8 +38,8 @@ public class GameWorld {
         screenBatch = gameSpriteBatch;
         this.currentMap = new GameMap(mapFile);
 
-        textures = new Texture[currentMap.getTilesetRegionNames().length];
-        textures[0] = new Texture(Gdx.files.internal("placeholder.png"));
+        // textures = new Texture[currentMap.getTilesetRegionNames().length];
+        // textures[0] = new Texture(Gdx.files.internal("placeholder.png"));
 
         /* TOO DO
         for (String num: currentMap.getTilesetRegionNames()){
@@ -45,41 +49,20 @@ public class GameWorld {
 
         // Manually loading textures for demonstration purposes
         // resize each texture to match tile size
-        textures[0] = new Texture(Gdx.files.internal("floor.png"));
-        textures[1] = new Texture(Gdx.files.internal("wall.png"));
-        textures[2] = new Texture(Gdx.files.internal("bookshelf.png"));
-        textures[3] = new Texture(Gdx.files.internal("table.png"));
-        textures[4] = new Texture(Gdx.files.internal("chair_right.png"));
-        textures[5] = new Texture(Gdx.files.internal("chair_left.png"));
-        textures[6] = new Texture(Gdx.files.internal("exit_door.png"));
+//        textures[0] = new Texture(Gdx.files.internal("floor.png"));
+//        textures[1] = new Texture(Gdx.files.internal("wall.png"));
+//        textures[2] = new Texture(Gdx.files.internal("bookshelf.png"));
+//        textures[3] = new Texture(Gdx.files.internal("table.png"));
+//        textures[4] = new Texture(Gdx.files.internal("chair_right.png"));
+//        textures[5] = new Texture(Gdx.files.internal("chair_left.png"));
+//        textures[6] = new Texture(Gdx.files.internal("exit_door.png"));
 
-        // Resize textures to match tile size
-        // TODO: Optimize this process to avoid performance issues
-        // Consider using a texture atlas or pre-scaled textures
-        for (int i = 0; i < textures.length; i++) {
-            textures[i].setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
-            textures[i] = new Texture(textures[i].getTextureData());
-            textures[i].getTextureData().prepare();
-            Pixmap originalPixmap = textures[i].getTextureData().consumePixmap();
-            Pixmap resizedPixmap = new Pixmap(
-                currentMap.getTileWidth(),
-                currentMap.getTileHeight(),
-                originalPixmap.getFormat()
-            );
-            resizedPixmap.drawPixmap(
-                originalPixmap,
-                0, 0, originalPixmap.getWidth(), originalPixmap.getHeight(),
-                0, 0, currentMap.getTileWidth(), currentMap.getTileHeight()
-            );
-            originalPixmap.dispose();
-            textures[i].dispose();
-            textures[i] = new Texture(resizedPixmap);
-            resizedPixmap.dispose();
+        textureAtlas = new TextureAtlas(Gdx.files.internal(this.currentMap.getTextureAtlasFile()));
+        tileTextures = new TextureRegion[currentMap.getTilesetRegionNames().length];
+        for (int i = 0; i < currentMap.getTilesetRegionNames().length; i++) {
+            System.out.println(currentMap.getTilesetRegionNames()[i]);
+            tileTextures[i] = textureAtlas.findRegion(currentMap.getTilesetRegionNames()[i]);
         }
-
-
-        // Load texture atlas for the current map
-        //this.textureAtlas = new TextureAtlas(Gdx.files.internal(this.currentMap.getTextureAtlasFile()));
 
         // replace declaration
         // mapArray = new Tile[currentMap.getMapWidth()][currentMap.getMapHeight()];
@@ -91,14 +74,62 @@ public class GameWorld {
                 mapArray[j][i] = new Tile(
                     currentMap.getTilesetRegionNames()[currentMap.getMapMatrix()[j][i]],
                     this.isTileCollidable(i, j),
-                    new Sprite(textures[0])
+                    new Sprite(tileTextures[0])
                 );
-                mapArray[j][i].getSprite().setRegion(textures[currentMap.getMapMatrix()[j][i]]);
+                mapArray[j][i].getSprite().setRegion(tileTextures[currentMap.getMapMatrix()[j][i]]);
                 mapArray[j][i].getSprite().setPosition(
                     i * currentMap.getTileWidth(),
                     Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + tileDrawYOffset)
                 );
             }
+        }
+
+        mapEntities = new MapEntity[currentMap.getNumberOfMapEntities()];
+        // Load map entities (NPCs, items, etc.)
+        JsonValue entitiesData = currentMap.getObjectsLayer();
+        for (JsonValue entityData : entitiesData) {
+            // Create MapEntity instances based on entityData
+            // and add them to mapEntities array
+
+            // get key
+            String entityKey = entityData.name(); // e.g. com.mathochist.mazegame.World.Objects.Bookcase
+            System.out.println("Loaded entity: " + entityKey);
+
+            int width = entityData.getInt("width");
+            int height = entityData.getInt("height");
+            boolean collidable = entityData.getBoolean("collidable");
+
+            JsonValue positionData = entityData.get("positions");
+            Json json = new Json();
+            int[][] positions = json.readValue(int[][].class, positionData);
+
+            for (int[] pos : positions) {
+                // Instantiate specific MapEntity subclasses based on entityKey
+                System.out.println(pos[0] + ", " + pos[1]);
+                System.out.println(width + "x" + height);
+                System.out.println(collidable);
+                MapEntity entity = Utils.instantiate(entityKey, MapEntity.class,
+                    screenBatch,
+                    this.textureAtlas,
+                    pos[0],
+                    pos[1],
+                    width,
+                    height,
+                    collidable
+                );
+
+                // Add entity to mapEntities array
+                // For simplicity, we just add to the first available slot
+                for (int k = 0; k < mapEntities.length; k++) {
+                    if (mapEntities[k] == null) {
+                        mapEntities[k] = entity;
+                        break;
+                    }
+                }
+            }
+
+            System.out.println("Total entities loaded: " + mapEntities.length);
+
         }
     }
 
@@ -119,9 +150,15 @@ public class GameWorld {
                 mapArray[j][i].getSprite().draw(screenBatch);
             }
         }
+        // Draw map entities
+        for (MapEntity entity : mapEntities) {
+            if (entity != null) {
+                entity.render();
+            }
+        }
         screenBatch.end();
 
-//        // Optionally whole render collision layer for debugging
+        // Optionally whole render collision layer for debugging
 //        for (int j = 0; j < currentMap.getMapHeight(); j++) {
 //            for (int i = 0; i < currentMap.getMapWidth(); i++) {
 //                if (mapArray[j][i].isCollidable()) {
@@ -135,9 +172,25 @@ public class GameWorld {
 //                }
 //            }
 //        }
+
+        // highlight all entities for debugging
+        for (MapEntity entity : mapEntities) {
+            if (entity != null) {
+                float[] bbox = entity.getBBox();
+                shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
+                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(new Color(0, 0, 1, 0.4f)); // semi-transparent blue
+                // bbox: x, y, width, height in tile coords
+                float x = bbox[0] * currentMap.getTileWidth();
+                float y = Gdx.graphics.getHeight() - (bbox[1] * currentMap.getTileHeight() + tileDrawYOffset) - (bbox[3] * currentMap.getTileHeight());
+                shapeRenderer.rect(x, y, bbox[2] * currentMap.getTileWidth(), bbox[3] * currentMap.getTileHeight());
+                shapeRenderer.end();
+            }
+        }
+
     }
 
-    // java
+    // Debug function TODO: REMOVE IN RELEASE
     public void render_collision_layer(Player p) {
         float[] playerTilePos = this.pixelCoordsToTileIndex(p.getX(), p.getY());
         boolean[] collisionLayer = this.getCollisionLayer(p.getX(), p.getY(), Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT);
@@ -189,15 +242,66 @@ public class GameWorld {
 
 
     public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels, float playerWidthPixels, float playerHeightPixels) {
-        // Adjust playerYPixels to account for viewport height changes
-        // dont look at this im tired
+        // Adjust playerYPixels to account for viewport height changes (because the viewport scales height during resizing)
         float[] playerTilePos = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels + deltaViewportHeight);
-        System.out.println(Arrays.toString(playerTilePos));;
+        boolean[] entityCollisionLayer = this.getCollisionLayerWithEntities(playerTilePos);
         return new boolean[] {
-            mapArray[(int) Math.floor(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable(),
-            mapArray[(int) Math.ceil(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable(),
-            mapArray[Math.round(playerTilePos[1])][(int) Math.floor(playerTilePos[0])].isCollidable(),
-            mapArray[Math.round(playerTilePos[1])][(int) Math.ceil(playerTilePos[0])].isCollidable()}; // above, below, left, right
+            mapArray[(int) Math.floor(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable() || entityCollisionLayer[0],
+            mapArray[(int) Math.ceil(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable() || entityCollisionLayer[1],
+            mapArray[Math.round(playerTilePos[1])][(int) Math.floor(playerTilePos[0])].isCollidable() || entityCollisionLayer[2],
+            mapArray[Math.round(playerTilePos[1])][(int) Math.ceil(playerTilePos[0])].isCollidable() || entityCollisionLayer[3]
+        }; // above, below, left, right
+    }
+
+    private boolean[] getCollisionLayerWithEntities(float[] playerTilePos) {
+        boolean[] collisionLayer = new boolean[]{false, false, false, false}; // above, below, left, right
+
+        for (MapEntity entity : mapEntities) {
+            if (!entity.isCollidable()) {
+                continue;
+            }
+
+            float[] entityBBox = entity.getBBox();
+
+            // brief explanation of how the bbox interacts with the player
+            // bbox: x, y, width, height in tile coords
+            // playerTilePos: x, y in tile coords (center of player)
+            // each direction ors with any previous collision detected
+            // we check a direction by seeing if the player's tile position plus/minus 1 in that direction
+            // would still be within the entity's bbox
+            // we and that with 3 parameters to prevent collisions to either side of the collision
+            // edge and on the other side of the entity.
+            // These are rounded so we have 0.5 error s.t. we do not get collisions when up against the
+            // object.
+
+            // above
+            collisionLayer[0] = collisionLayer[0] || Math.floor(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
+                    Math.round(playerTilePos[0]) >= entityBBox[0] &&
+                    Math.round(playerTilePos[0]) < entityBBox[0] + entityBBox[2] &&
+                    Math.floor(playerTilePos[1]) - 1 >= entityBBox[1];
+
+            // below
+            collisionLayer[1] = collisionLayer[1] || Math.floor(playerTilePos[1]) >= entityBBox[1] &&
+                    Math.round(playerTilePos[0]) >= entityBBox[0] &&
+                    Math.round(playerTilePos[0]) < entityBBox[0] + entityBBox[2] &&
+                    Math.floor(playerTilePos[1]) + 1 <= entityBBox[1] + entityBBox[3];
+
+            // left
+            collisionLayer[2] = collisionLayer[2] || Math.ceil(playerTilePos[0]) <= entityBBox[0] + entityBBox[2] &&
+                    Math.round(playerTilePos[1]) > entityBBox[1] &&
+                    Math.round(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
+                    Math.ceil(playerTilePos[0]) - 1 >= entityBBox[0];
+
+            // right
+            collisionLayer[3] = collisionLayer[3] || Math.ceil(playerTilePos[0]) >= entityBBox[0] &&
+                    Math.round(playerTilePos[1]) > entityBBox[1] &&
+                    Math.round(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
+                    Math.ceil(playerTilePos[0]) + 1 <= entityBBox[0] + entityBBox[2];
+
+        }
+
+        return collisionLayer;
+
     }
 
     public void dispose() {
@@ -210,7 +314,7 @@ public class GameWorld {
         return new float[]{tileX, tileY};
     }
 
-    public boolean isTileCollidable(int tileX, int tileY) {
+    private boolean isTileCollidable(int tileX, int tileY) {
         int tileIndex = currentMap.getMapMatrix()[tileY][tileX];
         return java.util.Arrays.stream(currentMap.getCollisionTiles()).anyMatch(tile -> tile == tileIndex);
     }
@@ -230,7 +334,38 @@ public class GameWorld {
     public void scaleWorld(float oldViewportWidth, float oldViewportHeight, float newViewportWidth, float newViewportHeight) {
         deltaViewportWidth = newViewportWidth - oldViewportWidth;
         deltaViewportHeight = newViewportHeight - oldViewportHeight;
-        System.out.println("Scaled world by deltaViewportWidth: " + deltaViewportWidth + ", deltaViewportHeight: " + deltaViewportHeight);
+    }
+
+    private double getTileDistance(float tileX1, float tileY1, float tileX2, float tileY2) {
+        return Math.sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
+    }
+
+    private double distanceFromBBox(float[] entityBBox, float tileX1, float tileY1) {
+        float rx_min = entityBBox[0];
+        float rx_max = entityBBox[0] + entityBBox[2];
+        float ry_min = entityBBox[1];
+        float ry_max = entityBBox[1] + entityBBox[3];
+
+        if (rx_min <= tileX1 && tileX1 <= rx_max && ry_min <= tileY1 && tileY1 <= ry_max) {
+            return Math.min(Math.min(tileX1 - rx_min, rx_max - tileX1), Math.min(tileY1 - ry_min, ry_max - tileY1));
+        }
+
+        double dx = Math.max(0, Math.max(rx_min - tileX1, tileX1 - rx_max));
+        double dy = Math.max(0, Math.max(ry_min - tileY1, tileY1 - ry_max));
+        return Math.sqrt(dx*dx + dy*dy);
+    }
+
+    public MapEntity[] getMapEntitiesInRadius(float tileX, float tileY, double radius) {
+        ArrayList<MapEntity> array_output = new ArrayList<>();
+        for (MapEntity entity : mapEntities) {
+            double dist = distanceFromBBox(entity.getBBox(), tileX, tileY);
+            if (dist <= radius) {
+                array_output.add(entity);
+            }
+        }
+        MapEntity[] output = new MapEntity[array_output.size()];
+        array_output.toArray(output);
+        return output;
     }
 
 

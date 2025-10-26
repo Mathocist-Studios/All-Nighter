@@ -9,25 +9,43 @@ public abstract class Entity {
     private TextureAtlas atlas;
     private String regionName;
 
-    private float pixelX;
-    private float pixelY;
+    private float tileX;
+    private float tileY;
+    private float width;
+    private float height;
+    private boolean collidable;
 
-    public Entity(SpriteBatch batch, TextureAtlas atlas, String regionName, float PixelX, float PixelY) {
+    public Entity(SpriteBatch batch, TextureAtlas atlas, String regionName, float tileX, float tileY, float width, float height, boolean collidable) {
         this.batch = batch;
         this.atlas = atlas;
         this.regionName = regionName;
-        this.pixelX = PixelX;
-        this.pixelY = PixelY;
+        this.tileX = tileX;
+        this.tileY = tileY;
+        this.width = width;
+        this.height = height;
+        this.collidable = collidable;
     }
 
-    public abstract void render(float delta);
+    public abstract void render();
 
-    public float getPixelX() {
-        return pixelX;
+    public float getTileX() {
+        return tileX;
     }
 
-    public float getPixelY() {
-        return pixelY;
+    public float getTileY() {
+        return tileY;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public boolean isCollidable() {
+        return collidable;
     }
 
 }

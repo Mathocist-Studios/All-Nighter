@@ -1,7 +1,5 @@
 package com.mathochist.mazegame.Entities;
 
-import java.util.Dictionary;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,6 +10,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mathochist.mazegame.Movement.KeyBuffer;
 import com.mathochist.mazegame.World.GameWorld;
 
+import java.util.Arrays;
+
+
+// TODO: Refactor to extend Entity class
 public class Player {
     private Texture spriteSheet;
     private Animation<TextureRegion> walkUp, walkDown, walkLeft, walkRight;
@@ -19,8 +21,6 @@ public class Player {
     private Sprite playerSprite;
 
     private SpriteBatch screenBatch;
-
-    private Dictionary<String, Texture> spriteTable;
 
     private final int FRAME_COLS = 4;
     private final int FRAME_ROWS = 4;
@@ -32,7 +32,7 @@ public class Player {
     private OrthographicCamera camera;
     private GameWorld world;
 
-    public final static float MOVE_SPEED = 100; // pixels per second
+    public final static float MOVE_SPEED = 300; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
 
@@ -179,6 +179,11 @@ public class Player {
         this.render(game_delta);
 
         this.world.render_collision_layer(this);
+        System.out.println(Arrays.toString(this.world.getMapEntitiesInRadius(
+            this.world.pixelCoordsToTileIndex(this.x, this.y)[0],
+            this.world.pixelCoordsToTileIndex(this.x, this.y)[1],
+            2
+        )));
     }
 
     public void render(float delta) {

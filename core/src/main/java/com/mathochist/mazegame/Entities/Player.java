@@ -32,7 +32,7 @@ public class Player {
     private OrthographicCamera camera;
     private GameWorld world;
 
-    public final static float MOVE_SPEED = 100; // pixels per second
+    public final static float MOVE_SPEED = 1000; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
 
@@ -127,6 +127,7 @@ public class Player {
 //
 //        this.render(game_delta);
 
+        System.out.println("Actually no fuck you apprently we going to: " + camera.position.x + ", " + camera.position.y);
         float delta_time = Gdx.graphics.getDeltaTime();
         keyBuffer.updateCameraMovementFromKeys();
         float[] move = keyBuffer.getCameraMove();
@@ -204,6 +205,11 @@ public class Player {
 
     public KeyBuffer getKeyBuffer() {
         return keyBuffer;
+    }
+
+    public void setPosition(float newX, float newY) {
+        camera.position.set(newX, newY, 0); // Center camera
+        camera.update();
     }
 
 }

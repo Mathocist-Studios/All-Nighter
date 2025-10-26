@@ -70,8 +70,18 @@ public class GameMap {
         return Gdx.audio.newMusic(Gdx.files.internal(musicFile));
     }
 
-    public JsonValue getExitPoints() {
-        return mapData.get("metadata").get("exit_points");
+    public ExitTile[] getExitPoints() {
+        ExitTile[] exitTiles = new ExitTile[mapData.get("metadata").get("exit_points").size];
+        //System.out.println("exit points: "+mapData.get("metadata").get("exit_points").size);
+        for (int j = 0; j < mapData.get("metadata").get("exit_points").size; j++) {
+            exitTiles[j] = new ExitTile();
+            exitTiles[j].x = mapData.get("metadata").get("exit_points").get(j).getInt("x");
+            exitTiles[j].y = mapData.get("metadata").get("exit_points").get(j).getInt("y");
+            exitTiles[j].targetX = mapData.get("metadata").get("exit_points").get(j).getInt("target_x");
+            exitTiles[j].targetY = mapData.get("metadata").get("exit_points").get(j).getInt("target_y");
+            exitTiles[j].targetMap = mapData.get("metadata").get("exit_points").get(j).getString("target_map");
+        }
+        return exitTiles;
     }
 
     public JsonValue getNPCs() {

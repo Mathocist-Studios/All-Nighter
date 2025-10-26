@@ -1,12 +1,12 @@
 package com.mathochist.mazegame.Screens.Game;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.World.GameWorld;
-
-import java.util.Arrays;
 
 public class LibraryScreen extends BaseGameScreen {
 

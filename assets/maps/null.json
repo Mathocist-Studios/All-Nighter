@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "name": "Null",
+    "author": "",
+    "version": "1.0",
+    "tilesets": {
+      "tile_width": 64,
+      "tile_height": 64
+    },
+    "map_width": 12,
+    "map_height": 9,
+    "spawn_point": {
+      "x": 2,
+      "y": 2
+    },
+    "background_music": "library/library_theme.mp3",
+    "texture_atlas": "library/library_atlas.atlas",
+    "exit_points": [
+      {
+        "x": 999,
+        "y": 999,
+        "target_map": "maps/null.json",
+        "target_x": 0,
+        "target_y": 0
+      }
+    ],
+    "npcs": [
+      {
+      }
+    ]
+  },
+  "tiles": [
+    "floor",
+    "wall",
+    "bookshelf",
+    "table",
+    "chair_right",
+    "chair_left",
+    "exit_door"
+  ],
+  "collision_tiles": [1, 2, 3, 4, 5],
+  "map_matrix": [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 2, 2, 2, 0, 3, 3, 3, 0, 1],
+    [1, 0, 2, 2, 2, 0, 0, 3, 3, 3, 0, 1],
+    [1, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 4, 3, 3, 5, 0, 1],
+    [1, 0, 4, 3, 3, 3, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 1],
+    [1, 0, 6, 6, 6, 0, 0, 0, 2, 2, 2, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  ]
+}

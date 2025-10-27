@@ -14,7 +14,7 @@
       "y": 10
     },
     "background_music": "library/library_theme.mp3",
-    "texture_atlas": "maps/library/Placeholder.atlas",
+    "texture_atlas": "maps/library/library.atlas",
     "exit_points": [
       {
         "x": 18,

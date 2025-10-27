@@ -1,0 +1,15 @@
+Library.png
+size:256,512
+repeat:none
+wall
+bounds:68,178,64,64
+floor
+bounds:68,244,64,64
+exit_door
+bounds:68,244,64,64
+book3-fotor-20251027212914
+bounds:2,196,64,256
+book4-fotor-2025102721307
+bounds:2,2,64,192
+image_2025-10-24_173228394-fotor-20251027212829
+bounds:68,310,128,142

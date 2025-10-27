@@ -10,33 +10,31 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mathochist.mazegame.Movement.KeyBuffer;
 import com.mathochist.mazegame.World.GameWorld;
 
-import java.util.Arrays;
-
 
 // TODO: Refactor to extend Entity class
 public class Player {
     private Texture spriteSheet;
-    private Animation<TextureRegion> walkUp, walkDown, walkLeft, walkRight;
+    private final Animation<TextureRegion> walkUp, walkDown, walkLeft, walkRight;
     private TextureRegion currentFrame;
-    private Sprite playerSprite;
+    private final Sprite playerSprite;
 
-    private SpriteBatch screenBatch;
+    private final SpriteBatch screenBatch;
 
     private final int FRAME_COLS = 4;
     private final int FRAME_ROWS = 4;
     private float stateTime = 0f; // time tracker for animation
 
-    private KeyBuffer keyBuffer;
+    private final KeyBuffer keyBuffer;
     private float x, y;
 
-    private OrthographicCamera camera;
-    private GameWorld world;
+    private final OrthographicCamera camera;
+    private final GameWorld world;
 
-    public final static float MOVE_SPEED = 300; // pixels per second
+    public final static float MOVE_SPEED = 1000; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
 
-    public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, int startX, int startY) {
+    public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, float startX, float startY) {
 
         this.camera = camera;
         this.screenBatch = batch;
@@ -137,7 +135,7 @@ public class Player {
 
         // Use player's position for collision, not camera
         // System.out.println("Player X: " + (x + SPRITE_WIDTH / 2f) + " Y: " + (y + SPRITE_HEIGHT / 2f));
-        boolean[] collisionLayer = world.getCollisionLayer(x, y, SPRITE_WIDTH, SPRITE_HEIGHT);
+        boolean[] collisionLayer = world.getCollisionLayer(x, y);
         if (deltaY > 0 && collisionLayer[0]) { // moving up
             deltaY = 0;
         }
@@ -179,11 +177,6 @@ public class Player {
         this.render(game_delta);
 
         this.world.render_collision_layer(this);
-        System.out.println(Arrays.toString(this.world.getMapEntitiesInRadius(
-            this.world.pixelCoordsToTileIndex(this.x, this.y)[0],
-            this.world.pixelCoordsToTileIndex(this.x, this.y)[1],
-            2
-        )));
     }
 
     public void render(float delta) {
@@ -196,7 +189,6 @@ public class Player {
 
     public void dispose() {
         spriteSheet.dispose();
-        screenBatch.dispose();
     }
 
     public float getX() {
@@ -209,6 +201,11 @@ public class Player {
 
     public KeyBuffer getKeyBuffer() {
         return keyBuffer;
+    }
+
+    public void setPosition(float newX, float newY) {
+        camera.position.set(newX, newY, 0); // Center camera
+        camera.update();
     }
 
 }

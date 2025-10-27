@@ -1,6 +1,7 @@
 package com.mathochist.mazegame.World;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -9,32 +10,36 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.Screens.Game.BaseGameScreen;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GameWorld {
 
-    private GameMap currentMap;
-    private TextureAtlas textureAtlas;
-    private TextureRegion[] tileTextures;
+    private final Main game;
+    private final GameMap currentMap;
+    private final TextureAtlas textureAtlas;
 
-    private SpriteBatch screenBatch;
+    private final SpriteBatch screenBatch;
 
-    private Tile[][] mapArray;
-    private MapEntity[] mapEntities;
+    private final Tile[][] mapArray;
+    private final MapEntity[] mapEntities;
 
-    private ShapeRenderer shapeRenderer = new ShapeRenderer();
+    private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    private int tileDrawYOffset = 48; // Adjust based on HUD height or other UI elements
+    private final int tileDrawYOffset = 48; // Adjust based on HUD height or other UI elements
 
     // For resizing
-    private float deltaViewportWidth;
     private float deltaViewportHeight;
 
-    public GameWorld(FileHandle mapFile, SpriteBatch gameSpriteBatch) {
+    // Debug
+    private boolean debug = false;
 
+    public GameWorld(Main game, FileHandle mapFile, SpriteBatch gameSpriteBatch) {
+
+        this.game = game;
         screenBatch = gameSpriteBatch;
         this.currentMap = new GameMap(mapFile);
 
@@ -58,7 +63,7 @@ public class GameWorld {
 //        textures[6] = new Texture(Gdx.files.internal("exit_door.png"));
 
         textureAtlas = new TextureAtlas(Gdx.files.internal(this.currentMap.getTextureAtlasFile()));
-        tileTextures = new TextureRegion[currentMap.getTilesetRegionNames().length];
+        TextureRegion[] tileTextures = new TextureRegion[currentMap.getTilesetRegionNames().length];
         for (int i = 0; i < currentMap.getTilesetRegionNames().length; i++) {
             System.out.println(currentMap.getTilesetRegionNames()[i]);
             tileTextures[i] = textureAtlas.findRegion(currentMap.getTilesetRegionNames()[i]);
@@ -105,9 +110,6 @@ public class GameWorld {
 
             for (int[] pos : positions) {
                 // Instantiate specific MapEntity subclasses based on entityKey
-                System.out.println(pos[0] + ", " + pos[1]);
-                System.out.println(width + "x" + height);
-                System.out.println(collidable);
                 MapEntity entity = Utils.instantiate(entityKey, MapEntity.class,
                     screenBatch,
                     this.textureAtlas,
@@ -158,33 +160,42 @@ public class GameWorld {
         }
         screenBatch.end();
 
-        // Optionally whole render collision layer for debugging
-//        for (int j = 0; j < currentMap.getMapHeight(); j++) {
-//            for (int i = 0; i < currentMap.getMapWidth(); i++) {
-//                if (mapArray[j][i].isCollidable()) {
-//                    shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
-//                    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//                    shapeRenderer.setColor(new Color(1, 0, 0, 0.4f)); // semi-transparent red
-//                    float x = i * currentMap.getTileWidth();
-//                    float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + tileDrawYOffset);
-//                    shapeRenderer.rect(x, y, currentMap.getTileWidth(), currentMap.getTileHeight());
-//                    shapeRenderer.end();
-//                }
-//            }
-//        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
+            if (debug) {
+                debug=false;
+            } else {
+                debug=true;
+            }
+        }
+        if (debug) {
+            // Optionally whole render collision layer for debugging
+            for (int j = 0; j < currentMap.getMapHeight(); j++) {
+                for (int i = 0; i < currentMap.getMapWidth(); i++) {
+                    if (mapArray[j][i].isCollidable()) {
+                        shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
+                        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                        shapeRenderer.setColor(new Color(1, 0, 0, 0.4f)); // semi-transparent red
+                        float x = i * currentMap.getTileWidth();
+                        float y = Gdx.graphics.getHeight() - (j * currentMap.getTileHeight() + tileDrawYOffset);
+                        shapeRenderer.rect(x, y - deltaViewportHeight, currentMap.getTileWidth(), currentMap.getTileHeight());
+                        shapeRenderer.end();
+                    }
+                }
+            }
 
-        // highlight all entities for debugging
-        for (MapEntity entity : mapEntities) {
-            if (entity != null) {
-                float[] bbox = entity.getBBox();
-                shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
-                shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-                shapeRenderer.setColor(new Color(0, 0, 1, 0.4f)); // semi-transparent blue
-                // bbox: x, y, width, height in tile coords
-                float x = bbox[0] * currentMap.getTileWidth();
-                float y = Gdx.graphics.getHeight() - (bbox[1] * currentMap.getTileHeight() + tileDrawYOffset) - (bbox[3] * currentMap.getTileHeight());
-                shapeRenderer.rect(x, y, bbox[2] * currentMap.getTileWidth(), bbox[3] * currentMap.getTileHeight());
-                shapeRenderer.end();
+            // highlight all entities for debugging
+            for (MapEntity entity : mapEntities) {
+                if (entity != null) {
+                    float[] bbox = entity.getBBox();
+                    shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+                    shapeRenderer.setColor(new Color(0, 0, 1, 0.4f)); // semi-transparent blue
+                    // bbox: x, y, width, height in tile coords
+                    float x = bbox[0] * currentMap.getTileWidth();
+                    float y = Gdx.graphics.getHeight() - (bbox[1] * currentMap.getTileHeight() + tileDrawYOffset) - (bbox[3] * currentMap.getTileHeight());
+                    shapeRenderer.rect(x, y - deltaViewportHeight, bbox[2] * currentMap.getTileWidth(), bbox[3] * currentMap.getTileHeight());
+                    shapeRenderer.end();
+                }
             }
         }
 
@@ -193,7 +204,7 @@ public class GameWorld {
     // Debug function TODO: REMOVE IN RELEASE
     public void render_collision_layer(Player p) {
         float[] playerTilePos = this.pixelCoordsToTileIndex(p.getX(), p.getY());
-        boolean[] collisionLayer = this.getCollisionLayer(p.getX(), p.getY(), Player.SPRITE_WIDTH, Player.SPRITE_HEIGHT);
+        boolean[] collisionLayer = this.getCollisionLayer(p.getX(), p.getY());
         shapeRenderer.setProjectionMatrix(screenBatch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(new Color(0, 1, 0, 0.4f)); // semi-transparent green
@@ -240,10 +251,14 @@ public class GameWorld {
         shapeRenderer.end();
     }
 
-
-    public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels, float playerWidthPixels, float playerHeightPixels) {
+    public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels) {
         // Adjust playerYPixels to account for viewport height changes (because the viewport scales height during resizing)
         float[] playerTilePos = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels + deltaViewportHeight);
+        boolean isTransition = this.checkForWorldTransition(playerTilePos);
+        if (isTransition) {
+            // If a world transition occurred, return no collisions to avoid issues during transition
+            return new boolean[] {false, false, false, false};
+        }
         boolean[] entityCollisionLayer = this.getCollisionLayerWithEntities(playerTilePos);
         return new boolean[] {
             mapArray[(int) Math.floor(playerTilePos[1])][Math.round(playerTilePos[0])].isCollidable() || entityCollisionLayer[0],
@@ -251,6 +266,20 @@ public class GameWorld {
             mapArray[Math.round(playerTilePos[1])][(int) Math.floor(playerTilePos[0])].isCollidable() || entityCollisionLayer[2],
             mapArray[Math.round(playerTilePos[1])][(int) Math.ceil(playerTilePos[0])].isCollidable() || entityCollisionLayer[3]
         }; // above, below, left, right
+    }
+
+    private boolean checkForWorldTransition(float[] playerTilePos) {
+        ExitTile[] exitTiles = currentMap.getExitPoints();
+        for (ExitTile exitTile : exitTiles) {
+            if (Math.round(exitTile.getX()) == Math.round(playerTilePos[0]) &&
+                Math.round(exitTile.getY()) == Math.round(playerTilePos[1])) {
+                System.out.println("On exit tile");
+                System.out.println(exitTile);
+                loadNewWorld(exitTile);
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean[] getCollisionLayerWithEntities(float[] playerTilePos) {
@@ -266,11 +295,11 @@ public class GameWorld {
             // brief explanation of how the bbox interacts with the player
             // bbox: x, y, width, height in tile coords
             // playerTilePos: x, y in tile coords (center of player)
-            // each direction ors with any previous collision detected
+            // each direction 'or's with any previous collision detected
             // we check a direction by seeing if the player's tile position plus/minus 1 in that direction
             // would still be within the entity's bbox
-            // we and that with 3 parameters to prevent collisions to either side of the collision
-            // edge and on the other side of the entity.
+            // we 'and' that with 3 parameters to prevent collisions to either side of the collision
+            // edge, and on the other side of the entity.
             // These are rounded so we have 0.5 error s.t. we do not get collisions when up against the
             // object.
 
@@ -328,19 +357,25 @@ public class GameWorld {
     public int[] getSpawnPointPixels() {
         int x = currentMap.getSpawnX() * currentMap.getTileWidth();
         int y = Gdx.graphics.getHeight() - (currentMap.getSpawnY() * currentMap.getTileHeight() + tileDrawYOffset);
-        return new int[]{x, y};
+        return new int[]{x, (int) (y - deltaViewportHeight)};
     }
 
-    public void scaleWorld(float oldViewportWidth, float oldViewportHeight, float newViewportWidth, float newViewportHeight) {
-        deltaViewportWidth = newViewportWidth - oldViewportWidth;
+    public float[] getPixels(float tileX, float tileY) {
+        float x = tileX * currentMap.getTileWidth();
+        float y = Gdx.graphics.getHeight() - (tileY * currentMap.getTileHeight() + tileDrawYOffset);
+        return new float[]{x, y - deltaViewportHeight};
+    }
+
+    public void scaleWorld(float oldViewportHeight, float newViewportHeight) {
+        System.out.println(deltaViewportHeight);
         deltaViewportHeight = newViewportHeight - oldViewportHeight;
     }
 
-    private double getTileDistance(float tileX1, float tileY1, float tileX2, float tileY2) {
+    public static double getTileDistance(float tileX1, float tileY1, float tileX2, float tileY2) {
         return Math.sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
     }
 
-    private double distanceFromBBox(float[] entityBBox, float tileX1, float tileY1) {
+    public static double distanceFromBBox(float[] entityBBox, float tileX1, float tileY1) {
         float rx_min = entityBBox[0];
         float rx_max = entityBBox[0] + entityBBox[2];
         float ry_min = entityBBox[1];
@@ -366,6 +401,23 @@ public class GameWorld {
         MapEntity[] output = new MapEntity[array_output.size()];
         array_output.toArray(output);
         return output;
+    }
+
+    private void loadNewWorld(ExitTile targetExit) {
+        // right dont really know how im gonna do this yet so im gonna comment how i think i should
+        // first gotta find the closest exit tile to the player
+        // then load the map file for that exit tile
+        // then set the player's position to the correct spawn point on the new map
+        // here we go
+
+        System.out.println("Loading new world: " + targetExit.getTargetMap());
+        // load new screen
+        BaseGameScreen newScreen = Utils.instantiate(targetExit.getTargetMap(), BaseGameScreen.class,
+            game,
+            targetExit.getTargetX(),
+            targetExit.getTargetY()
+        );
+        game.setScreen(newScreen);
     }
 
 

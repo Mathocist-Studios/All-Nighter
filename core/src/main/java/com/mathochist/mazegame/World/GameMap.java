@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+import java.util.Arrays;
+
 public class GameMap {
 
     private FileHandle mapFile;
@@ -70,24 +72,6 @@ public class GameMap {
         return Gdx.audio.newMusic(Gdx.files.internal(musicFile));
     }
 
-    public JsonValue getExitPoints() {
-        return mapData.get("metadata").get("exit_points");
-    }
-
-    public JsonValue getNPCs() {
-        return mapData.get("metadata").get("npcs");
-    }
-
-    public JsonValue getNPC(String npcName) {
-        JsonValue npcs = getNPCs();
-        for (JsonValue npc : npcs) {
-            if (npc.getString("name").equals(npcName)) {
-                return npc;
-            }
-        }
-        return null;
-    }
-
     public String[] getTilesetRegionNames() {
         JsonValue tileset = mapData.get("tiles");
         Json json = new Json();
@@ -116,6 +100,22 @@ public class GameMap {
 
     public int getNumberOfMapEntities() {
         return mapData.get("metadata").getInt("map_entity_number");
+    }
+
+    public ExitTile[] getExitPoints() {
+        JsonValue exit_points = mapData.get("metadata").get("exit_points");
+        ExitTile[] exitTiles = new ExitTile[exit_points.size];
+        //System.out.println("exit points: "+mapData.get("metadata").get("exit_points").size);
+        for (int j = 0; j < exit_points.size; j++) {
+            JsonValue exitPoint = exit_points.get(j);
+            String targetMap = exitPoint.getString("target_map");
+            int tileX = exitPoint.getInt("x");
+            int tileY = exitPoint.getInt("y");
+            int targetX = exitPoint.getInt("target_x");
+            int targetY = exitPoint.getInt("target_y");
+            exitTiles[j] = new ExitTile(tileX, tileY, targetMap, targetX, targetY);
+        }
+        return exitTiles;
     }
 
 }

@@ -41,6 +41,23 @@ public abstract class BaseGameScreen extends DefaultScreen {
         screenBatch = new SpriteBatch();
     }
 
+    public BaseGameScreen(Main game, Float spawnX, Float spawnY) {
+        super(game);
+        // GDX setup
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
+        Gdx.input.setInputProcessor(this);
+
+        // Camera setup
+        gameHud = new Hud();
+        camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Center camera
+        camera.update();
+        viewport = new FitViewport(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, camera);
+
+        // Batch setup
+        screenBatch = new SpriteBatch();
+    }
+
     public Player getPlayer() {
         return player;
     }
@@ -58,7 +75,7 @@ public abstract class BaseGameScreen extends DefaultScreen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        world.scaleWorld(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, width, height);
+        world.scaleWorld(VIEWPORT_HEIGHT, height);
     }
 
     @Override
@@ -91,6 +108,9 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     public void setWorld(GameWorld world) {
         this.world = world;
+
+        // Ensure world scaling for collisions
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public GameWorld getWorld() {

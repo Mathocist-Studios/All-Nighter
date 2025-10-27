@@ -17,25 +17,25 @@
     "texture_atlas": "maps/library/Placeholder.atlas",
     "exit_points": [
       {
-        "x": 30,
-        "y": 19,
-        "target_map": "maps/outside.json",
-        "target_x": 38,
-        "target_y": 14
+        "x": 18,
+        "y": 29,
+        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
+        "target_x": 18,
+        "target_y": 1
       },
       {
-        "x": 30,
-        "y": 20,
-        "target_map": "maps/outside.json",
-        "target_x": 38,
-        "target_y": 15
+        "x": 19,
+        "y": 29,
+        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
+        "target_x": 19,
+        "target_y": 1
       },
       {
-        "x": 30,
-        "y": 21,
-        "target_map": "maps/outside.json",
-        "target_x": 38,
-        "target_y": 16
+        "x": 20,
+        "y": 29,
+        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
+        "target_x": 20,
+        "target_y": 1
       }
     ],
     "map_entity_number": 2,

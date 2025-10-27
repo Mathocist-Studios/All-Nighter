@@ -8,11 +8,11 @@ import com.mathochist.mazegame.World.GameWorld;
 
 import java.util.Arrays;
 
-public class LibraryScreen extends BaseGameScreen {
+public class OutdoorScreen extends BaseGameScreen {
 
-    public LibraryScreen(Main game) {
+    public OutdoorScreen(Main game) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
 
         int[] spawnPoint = super.getWorld().getSpawnPointPixels();
         System.out.println(Arrays.toString(spawnPoint));
@@ -23,17 +23,21 @@ public class LibraryScreen extends BaseGameScreen {
         super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPoint[0], spawnPoint[1]));
     }
 
-    public LibraryScreen(Main game, Float spawnX, Float spawnY) {
+    public OutdoorScreen(Main game, Float spawnX, Float spawnY) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
 
         float[] spawnPixels = super.getWorld().getPixels(spawnX, spawnY);
+        System.out.println(Arrays.toString(spawnPixels));
         super.getCamera().position.set(spawnX, spawnY, 0);
         super.getCamera().update();
 
         super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPixels[0], spawnPixels[1]));
 
-        super.getPlayer().setPosition(spawnPixels[0], spawnPixels[1]); // reference OutdoorScreen.java for info
+        // because of some weird glitch where it doesn't set spawn properly
+        // don't ask me why
+        // hours spent trying to work out why: 6
+        super.getPlayer().setPosition(spawnPixels[0], spawnPixels[1]);
     }
 
     @Override
@@ -62,5 +66,4 @@ public class LibraryScreen extends BaseGameScreen {
         super.getWorld().dispose();
         super.getPlayer().dispose();
     }
-
 }

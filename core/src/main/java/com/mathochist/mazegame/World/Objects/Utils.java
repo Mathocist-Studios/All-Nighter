@@ -1,7 +1,5 @@
 package com.mathochist.mazegame.World.Objects;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 

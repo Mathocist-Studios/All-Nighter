@@ -438,6 +438,9 @@ public class GameWorld {
 
     /**
      * Calculate the distance from a point to the nearest edge of an entity's bounding box.
+     * <br>
+     * <br>
+     * <b>CREDITS: <a href="https://stackoverflow.com/questions/5254838/calculating-distance-between-a-point-and-a-rectangular-box-nearest-point">StackOverflow</a></b>
      *
      * @param entityBBox the bounding box of the entity in tile coordinates [x, y, width, height]
      * @param tileX1 the x coordinate of the point in tile units
@@ -522,6 +525,11 @@ public class GameWorld {
      */
     public boolean triggerInteraction(float tileX, float tileY, double radius, Player p) {
         MapEntity[] nearbyEntities = this.getMapEntitiesInRadius(tileX, tileY, radius);
+        MapEntity[] entitiesOutOfRange = Utils.complementOfSubArray(mapEntities, nearbyEntities);
+        // end any interactions with entities out of range
+        for (MapEntity entity : entitiesOutOfRange) {
+            entity.onInteractEnd(p, this);
+        }
         for (MapEntity entity : nearbyEntities) {
             if (entity.onInteract(p, this)) {
                 return true; // interaction occurred

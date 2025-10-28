@@ -1,5 +1,8 @@
 package com.mathochist.mazegame.Movement;
 
+/**
+ * Enum representing different key actions for player movement and interaction.
+ */
 public enum KeyAction {
 
     MOVE_UP,

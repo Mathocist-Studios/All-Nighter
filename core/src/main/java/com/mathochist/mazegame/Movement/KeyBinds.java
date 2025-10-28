@@ -2,6 +2,18 @@ package com.mathochist.mazegame.Movement;
 
 import com.badlogic.gdx.Input;
 
+/**
+ * Class containing key bindings for player movement and interaction.
+ * <br>
+ * <br>
+ * To add new key binds, add a new static integer variable, add the relevant enum to KeyAction,
+ * and update the setKeyBind method accordingly. You will be able to check for the key press using
+ * KeyBuffer.isKeyPressed(KeyBinds.YOUR_NEW_KEY_BIND_VARIABLE).
+ * <br>
+ * <br>
+ * If you want to add more complex functionality (like toggling sprint), you will need to
+ * implement that in KeyBuffer.java.
+ */
 public class KeyBinds {
 
     public static int MOVE_UP = Input.Keys.UP; // W key

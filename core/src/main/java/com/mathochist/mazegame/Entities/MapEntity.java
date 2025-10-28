@@ -42,4 +42,14 @@ public abstract class MapEntity extends Entity {
      */
     public abstract boolean onInteract(Player p, GameWorld world);
 
+    /**
+     * Called when a player ends interaction with this entity.
+     * <br>
+     * <b>*Called every frame the player is out of range*</b>
+     *
+     * @param p The player ending interaction with the entity.
+     * @param world The game world context.
+     */
+    public abstract void onInteractEnd(Player p, GameWorld world);
+
 }

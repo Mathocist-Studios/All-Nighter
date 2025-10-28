@@ -2,6 +2,9 @@ package com.mathochist.mazegame.World.Objects;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Utils {
 
@@ -12,6 +15,8 @@ public class Utils {
      * <b>Note:</b> The constructor argument types are inferred from the runtime classes of the provided arguments.
      * This means that you should not use primitive types (e.g., int, boolean) directly in the constructor arguments,
      * as they will be boxed into their corresponding wrapper classes (e.g., Integer, Boolean).
+     * <br>
+     * <b>Defo not a safe function and is susceptible to injection code but don't tell anyone shhhhhh.</b>
      * <br>
      * <br>
      * <b>Example Usage:</b>
@@ -52,5 +57,27 @@ public class Utils {
             throw new IllegalStateException(e);
         }
     }
+
+
+    /**
+     * Returns a new array containing the elements of the input array that are not present in the subArray.
+     *
+     * @param array    The original array.
+     * @param subArray The array of elements to exclude from the original array.
+     * @param <T>      The type of the array elements.
+     * @return A new array containing the complement of the subArray in the original array.
+     * @throws IllegalArgumentException if the input array is null.
+     */
+    public static <T> T[] complementOfSubArray(T[] array, T[] subArray) {
+        if (array == null) throw new IllegalArgumentException("array must not be null");
+        if (subArray == null || subArray.length == 0) return Arrays.copyOf(array, array.length);
+
+        Set<T> exclude = new HashSet<>(Arrays.asList(subArray));
+        List<T> filtered = Arrays.stream(array)
+            .filter(e -> !exclude.contains(e))
+            .toList();
+        return filtered.toArray(Arrays.copyOf(array, 0));
+    }
+
 
 }

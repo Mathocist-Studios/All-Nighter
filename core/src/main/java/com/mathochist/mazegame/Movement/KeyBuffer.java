@@ -2,6 +2,9 @@ package com.mathochist.mazegame.Movement;
 
 import java.util.ArrayList;
 
+/**
+ * A buffer to store key presses and camera movement.
+ */
 public class KeyBuffer {
 
     private final float[] camera_move = {0, 0};

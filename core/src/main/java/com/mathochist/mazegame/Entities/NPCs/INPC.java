@@ -36,4 +36,14 @@ public interface INPC {
      */
     boolean onInteract(Player p, GameWorld world);
 
+    /**
+     * Handles the end of interaction with the player.
+     * <br>
+     * <b>*Called every frame the player is out of range*</b>
+     *
+     * @param p     The player ending interaction with the NPC.
+     * @param world The game world context.
+     */
+    void onInteractEnd(Player p, GameWorld world); // recommended to have a boolean (buffer) to check if interaction was ongoing
+
 }

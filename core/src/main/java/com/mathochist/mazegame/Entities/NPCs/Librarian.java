@@ -32,4 +32,9 @@ public class Librarian extends MapEntity implements INPC {
         System.out.println("The librarian says: 'Shhh! This is a library!'");
         return true;
     }
+
+    @Override
+    public void onInteractEnd(Player p, GameWorld world) {
+        System.out.println("You are not bothering the librarian.");
+    }
 }

@@ -21,4 +21,7 @@ public class Bookcase extends MapEntity {
     public boolean onInteract(Player p, GameWorld world) {
         return false; // Bookcases are not interactable
     }
+
+    @Override
+    public void onInteractEnd(Player p, GameWorld world) {} // No action needed on interaction end
 }

@@ -47,14 +47,6 @@
         "positions": [
           [10, 3]
         ]
-      },
-      "com.mathochist.mazegame.Entities.NPCs.Librarian": {
-        "width": 1,
-        "height": 1,
-        "collidable": false,
-        "positions": [
-          [15, 15]
-        ]
       }
     }
   },

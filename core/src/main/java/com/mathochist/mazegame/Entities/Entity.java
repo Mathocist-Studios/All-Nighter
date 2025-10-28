@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mathochist.mazegame.World.GameWorld;
 
 public abstract class Entity {
 
@@ -26,7 +27,7 @@ public abstract class Entity {
         this.collidable = collidable;
     }
 
-    public abstract void render();
+    public abstract void render(GameWorld world);
 
     public float getTileX() {
         return tileX;

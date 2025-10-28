@@ -3,6 +3,8 @@ package com.mathochist.mazegame.Entities.NPCs;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mathochist.mazegame.Entities.MapEntity;
+import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.World.GameWorld;
 
 public class Librarian extends MapEntity implements INPC {
 
@@ -11,23 +13,28 @@ public class Librarian extends MapEntity implements INPC {
     }
 
     @Override
-    public void render() {
+    public void render(GameWorld world) {
 
     }
 
     @Override
-    public void renderPrompt() {
+    public void renderPrompt(GameWorld world) {
 
     }
 
     @Override
-    public void renderSpeech(String text) {
+    public void renderSpeech(String text, GameWorld world) {
 
     }
 
     @Override
-    public void onPromptActivate() {
+    public void onPromptActivate(GameWorld world) {
 
     }
 
+    @Override
+    public boolean onInteract(Player p, GameWorld world) {
+        System.out.println("The librarian says: 'Shhh! This is a library!'");
+        return true;
+    }
 }

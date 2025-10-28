@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mathochist.mazegame.Movement.KeyBinds;
 import com.mathochist.mazegame.Movement.KeyBuffer;
 import com.mathochist.mazegame.World.GameWorld;
 
@@ -30,9 +31,10 @@ public class Player {
     private final OrthographicCamera camera;
     private final GameWorld world;
 
-    public final static float MOVE_SPEED = 1000; // pixels per second
+    public final static float MOVE_SPEED = 300; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
+    public final static float INTERACTION_RANGE = 3; // tiles
 
     public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, float startX, float startY) {
 
@@ -127,11 +129,29 @@ public class Player {
 
         float delta_time = Gdx.graphics.getDeltaTime();
         keyBuffer.updateCameraMovementFromKeys();
+
+        // base move speed buffer
+        int moveSpeed = (int) MOVE_SPEED;
+
+        // check extra keys
+        if (keyBuffer.isKeyPressed(KeyBinds.SPRINT)) {
+            // sprinting logic
+            moveSpeed += 300;
+        }
+        if (keyBuffer.isKeyPressed(KeyBinds.INTERACT)) {
+            // interaction logic
+            world.triggerInteractionByPixel(x, y, INTERACTION_RANGE, this);
+        }
+        if (keyBuffer.isKeyPressed(KeyBinds.ESCAPE_GAME)) {
+            // escape logic
+            Gdx.app.exit();
+        }
+
         float[] move = keyBuffer.getCameraMove();
 
         // Calculate new position and basic collision detection
-        float deltaX = move[0] * delta_time * MOVE_SPEED;
-        float deltaY = move[1] * delta_time * MOVE_SPEED;
+        float deltaX = move[0] * delta_time * moveSpeed;
+        float deltaY = move[1] * delta_time * moveSpeed;
 
         // Use player's position for collision, not camera
         // System.out.println("Player X: " + (x + SPRITE_WIDTH / 2f) + " Y: " + (y + SPRITE_HEIGHT / 2f));
@@ -150,7 +170,7 @@ public class Player {
         }
 
         if (move[0] != 0 || move[1] != 0) {
-            camera.translate(deltaX, deltaY);
+            camera.translate(deltaX, deltaY); // translate camera not player
             camera.update();
             stateTime += game_delta;
             // Choose correct frame
@@ -171,6 +191,7 @@ public class Player {
 
         keyBuffer.clear();
 
+        // Update player position based on camera
         this.x = camera.position.x - SPRITE_WIDTH / 2f;
         this.y = camera.position.y - SPRITE_HEIGHT / 2f;
 

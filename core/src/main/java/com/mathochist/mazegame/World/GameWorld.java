@@ -155,7 +155,7 @@ public class GameWorld {
         // Draw map entities
         for (MapEntity entity : mapEntities) {
             if (entity != null) {
-                entity.render();
+                entity.render(this);
             }
         }
         screenBatch.end();
@@ -201,7 +201,7 @@ public class GameWorld {
 
     }
 
-    // Debug function TODO: REMOVE IN RELEASE
+    // Debug function TODO: REMOVE IN RELEASE PLEASEEEEEEE
     public void render_collision_layer(Player p) {
         float[] playerTilePos = this.pixelCoordsToTileIndex(p.getX(), p.getY());
         boolean[] collisionLayer = this.getCollisionLayer(p.getX(), p.getY());
@@ -251,6 +251,15 @@ public class GameWorld {
         shapeRenderer.end();
     }
 
+    /**
+     * Get the collision layer around the player based on their pixel coordinates.
+     * <br>
+     * <b>Note:</b> This can be used for other objects, not just the player. Slightly misnamed for convenience.
+     *
+     * @param playerXPixels the player's x coordinate in pixels
+     * @param playerYPixels the player's y coordinate in pixels
+     * @return a boolean array representing collisions in the order: above, below, left, right
+     */
     public boolean[] getCollisionLayer(float playerXPixels, float playerYPixels) {
         // Adjust playerYPixels to account for viewport height changes (because the viewport scales height during resizing)
         float[] playerTilePos = this.pixelCoordsToTileIndex(playerXPixels, playerYPixels + deltaViewportHeight);
@@ -286,6 +295,9 @@ public class GameWorld {
         boolean[] collisionLayer = new boolean[]{false, false, false, false}; // above, below, left, right
 
         for (MapEntity entity : mapEntities) {
+            if (entity == null) {
+                continue;
+            }
             if (!entity.isCollidable()) {
                 continue;
             }
@@ -337,6 +349,13 @@ public class GameWorld {
         textureAtlas.dispose();
     }
 
+    /**
+     * Convert pixel coordinates to tile indices.
+     *
+     * @param pixelCoordX the x coordinate in pixels
+     * @param pixelCoordY the y coordinate in pixels
+     * @return an array containing the x and y coordinates in tile units
+     */
     public float[] pixelCoordsToTileIndex(float pixelCoordX, float pixelCoordY) {
         float tileX = ((pixelCoordX) / currentMap.getTileWidth());
         float tileY = ((Gdx.graphics.getHeight() - pixelCoordY - tileDrawYOffset) / currentMap.getTileHeight());
@@ -348,33 +367,79 @@ public class GameWorld {
         return java.util.Arrays.stream(currentMap.getCollisionTiles()).anyMatch(tile -> tile == tileIndex);
     }
 
+    /**
+     * Get the pixel bbox of a tile given its tile coordinates.
+     *
+     * @param tileX the x coordinate in tile units
+     * @param tileY the y coordinate in tile units
+     * @return an array containing the x, y, width, and height of the tile in pixels
+     */
     public float[] getPixelBoundsOfTile(int tileX, int tileY) {
         float pixelX = tileX * currentMap.getTileWidth();
         float pixelY = tileY * currentMap.getTileHeight();
         return new float[]{pixelX, pixelY, currentMap.getTileWidth(), currentMap.getTileHeight()};
     }
 
+    /**
+     * Get the spawn point of the current map in pixel coordinates, adjusting for viewport height changes.
+     *
+     * @return an array containing the x and y coordinates of the spawn point in pixels
+     */
     public int[] getSpawnPointPixels() {
         int x = currentMap.getSpawnX() * currentMap.getTileWidth();
         int y = Gdx.graphics.getHeight() - (currentMap.getSpawnY() * currentMap.getTileHeight() + tileDrawYOffset);
         return new int[]{x, (int) (y - deltaViewportHeight)};
     }
 
+    /**
+     * Convert tile coordinates to pixel coordinates, adjusting for viewport height changes.
+     * <br>
+     * <b>Note:</b> This returns float for increased precision when dealing with entities that may not be
+     * aligned to the tile grid. for tile-aligned positions, consider using getPixelBoundsOfTile instead.
+     * or take the floor/ceil of the returned values. (See collision detection for an example of this)
+     *
+     * @param tileX the x coordinate in tile units
+     * @param tileY the y coordinate in tile units
+     * @return an array containing the x and y coordinates in pixels
+     */
     public float[] getPixels(float tileX, float tileY) {
         float x = tileX * currentMap.getTileWidth();
         float y = Gdx.graphics.getHeight() - (tileY * currentMap.getTileHeight() + tileDrawYOffset);
         return new float[]{x, y - deltaViewportHeight};
     }
 
+    /**
+     * Scale the world based on viewport height changes. (Scales collision layers and entity positions)<br>
+     * <b>Only used by BaseGameScreen, do not call unless you know what you are doing</b>
+     *
+     * @param oldViewportHeight the previous height of the viewport
+     * @param newViewportHeight the new height of the viewport
+     */
     public void scaleWorld(float oldViewportHeight, float newViewportHeight) {
-        System.out.println(deltaViewportHeight);
         deltaViewportHeight = newViewportHeight - oldViewportHeight;
     }
 
+    /**
+     * Calculate the Euclidean distance between two points in tile coordinates.
+     *
+     * @param tileX1 the x coordinate of the first point in tile units
+     * @param tileY1 the y coordinate of the first point in tile units
+     * @param tileX2 the x coordinate of the second point in tile units
+     * @param tileY2 the y coordinate of the second point in tile units
+     * @return the Euclidean distance between the two points
+     */
     public static double getTileDistance(float tileX1, float tileY1, float tileX2, float tileY2) {
         return Math.sqrt((tileX1 - tileX2) * (tileX1 - tileX2) + (tileY1 - tileY2) * (tileY1 - tileY2));
     }
 
+    /**
+     * Calculate the distance from a point to the nearest edge of an entity's bounding box.
+     *
+     * @param entityBBox the bounding box of the entity in tile coordinates [x, y, width, height]
+     * @param tileX1 the x coordinate of the point in tile units
+     * @param tileY1 the y coordinate of the point in tile units
+     * @return the distance from the point to the nearest edge of the bounding box
+     */
     public static double distanceFromBBox(float[] entityBBox, float tileX1, float tileY1) {
         float rx_min = entityBBox[0];
         float rx_max = entityBBox[0] + entityBBox[2];
@@ -390,6 +455,14 @@ public class GameWorld {
         return Math.sqrt(dx*dx + dy*dy);
     }
 
+    /**
+     * Get all map entities within a certain radius of the given tile coordinates.
+     *
+     * @param tileX the x coordinate in tile units
+     * @param tileY the y coordinate in tile units
+     * @param radius the radius within which to check for entities (in tile units)
+     * @return an array of MapEntity objects within the specified radius
+     */
     public MapEntity[] getMapEntitiesInRadius(float tileX, float tileY, double radius) {
         ArrayList<MapEntity> array_output = new ArrayList<>();
         for (MapEntity entity : mapEntities) {
@@ -418,6 +491,39 @@ public class GameWorld {
             targetExit.getTargetY()
         );
         game.setScreen(newScreen);
+    }
+
+    /**
+     * Trigger interaction with map entities within a certain radius of the given pixel coordinates.
+     *
+     * @param pixelX the x coordinate in pixels
+     * @param pixelY the y coordinate in pixels
+     * @param tileRadius the radius within which to check for interactions (in tile units)
+     * @param p the player triggering the interaction
+     * @return true if an interaction occurred, false otherwise
+     */
+    public boolean triggerInteractionByPixel(float pixelX, float pixelY, double tileRadius, Player p) {
+        float[] tileCoords = this.pixelCoordsToTileIndex(pixelX, pixelY);
+        return triggerInteraction(tileCoords[0], tileCoords[1], tileRadius, p);
+    }
+
+    /**
+     * Trigger interaction with map entities within a certain radius of the given tile coordinates.
+     *
+     * @param tileX the x coordinate in tile units
+     * @param tileY the y coordinate in tile units
+     * @param radius the radius within which to check for interactions (in tile units)
+     * @param p the player triggering the interaction
+     * @return true if an interaction occurred, false otherwise
+     */
+    public boolean triggerInteraction(float tileX, float tileY, double radius, Player p) {
+        MapEntity[] nearbyEntities = this.getMapEntitiesInRadius(tileX, tileY, radius);
+        for (MapEntity entity : nearbyEntities) {
+            if (entity.onInteract(p, this)) {
+                return true; // interaction occurred
+            }
+        }
+        return false; // no interaction occurred
     }
 
 

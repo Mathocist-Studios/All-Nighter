@@ -39,7 +39,7 @@ public interface INPC {
     /**
      * Handles the end of interaction with the player.
      * <br>
-     * <b>*Called every frame the player is out of range*</b>
+     * <b>*Called every time the player attempts to interact but entity out of range*</b>
      *
      * @param p     The player ending interaction with the NPC.
      * @param world The game world context.

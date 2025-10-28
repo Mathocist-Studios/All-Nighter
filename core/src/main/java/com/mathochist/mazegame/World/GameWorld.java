@@ -15,6 +15,7 @@ import com.mathochist.mazegame.Screens.Game.BaseGameScreen;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Represents the game world, including the map, tiles, and entities.

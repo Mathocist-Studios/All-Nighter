@@ -12,6 +12,10 @@ import com.mathochist.mazegame.Movement.KeyBuffer;
 import com.mathochist.mazegame.World.GameWorld;
 
 
+/**
+ * Player entity controlled by user input.
+ * Handles movement, animation, and interaction.
+ */
 // TODO: Refactor to extend Entity class
 public class Player {
     private Texture spriteSheet;

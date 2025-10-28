@@ -28,11 +28,6 @@ public class Librarian extends MapEntity implements INPC {
     }
 
     @Override
-    public void onPromptActivate(GameWorld world) {
-
-    }
-
-    @Override
     public boolean onInteract(Player p, GameWorld world) {
         System.out.println("The librarian says: 'Shhh! This is a library!'");
         return true;

@@ -11,6 +11,10 @@ import com.mathochist.mazegame.Screens.DefaultScreen;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
+/**
+ * Base class for all game screens, providing common functionality such as camera setup,
+ * viewport management, HUD integration, and player handling.
+ */
 public abstract class BaseGameScreen extends DefaultScreen {
 
     private OrthographicCamera camera;

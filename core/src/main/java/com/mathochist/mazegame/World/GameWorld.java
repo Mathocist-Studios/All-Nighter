@@ -16,6 +16,10 @@ import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the game world, including the map, tiles, and entities.
+ * Handles rendering and collision detection.
+ */
 public class GameWorld {
 
     private final Main game;

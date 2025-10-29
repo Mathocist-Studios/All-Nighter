@@ -58,6 +58,11 @@
       }
     }
   },
+  "shader": {
+      "name": "Vingette Shader",
+      "vertex": "shaders/vingette_vertex.glsl",
+      "fragment": "shaders/vingette_fragment.glsl"
+  },
   "tiles": [
     "floor",
     "wall",

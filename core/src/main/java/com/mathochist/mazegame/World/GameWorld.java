@@ -4,14 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.Game.BaseGameScreen;
+import com.mathochist.mazegame.Screens.Shader;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
@@ -28,6 +33,8 @@ public class GameWorld {
     private final TextureAtlas textureAtlas;
 
     private final SpriteBatch screenBatch;
+    private Shader shader;
+    private ShaderProgram shaderProgram;
 
     private final Tile[][] mapArray;
     private final MapEntity[] mapEntities;
@@ -138,6 +145,12 @@ public class GameWorld {
             System.out.println("Total entities loaded: " + mapEntities.length);
 
         }
+
+        shader = this.currentMap.getMapShader();
+        if (shader != null) {
+            this.setShader(shader);
+        }
+
     }
 
     public GameMap getMap() {
@@ -148,7 +161,31 @@ public class GameWorld {
         return textureAtlas;
     }
 
-    public void render() {
+    public void setShader(Shader shader) {
+        ShaderProgram.pedantic = false;
+
+        this.shader = shader;
+        this.shaderProgram = new ShaderProgram(shader.getVertexShaderCode(), shader.getFragmentShaderCode());
+        screenBatch.setShader(this.shaderProgram);
+        System.out.println(shaderProgram.getLog());
+    }
+
+    public ShaderProgram getShaderProgram() {
+        return shaderProgram;
+    }
+
+    public void render(FitViewport viewport) {
+        // If a custom shader program is active for the batch, set the screen resolution uniform
+        if (shaderProgram != null && shaderProgram.isCompiled()) {
+            shaderProgram.setUniformf("u_viewport",
+                viewport.getScreenX(),
+                viewport.getScreenY(),
+                viewport.getScreenWidth(),
+                viewport.getScreenHeight()
+            );
+
+        }
+
         // Rendering logic for the game world goes here
         screenBatch.begin();
         // Draw tiles
@@ -352,6 +389,9 @@ public class GameWorld {
 
     public void dispose() {
         textureAtlas.dispose();
+        if (shaderProgram != null) {
+            shaderProgram.dispose();
+        }
     }
 
     /**

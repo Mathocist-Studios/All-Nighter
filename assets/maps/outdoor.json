@@ -50,6 +50,11 @@
       }
     }
   },
+  "shader": {
+    "name": "default",
+    "vertex": "",
+    "fragment": ""
+  },
   "tiles": [
     "floor",
     "wall",

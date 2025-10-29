@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mathochist.mazegame.Main;
 
 public class Hud {
 
@@ -11,11 +12,11 @@ public class Hud {
     private SpriteBatch hudBatch;
     private BitmapFont font;
 
-    public Hud() {
+    public Hud(Main game) {
 
         hudBatch = new SpriteBatch();
-        hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        hudCamera.position.set(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() / 2.0f, 1.0f);
+        hudCamera = new OrthographicCamera(game.WIDTH, game.HEIGHT);
+        hudCamera.position.set(game.WIDTH / 2.0f, game.HEIGHT / 2.0f, 1.0f);
 
         font = new BitmapFont(Gdx.files.internal("fonts/game_font.fnt"), Gdx.files.internal("fonts/game_font.png"), false);
         font.getData().setScale(0.5f);

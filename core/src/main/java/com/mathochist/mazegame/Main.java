@@ -31,6 +31,9 @@ https://mathochiststudios.com/
  */
 public class Main extends Game {
 
+    public int WIDTH = 0;
+    public int HEIGHT = 0;
+
     /**
      * Initializes the game by setting the initial screen to the TitleScreen.
      */
@@ -40,9 +43,9 @@ public class Main extends Game {
         Gdx.graphics.setTitle("All Nighter");
 
         // Set aspect ratio to 16:9
-        int width = Gdx.graphics.getWidth() * 2;
-        int height = (width * 9) / 16;
-        Gdx.graphics.setWindowedMode(width, height);
+        WIDTH = Gdx.graphics.getWidth() * 2;
+        HEIGHT = (WIDTH * 9) / 16;
+        Gdx.graphics.setWindowedMode(WIDTH, HEIGHT);
 
         // Set the initial screen to the title screen
         setScreen(new TitleScreen(this));

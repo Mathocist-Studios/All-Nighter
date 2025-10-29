@@ -69,7 +69,7 @@ public class Utils {
      * @throws IllegalArgumentException if the input array is null.
      */
     public static <T> T[] complementOfSubArray(T[] array, T[] subArray) {
-        if (array == null) throw new IllegalArgumentException("array must not be null");
+        if (array == null) throw new IllegalArgumentException("complementOfSubArray: Array must not be null");
         if (subArray == null || subArray.length == 0) return Arrays.copyOf(array, array.length);
 
         Set<T> exclude = new HashSet<>(Arrays.asList(subArray));

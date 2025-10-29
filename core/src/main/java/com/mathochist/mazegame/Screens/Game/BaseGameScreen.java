@@ -21,8 +21,8 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private FitViewport viewport;
     private Hud gameHud;
 
-    private static float VIEWPORT_WIDTH = Gdx.graphics.getWidth();
-    private static float VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
+    private float VIEWPORT_WIDTH = 0;
+    private float VIEWPORT_HEIGHT = 0;
 
     private Player player;
     private SpriteBatch screenBatch;
@@ -34,8 +34,11 @@ public abstract class BaseGameScreen extends DefaultScreen {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         Gdx.input.setInputProcessor(this);
 
+        VIEWPORT_WIDTH = game.WIDTH;
+        VIEWPORT_HEIGHT = game.HEIGHT;
+
         // Camera setup
-        gameHud = new Hud();
+        gameHud = new Hud(game);
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Center camera
         camera.update();
@@ -51,8 +54,11 @@ public abstract class BaseGameScreen extends DefaultScreen {
         Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
         Gdx.input.setInputProcessor(this);
 
+        VIEWPORT_WIDTH = game.WIDTH;
+        VIEWPORT_HEIGHT = game.HEIGHT;
+
         // Camera setup
-        gameHud = new Hud();
+        gameHud = new Hud(game);
         camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         camera.position.set(VIEWPORT_WIDTH / 2f, VIEWPORT_HEIGHT / 2f, 0); // Center camera
         camera.update();
@@ -114,7 +120,7 @@ public abstract class BaseGameScreen extends DefaultScreen {
         this.world = world;
 
         // Ensure world scaling for collisions
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        resize((int) VIEWPORT_WIDTH, (int) VIEWPORT_HEIGHT);
     }
 
     public GameWorld getWorld() {

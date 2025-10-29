@@ -54,7 +54,7 @@ public class OutdoorScreen extends BaseGameScreen {
         super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
 
         // Draw game elements here
-        super.getWorld().render();
+        super.getWorld().render(super.getViewport());
         super.getGameHud().render(delta);
         super.getPlayer().update(delta);
     }

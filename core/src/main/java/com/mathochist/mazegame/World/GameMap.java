@@ -6,6 +6,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.mathochist.mazegame.Screens.Shader;
+
+import java.util.Objects;
 
 public class GameMap {
 
@@ -114,6 +117,16 @@ public class GameMap {
             exitTiles[j] = new ExitTile(tileX, tileY, targetMap, targetX, targetY);
         }
         return exitTiles;
+    }
+
+    public Shader getMapShader() {
+        JsonValue shaderData = mapData.get("shader");
+        if (Objects.equals(shaderData.getString("name"), "default")) {
+            return null;
+        }
+        FileHandle vertexFile = Gdx.files.internal(shaderData.getString("vertex"));
+        FileHandle fragmentFile = Gdx.files.internal(shaderData.getString("fragment"));
+        return new Shader(vertexFile, fragmentFile);
     }
 
 }

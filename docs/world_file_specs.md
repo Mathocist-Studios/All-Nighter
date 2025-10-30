@@ -21,9 +21,8 @@ You may refer to example world files in the /assets/maps/ directory.
 ## Meta Data:
 World files contain a header of metadata that defines everything from the author to the entity placement rules.
 All metadata fields are stored in the metadata object in the json file.
-Below is a breakdown of all the metadata fields found in world files:
+Below is a breakdown of all the `metadata` fields found in world files:
 All fields listed are required.
-All files should be in the `metadata` object in the json file.
 
 - **name**: The name of the world.
   - Type: string

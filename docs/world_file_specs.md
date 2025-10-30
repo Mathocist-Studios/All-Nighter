@@ -133,6 +133,8 @@ All shader fields are stored in the `shader` object in the json file.
 - **name**: The name of the shader to be applied to the map.
   - Type: string
   - Example: "night_shader"
+  - Keywords:
+    - *default*: No shader applied to the map. You may leave the other shader fields blank.
   - <span style="color:grey;">Note: This is not technically essential yet but a shader manager is planned where shaders can be referenced by name</span>
 - **vertex**: The file path to the vertex shader code.
   - Type: string

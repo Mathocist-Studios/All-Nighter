@@ -1,0 +1,46 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Entity {
+  - batch: SpriteBatch
+  - collidable: boolean
+  - regionName: String
+  - tileY: float
+  - width: float
+  - tileX: float
+  - height: float
+  - atlas: TextureAtlas
+  + getTileY(): float
+  + getWidth(): float
+  + isCollidable(): boolean
+  + render(GameWorld): void
+  + getHeight(): float
+  + getTileX(): float
+}
+interface INPC << interface >> {
+  + render(GameWorld): void
+  + onInteractEnd(Player, GameWorld): void
+  + renderSpeech(String, GameWorld): void
+  + renderPrompt(GameWorld): void
+  + onInteract(Player, GameWorld): boolean
+}
+class Librarian {
+  + render(GameWorld): void
+  + renderSpeech(String, GameWorld): void
+  + onInteract(Player, GameWorld): boolean
+  + renderPrompt(GameWorld): void
+  + onInteractEnd(Player, GameWorld): void
+}
+class MapEntity {
+  + getBBox(): float[]
+  + onInteract(Player, GameWorld): boolean
+  + onInteractEnd(Player, GameWorld): void
+}
+
+Librarian  -[#008200,dashed]-^  INPC      
+Librarian  -[#000082,plain]-^  MapEntity 
+MapEntity  -[#000082,plain]-^  Entity    
+@enduml

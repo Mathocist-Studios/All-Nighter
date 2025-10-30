@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,7 +18,6 @@ import com.mathochist.mazegame.Screens.Shader;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Represents the game world, including the map, tiles, and entities.
@@ -41,7 +38,7 @@ public class GameWorld {
 
     private final ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    private final int tileDrawYOffset = 48; // Adjust based on HUD height or other UI elements
+    public int tileDrawYOffset = 0; // Adjust based on HUD height or other UI elements
 
     // For resizing
     private float deltaViewportHeight;
@@ -350,12 +347,12 @@ public class GameWorld {
             // bbox: x, y, width, height in tile coords
             // playerTilePos: x, y in tile coords (center of player)
             // each direction 'or's with any previous collision detected
-            // we check a direction by seeing if the player's tile position plus/minus 1 in that direction
-            // would still be within the entity's bbox
-            // we 'and' that with 3 parameters to prevent collisions to either side of the collision
+            // we check a direction by seeing if the player's tile position plus 1 in that direction
+            // would be within the entity's bbox
+            // we 'and' that result with 3 parameters to prevent collisions to either side of the collision
             // edge, and on the other side of the entity.
             // These are rounded so we have 0.5 error s.t. we do not get collisions when up against the
-            // object.
+            // object on a different axis.
 
             // above
             collisionLayer[0] = collisionLayer[0] || Math.floor(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
@@ -407,6 +404,7 @@ public class GameWorld {
         return new float[]{tileX, tileY};
     }
 
+
     private boolean isTileCollidable(int tileX, int tileY) {
         int tileIndex = currentMap.getMapMatrix()[tileY][tileX];
         return java.util.Arrays.stream(currentMap.getCollisionTiles()).anyMatch(tile -> tile == tileIndex);
@@ -431,9 +429,8 @@ public class GameWorld {
      * @return an array containing the x and y coordinates of the spawn point in pixels
      */
     public int[] getSpawnPointPixels() {
-        int x = currentMap.getSpawnX() * currentMap.getTileWidth();
-        int y = Gdx.graphics.getHeight() - (currentMap.getSpawnY() * currentMap.getTileHeight() + tileDrawYOffset);
-        return new int[]{x, (int) (y - deltaViewportHeight)};
+        float[] spawnPixelCoords = this.getPixels(currentMap.getSpawnX(), currentMap.getSpawnY());
+        return new int[]{(int) spawnPixelCoords[0], (int) spawnPixelCoords[1]};
     }
 
     /**
@@ -551,7 +548,7 @@ public class GameWorld {
      * @return true if an interaction occurred, false otherwise
      */
     public boolean triggerInteractionByPixel(float pixelX, float pixelY, double tileRadius, Player p) {
-        float[] tileCoords = this.pixelCoordsToTileIndex(pixelX, pixelY);
+        float[] tileCoords = this.pixelCoordsToTileIndex(pixelX, pixelY + deltaViewportHeight);
         return triggerInteraction(tileCoords[0], tileCoords[1], tileRadius, p);
     }
 

@@ -6,17 +6,14 @@ import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.World.GameWorld;
 
-import java.util.Arrays;
-
 public class LibraryScreen extends BaseGameScreen {
 
     public LibraryScreen(Main game) {
         super(game);
         super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         int[] spawnPoint = super.getWorld().getSpawnPointPixels();
-        System.out.println(Arrays.toString(spawnPoint));
-
         super.getCamera().position.set(spawnPoint[0], spawnPoint[1], 0);
         super.getCamera().update();
 
@@ -27,13 +24,17 @@ public class LibraryScreen extends BaseGameScreen {
         super(game);
         super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
 
+        // Adjust for different screen resizes because of viewport
+        // I hate viewports
+        super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
+        /// ///
+
         float[] spawnPixels = super.getWorld().getPixels(spawnX, spawnY);
-        super.getCamera().position.set(spawnX, spawnY, 0);
+        super.getCamera().position.set(spawnPixels[0], spawnPixels[1], 0);
         super.getCamera().update();
 
         super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPixels[0], spawnPixels[1]));
-
-        super.getPlayer().setPosition(spawnPixels[0], spawnPixels[1]); // reference OutdoorScreen.java for info
     }
 
     @Override

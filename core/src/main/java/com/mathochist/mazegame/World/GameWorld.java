@@ -2,6 +2,7 @@ package com.mathochist.mazegame.World;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -33,6 +34,8 @@ public class GameWorld {
     private Shader shader;
     private ShaderProgram shaderProgram;
 
+    private Music backgroundMusic;
+
     private final Tile[][] mapArray;
     private final MapEntity[] mapEntities;
 
@@ -51,6 +54,16 @@ public class GameWorld {
         this.game = game;
         screenBatch = gameSpriteBatch;
         this.currentMap = new GameMap(mapFile);
+
+        // setup music
+        if (backgroundMusic == null) { // only set music if not continuing from previous world
+            backgroundMusic = this.currentMap.getBackgroundMusic();
+            if (backgroundMusic != null) {
+                backgroundMusic.setLooping(true);
+                backgroundMusic.setVolume(0.5f);
+                backgroundMusic.play();
+            }
+        }
 
         // textures = new Texture[currentMap.getTilesetRegionNames().length];
         // textures[0] = new Texture(Gdx.files.internal("placeholder.png"));
@@ -148,6 +161,13 @@ public class GameWorld {
             this.setShader(shader);
         }
 
+    }
+
+    public void setBackgroundMusic(Music music) {
+        if (backgroundMusic != null) {
+            backgroundMusic.stop();
+        }
+        backgroundMusic = music;
     }
 
     public GameMap getMap() {
@@ -535,6 +555,18 @@ public class GameWorld {
             targetExit.getTargetX(),
             targetExit.getTargetY()
         );
+
+        // handle music transition
+        if (!newScreen.getWorld().getMap().getBackgroundMusicFile().equals("continue")) {
+            // stop current music
+            if (this.backgroundMusic != null) {
+                this.backgroundMusic.stop();
+            }
+        } else {
+            // continue current music
+            newScreen.getWorld().setBackgroundMusic(this.backgroundMusic);
+        }
+
         game.setScreen(newScreen);
     }
 

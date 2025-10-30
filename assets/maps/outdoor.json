@@ -13,7 +13,7 @@
       "x": 20,
       "y": 10
     },
-    "background_music": "library/library_theme.mp3",
+    "background_music": "continue",
     "texture_atlas": "maps/library/library.atlas",
     "exit_points": [
       {

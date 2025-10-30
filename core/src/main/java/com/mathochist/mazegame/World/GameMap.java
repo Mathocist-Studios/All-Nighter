@@ -70,7 +70,14 @@ public class GameMap {
 
     public Music getBackgroundMusic() {
         String musicFile = mapData.get("metadata").getString("background_music");
+        if (musicFile.equals("none") || musicFile.isEmpty() || musicFile.equals("continue")) {
+            return null;
+        }
         return Gdx.audio.newMusic(Gdx.files.internal(musicFile));
+    }
+
+    public String getBackgroundMusicFile() {
+        return mapData.get("metadata").getString("background_music");
     }
 
     public String[] getTilesetRegionNames() {

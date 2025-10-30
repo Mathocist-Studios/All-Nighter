@@ -201,6 +201,9 @@ public class Player {
 
         this.render(game_delta);
 
+        // TODO: Remove debug render call
+        //  Used to visualize collision layer
+        //  Remove or toggle off in production
         this.world.render_collision_layer(this);
     }
 

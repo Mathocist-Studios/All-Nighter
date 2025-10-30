@@ -54,6 +54,10 @@ public class LibraryScreen extends BaseGameScreen {
         super.getWorld().render(super.getViewport());
         super.getGameHud().render(delta);
         super.getPlayer().update(delta);
+
+        if (super.getPlayer().isSprinting()) {
+            super.getGameHud().render_speech_text("Librarian: Oi, stop running!", 1000);
+        }
     }
 
     @Override

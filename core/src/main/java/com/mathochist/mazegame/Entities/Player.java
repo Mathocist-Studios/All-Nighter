@@ -35,6 +35,8 @@ public class Player {
     private final OrthographicCamera camera;
     private final GameWorld world;
 
+    private boolean is_sprinting = false;
+
     public final static float MOVE_SPEED = 300; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
@@ -141,6 +143,9 @@ public class Player {
         if (keyBuffer.isKeyPressed(KeyBinds.SPRINT)) {
             // sprinting logic
             moveSpeed += 300;
+            is_sprinting = true;
+        } else {
+            is_sprinting = false;
         }
         if (keyBuffer.isKeyPressed(KeyBinds.INTERACT)) {
             // interaction logic
@@ -234,6 +239,10 @@ public class Player {
     public void setPosition(float newX, float newY) {
         camera.position.set(newX, newY, 0); // Center camera
         camera.update();
+    }
+
+    public boolean isSprinting() {
+        return is_sprinting;
     }
 
 }

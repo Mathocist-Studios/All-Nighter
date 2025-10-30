@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
 public class Bookcase extends MapEntity {
@@ -18,7 +19,7 @@ public class Bookcase extends MapEntity {
     }
 
     @Override
-    public boolean onInteract(Player p, GameWorld world) {
+    public boolean onInteract(Player p, GameWorld world, Hud worldHud) {
         return false; // Bookcases are not interactable
     }
 

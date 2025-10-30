@@ -56,7 +56,7 @@ public class LibraryScreen extends BaseGameScreen {
         super.getPlayer().update(delta);
 
         if (super.getPlayer().isSprinting()) {
-            super.getGameHud().render_speech_text("Librarian: Oi, stop running!", 1000);
+            super.getGameHud().getSpeechBubbleManager().createSpeechBubble("Librarian: Oi, stop running!", 1000);
         }
     }
 

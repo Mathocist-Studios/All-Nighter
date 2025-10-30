@@ -601,7 +601,7 @@ public class GameWorld {
             entity.onInteractEnd(p, this);
         }
         for (MapEntity entity : nearbyEntities) {
-            if (entity.onInteract(p, this)) {
+            if (entity.onInteract(p, this, ((BaseGameScreen) game.getScreen()).getGameHud())) {
                 return true; // interaction occurred
             }
         }

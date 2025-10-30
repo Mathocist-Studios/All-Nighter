@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
 /**
@@ -36,11 +37,12 @@ public abstract class MapEntity extends Entity {
      *
      * @param p The player interacting with the entity.
      * @param world The game world context.
+     * @param worldHud The HUD of the game world.
      * @return boolean True if the interaction was successful, false otherwise.
      * <br>
      * <b>*return false if you do not need interactions on your entity e.g. a bookcase*</b>
      */
-    public abstract boolean onInteract(Player p, GameWorld world);
+    public abstract boolean onInteract(Player p, GameWorld world, Hud worldHud);
 
     /**
      * Called when a player ends interaction with this entity.

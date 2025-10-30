@@ -1,6 +1,6 @@
 # World File Specifications
 
-File written as of 30 Oct 2025 - commit ea8ce6b
+File written as of 28 Oct 2025 - commit ea8ce6b
 
 <hr />
 

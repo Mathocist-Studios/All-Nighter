@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mathochist.mazegame.Movement.KeyBinds;
 import com.mathochist.mazegame.Movement.KeyBuffer;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
+import com.mathochist.mazegame.Rendering.RenderObject;
 import com.mathochist.mazegame.World.GameWorld;
 
 
@@ -84,7 +86,7 @@ public class Player {
         keyBuffer = new KeyBuffer();
     }
 
-    public void update(float game_delta) {
+    public void update(float game_delta, RenderBuffer renderBuffer) {
 //        moving=false;
 //        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 //            x -= speed * game_delta;
@@ -204,7 +206,7 @@ public class Player {
         this.x = camera.position.x - SPRITE_WIDTH / 2f;
         this.y = camera.position.y - SPRITE_HEIGHT / 2f;
 
-        this.render(game_delta);
+        this.render(game_delta, renderBuffer);
 
         // TODO: Remove debug render call
         //  Used to visualize collision layer
@@ -212,12 +214,20 @@ public class Player {
         this.world.render_collision_layer(this);
     }
 
-    public void render(float delta) {
+    public void render(float delta, RenderBuffer renderBuffer) {
         playerSprite.setPosition(x, y);
 
-        screenBatch.begin();
-        playerSprite.draw(screenBatch);
-        screenBatch.end();
+//        screenBatch.begin();
+//        playerSprite.draw(screenBatch);
+//        screenBatch.end();
+        renderBuffer.addToBuffer(
+            new RenderObject(
+                playerSprite,
+                screenBatch,
+                (int) Math.ceil(world.pixelCoordsToTileIndex(x, y)[1]) // use y for z-index sorting
+            )
+        );
+
     }
 
     public void dispose() {

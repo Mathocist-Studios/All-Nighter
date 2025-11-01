@@ -58,7 +58,6 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         Gdx.app.exit();
-        System.exit(0);
     }
 
 }

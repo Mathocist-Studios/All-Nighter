@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.World.GameWorld;
 
 public abstract class Entity {
@@ -27,7 +28,13 @@ public abstract class Entity {
         this.collidable = collidable;
     }
 
-    public abstract void render(GameWorld world);
+    /**
+     * Renders the entity onto the provided RenderBuffer within the given GameWorld context.
+     *
+     * @param world The GameWorld context in which the entity exists.
+     * @param renderBuffer The RenderBuffer to which the entity's render data will be added.
+     */
+    public abstract void render(GameWorld world, RenderBuffer renderBuffer);
 
     public float getTileX() {
         return tileX;

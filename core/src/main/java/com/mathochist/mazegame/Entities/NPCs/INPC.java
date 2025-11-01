@@ -1,6 +1,7 @@
 package com.mathochist.mazegame.Entities.NPCs;
 
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
@@ -10,8 +11,9 @@ public interface INPC {
      * Renders the NPC in the game world.
      *
      * @param world The game world context.
+     * @param renderBuffer The render buffer to draw the NPC onto.
      */
-    void render(GameWorld world);
+    void render(GameWorld world, RenderBuffer renderBuffer);
 
     /**
      * Renders a prompt for interaction with the NPC.

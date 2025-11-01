@@ -14,8 +14,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
+import com.mathochist.mazegame.Rendering.RenderObject;
 import com.mathochist.mazegame.Screens.Game.BaseGameScreen;
-import com.mathochist.mazegame.Screens.Shader;
+import com.mathochist.mazegame.Rendering.Shader;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
@@ -191,7 +193,7 @@ public class GameWorld {
         return shaderProgram;
     }
 
-    public void render(FitViewport viewport) {
+    public void render(FitViewport viewport, RenderBuffer renderBuffer) {
         // If a custom shader program is active for the batch, set the screen resolution uniform
         if (shaderProgram != null && shaderProgram.isCompiled()) {
             shaderProgram.setUniformf("u_viewport",
@@ -204,20 +206,21 @@ public class GameWorld {
         }
 
         // Rendering logic for the game world goes here
-        screenBatch.begin();
+        // screenBatch.begin();
         // Draw tiles
         for (int j = 0; j < currentMap.getMapHeight(); j++) {
             for (int i = 0; i < currentMap.getMapWidth(); i++) {
-                mapArray[j][i].getSprite().draw(screenBatch);
+                renderBuffer.addToBuffer(new RenderObject(mapArray[j][i].getSprite(), screenBatch, j)); // using row index as z-index
+                // mapArray[j][i].getSprite().draw(screenBatch);
             }
         }
         // Draw map entities
         for (MapEntity entity : mapEntities) {
             if (entity != null) {
-                entity.render(this);
+                entity.render(this, renderBuffer);
             }
         }
-        screenBatch.end();
+        // screenBatch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             if (debug) {

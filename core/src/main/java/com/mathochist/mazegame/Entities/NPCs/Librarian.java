@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
@@ -14,7 +15,7 @@ public class Librarian extends MapEntity implements INPC {
     }
 
     @Override
-    public void render(GameWorld world) {
+    public void render(GameWorld world, RenderBuffer buffer) {
 
     }
 

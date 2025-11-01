@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Screens.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.World.GameWorld;
@@ -44,20 +45,30 @@ public class LibraryScreen extends BaseGameScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0f,0f,0f,1.0f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        try {
+            Gdx.gl.glClearColor(0f,0f,0f,1.0f);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        super.getCamera().update();
-        super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
+            super.getCamera().update();
+            super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
 
-        // Draw game elements here
-        super.getWorld().render(super.getViewport());
-        super.getGameHud().render(delta);
-        super.getPlayer().update(delta);
+            // Draw game elements here
+            super.getWorld().render(super.getViewport(), super.getRenderBuffer());
+            super.getPlayer().update(delta, super.getRenderBuffer());
 
-        if (super.getPlayer().isSprinting()) {
-            super.getGameHud().getSpeechBubbleManager().createSpeechBubble("Librarian: Oi, stop running!", 1000);
-        }
+            // dump render buffer to screen
+            for (var obj : super.getRenderBuffer().getBufferOrderedByZIndex()) {
+                obj.render();
+            }
+
+            super.getRenderBuffer().clearBuffer();
+
+            super.getGameHud().render(delta);
+
+            if (super.getPlayer().isSprinting()) {
+                super.getGameHud().getSpeechBubbleManager().createSpeechBubble("Librarian: Oi, stop running!", 1000);
+            }
+        } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
     }
 
     @Override

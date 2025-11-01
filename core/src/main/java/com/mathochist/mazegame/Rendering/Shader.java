@@ -1,4 +1,4 @@
-package com.mathochist.mazegame.Screens;
+package com.mathochist.mazegame.Rendering;
 
 import com.badlogic.gdx.files.FileHandle;
 

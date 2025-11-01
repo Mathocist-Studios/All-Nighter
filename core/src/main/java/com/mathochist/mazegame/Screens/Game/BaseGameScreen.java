@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.Screens.DefaultScreen;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
@@ -28,6 +29,8 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private SpriteBatch screenBatch;
     private GameWorld world;
 
+    private RenderBuffer renderBuffer;
+
     public BaseGameScreen(Main game) {
         super(game);
         // GDX setup
@@ -46,6 +49,9 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
         // Batch setup
         screenBatch = new SpriteBatch();
+
+        // Render buffer setup
+        renderBuffer = new RenderBuffer();
     }
 
     public BaseGameScreen(Main game, Float spawnX, Float spawnY) {
@@ -66,6 +72,9 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
         // Batch setup
         screenBatch = new SpriteBatch();
+
+        // Render buffer setup
+        renderBuffer = new RenderBuffer();
     }
 
     public Player getPlayer() {
@@ -78,6 +87,11 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     @Override
     public abstract void show();
+
+    @Override
+    public void hide() {
+        this.dispose();
+    }
 
     @Override
     public abstract void render(float delta);
@@ -129,6 +143,10 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     public FitViewport getViewport() {
         return viewport;
+    }
+
+    public RenderBuffer getRenderBuffer() {
+        return renderBuffer;
     }
 
 }

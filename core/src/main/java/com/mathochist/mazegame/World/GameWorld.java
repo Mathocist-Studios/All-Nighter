@@ -146,6 +146,7 @@ public class GameWorld {
 
                 // Add entity to mapEntities array
                 // For simplicity, we just add to the first available slot
+                // probably a better way to do this idk and idc
                 for (int k = 0; k < mapEntities.length; k++) {
                     if (mapEntities[k] == null) {
                         mapEntities[k] = entity;

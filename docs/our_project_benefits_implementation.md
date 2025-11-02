@@ -2,7 +2,7 @@
 
 # Our Project Benefits Implementation
 
-File written as of 2 Nov 2025 - commit d3681900
+File written as of 2 Nov 2025 - commit ab28ae38
 
 <hr />
 
@@ -70,4 +70,4 @@ LibGDX is really easy to learn and you'll love it!
 
 <hr /> 
 
-<a href="#world_file_specs">Back to Top</a>
+<a href="#top">Back to Top</a>

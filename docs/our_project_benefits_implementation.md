@@ -19,7 +19,7 @@ Essentially every world can be created with only a JSON file and the relevant ti
 
 <span id="world_file"></span>
 ### World File
-Refer to the [World File Specifications](docs/world_file_specs.md) for a comprehensive breakdown of the world file structure and required fields.
+Refer to the [World File Specifications](world_file_specs.md) for a comprehensive breakdown of the world file structure and required fields.
 
 ### Tile-Entity System
 Our project utilises a tile and entity system that allows for modular world development and easy scalability.

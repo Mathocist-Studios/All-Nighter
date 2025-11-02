@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.World.GameWorld;
 
 public class LibraryScreen extends BaseGameScreen {
@@ -63,11 +64,20 @@ public class LibraryScreen extends BaseGameScreen {
 
             super.getRenderBuffer().clearBuffer();
 
+            super.getWorld().renderDebugLayer();
+
+            // TODO: Remove debug render call
+            //  Used to visualize collision layer
+            //  Remove or toggle off in production
+            super.getWorld().render_collision_layer(super.getPlayer());
+
             super.getGameHud().render(delta);
 
             if (super.getPlayer().isSprinting()) {
-                super.getGameHud().getSpeechBubbleManager().createSpeechBubble("Librarian: Oi, stop running!", 1000);
+                super.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
+                super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Oi, stop running!", 1000);
             }
+
         } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
     }
 

@@ -1,3 +1,5 @@
+<span id="world_file_specs"></span>
+
 # World File Specifications
 
 File written as of 28 Oct 2025 - updated commit ea8ce6b
@@ -196,4 +198,4 @@ Each integer corresponds to an index in the <a href="#tiles">tiles array above</
 
 <hr />
 
-([Back to Top](#))
+<a href="#world_file_specs">Back to Top</a>

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.UI.Speech.SpeechBubbleManager;
 
 public class Hud {
 
@@ -41,6 +42,9 @@ public class Hud {
 
     public void dispose() {
         hudBatch.dispose();
+        small_font.dispose();
+        main_font.dispose();
+        speechBubbleManager.dispose();
     }
 
     public void render(float delta) {

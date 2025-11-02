@@ -222,6 +222,9 @@ public class GameWorld {
         }
         // screenBatch.end();
 
+    }
+
+    public void renderDebugLayer() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F3)) {
             if (debug) {
                 debug=false;
@@ -260,7 +263,6 @@ public class GameWorld {
                 }
             }
         }
-
     }
 
     // Debug function TODO: REMOVE IN RELEASE PLEASEEEEEEE

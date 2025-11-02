@@ -207,11 +207,6 @@ public class Player {
         this.y = camera.position.y - SPRITE_HEIGHT / 2f;
 
         this.render(game_delta, renderBuffer);
-
-        // TODO: Remove debug render call
-        //  Used to visualize collision layer
-        //  Remove or toggle off in production
-        this.world.render_collision_layer(this);
     }
 
     public void render(float delta, RenderBuffer renderBuffer) {

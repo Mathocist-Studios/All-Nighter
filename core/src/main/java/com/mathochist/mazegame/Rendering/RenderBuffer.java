@@ -8,7 +8,7 @@ public class RenderBuffer {
     private LinkedList<RenderObject> buffer;
 
     public RenderBuffer() {
-        this.buffer = new LinkedList<RenderObject>();
+        this.buffer = new LinkedList<>();
     }
 
     public synchronized void addToBuffer(RenderObject obj) {

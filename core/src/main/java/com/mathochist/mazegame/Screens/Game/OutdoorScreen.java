@@ -62,7 +62,15 @@ public class OutdoorScreen extends BaseGameScreen {
 
             super.getRenderBuffer().clearBuffer();
 
+            super.getWorld().renderDebugLayer();
+
+            // TODO: Remove debug render call
+            //  Used to visualize collision layer
+            //  Remove or toggle off in production
+            super.getWorld().render_collision_layer(super.getPlayer());
+
             super.getGameHud().render(delta);
+
         } catch (Exception ignored) {}
     }
 

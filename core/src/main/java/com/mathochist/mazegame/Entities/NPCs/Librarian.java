@@ -6,6 +6,7 @@ import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.UI.Hud;
+import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.World.GameWorld;
 
 public class Librarian extends MapEntity implements INPC {
@@ -32,7 +33,8 @@ public class Librarian extends MapEntity implements INPC {
     @Override
     public boolean onInteract(Player p, GameWorld world, Hud worldHud) {
         // System.out.println("The librarian says: 'Shhh! This is a library!'");
-        worldHud.getSpeechBubbleManager().createSpeechBubble("Librarian: Shhh! This is a library!", 2000);
+        worldHud.getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
+        worldHud.getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Shhh! This is a library!", 2000);
         return true;
     }
 

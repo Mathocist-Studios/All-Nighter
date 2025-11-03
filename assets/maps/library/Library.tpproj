@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:../../../../../../../../../../../Downloads/book4-fotor-2025102721307.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/book3-fotor-20251027212914.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/image_2025-10-24_173228394-fotor-20251027212829.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/book2-fotor-20251027212731.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/book1-fotor-20251027212357.png,type:Input,regionName:null}]
+inputFiles=[{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book1.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/Set dressers2.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book4.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/Set dressers1.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book5.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book3.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book2.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

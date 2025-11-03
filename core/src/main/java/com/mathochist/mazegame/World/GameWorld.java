@@ -197,11 +197,21 @@ public class GameWorld {
     public void render(FitViewport viewport, RenderBuffer renderBuffer) {
         // If a custom shader program is active for the batch, set the screen resolution uniform
         if (shaderProgram != null && shaderProgram.isCompiled()) {
+//            System.out.println(viewport.getScreenX());
+//            System.out.println(viewport.getScreenY());
+//            System.out.println(viewport.getScreenWidth());
+//            System.out.println(viewport.getScreenHeight());
+            shaderProgram.bind();
             shaderProgram.setUniformf("u_viewport",
                 viewport.getScreenX(),
                 viewport.getScreenY(),
                 viewport.getScreenWidth(),
                 viewport.getScreenHeight()
+            );
+
+            shaderProgram.setUniformf("u_resolution",
+                Gdx.graphics.getWidth(),
+                Gdx.graphics.getHeight()
             );
 
         }

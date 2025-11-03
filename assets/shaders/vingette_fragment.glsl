@@ -4,6 +4,7 @@ varying vec2 v_texCoords;
 
 uniform sampler2D u_texture;
 uniform vec4 u_viewport;   // x, y, width, height
+uniform vec2 u_resolution; // viewport resolution
 
 //vec2 getUV(vec2 pos, vec2 offset) {
 //    return (2.0 * (pos.xy + offset) - u_resolution.xy) / u_resolution.y;
@@ -27,9 +28,11 @@ void main() {
     // gl_FragColor = center(gl_FragCoord.xy);
 
     vec2 uv = projectToViewportUV(gl_FragCoord.xy);
-    float dist = length(uv - vec2(0.5, 0.5));
-    float vignette = smoothstep(0.0, 0.8, dist);
-    colour.rgb *= (1.0 - vignette * 0.9);
+
+    float dist = distance(uv, vec2(0.5, 0.5));
+    float vignette = smoothstep(0.8, 0.0, dist);
+    colour.rgb *= vignette;
+
     gl_FragColor = colour;
-    //gl_FragColor = vec4(uv, 0.0, 1.0);
+    // gl_FragColor = vec4(uv, 0.0, 1.0);
 }

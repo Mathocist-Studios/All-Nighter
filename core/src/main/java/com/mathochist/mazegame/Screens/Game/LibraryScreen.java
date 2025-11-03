@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Screens.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
@@ -13,7 +14,9 @@ public class LibraryScreen extends BaseGameScreen {
     public LibraryScreen(Main game) {
         super(game);
         super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+
         super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
 
         int[] spawnPoint = super.getWorld().getSpawnPointPixels();
         super.getCamera().position.set(spawnPoint[0], spawnPoint[1], 0);

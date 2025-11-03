@@ -11,7 +11,9 @@ public class OutdoorScreen extends BaseGameScreen {
     public OutdoorScreen(Main game) {
         super(game);
         super.setWorld(new GameWorld(game, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
+
         super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
 
         int[] spawnPoint = super.getWorld().getSpawnPointPixels();
         super.getCamera().position.set(spawnPoint[0], spawnPoint[1], 0);

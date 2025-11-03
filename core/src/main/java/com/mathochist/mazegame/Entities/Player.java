@@ -27,8 +27,9 @@ public class Player {
 
     private final SpriteBatch screenBatch;
 
-    private final int FRAME_COLS = 4;
+    private final int FRAME_COLS = 3;
     private final int FRAME_ROWS = 4;
+    private final int PADDING_BELOW = 4;
     private float stateTime = 0f; // time tracker for animation
 
     private final KeyBuffer keyBuffer;
@@ -58,6 +59,18 @@ public class Player {
             spriteSheet.getHeight() / FRAME_ROWS
         );
 
+        // remove padding below frames
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                tmp[i][j].setRegion(
+                    tmp[i][j].getRegionX(),
+                    tmp[i][j].getRegionY(),
+                    tmp[i][j].getRegionWidth(),
+                    tmp[i][j].getRegionHeight() - PADDING_BELOW
+                );
+            }
+        }
+
         // Flatten into 1D array
         TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
         int index = 0;
@@ -68,10 +81,10 @@ public class Player {
         }
 
         // Create animations for each direction
-        walkUp    = new Animation<>(0.15f, tmp[2]);
+        walkUp    = new Animation<>(0.15f, tmp[3]);
         walkLeft  = new Animation<>(0.15f, tmp[1]);
         walkDown  = new Animation<>(0.15f, tmp[0]);
-        walkRight = new Animation<>(0.15f, tmp[3]);
+        walkRight = new Animation<>(0.15f, tmp[2]);
 
         // Start with first frame facing down
         currentFrame = tmp[2][0];

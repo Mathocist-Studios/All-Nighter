@@ -2,10 +2,10 @@ package com.mathochist.mazegame.Screens.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
+import com.mathochist.mazegame.Screens.EndScreen;
 import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.World.GameWorld;
 
@@ -43,9 +43,7 @@ public class LibraryScreen extends BaseGameScreen {
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
@@ -72,7 +70,7 @@ public class LibraryScreen extends BaseGameScreen {
             // TODO: Remove debug render call
             //  Used to visualize collision layer
             //  Remove or toggle off in production
-            super.getWorld().render_collision_layer(super.getPlayer());
+            // super.getWorld().render_collision_layer(super.getPlayer());
 
             super.getGameHud().render(delta);
 
@@ -82,6 +80,14 @@ public class LibraryScreen extends BaseGameScreen {
             }
 
         } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
+
+        double timeElapsed = (System.currentTimeMillis() - game.START_TIME) / 1000;
+        double timeLeft = Main.TIME_LIMIT - timeElapsed;
+        if (timeLeft <= 0) {
+            super.getWorld().getBackgroundMusic().stop();
+            game.setScreen(new EndScreen(game));
+        }
+
     }
 
     @Override

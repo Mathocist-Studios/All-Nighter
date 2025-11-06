@@ -38,14 +38,28 @@
         "target_y": 1
       }
     ],
-    "map_entity_number": 2,
+    "map_entity_number": 16,
     "map_objects": {
       "com.mathochist.mazegame.World.Objects.Bookcase": {
-        "width": 2,
-        "height": 3,
+        "width": 1,
+        "height": 1,
         "collidable": true,
         "positions": [
-          [10, 3]
+          [10, 3],
+          [11, 3],
+          [12, 3],
+          [13, 3],
+          [14, 3],
+          [10, 4],
+          [11, 4],
+          [12, 4],
+          [13, 4],
+          [14, 4],
+          [10, 5],
+          [11, 5],
+          [12, 5],
+          [13, 5],
+          [14, 5]
         ]
       },
       "com.mathochist.mazegame.Entities.NPCs.Librarian": {

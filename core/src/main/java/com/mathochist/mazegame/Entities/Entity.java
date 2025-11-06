@@ -56,4 +56,16 @@ public abstract class Entity {
         return collidable;
     }
 
+    protected SpriteBatch getBatch() {
+        return batch;
+    }
+
+    protected TextureAtlas getAtlas() {
+        return atlas;
+    }
+
+    protected String getRegionName() {
+        return regionName;
+    }
+
 }

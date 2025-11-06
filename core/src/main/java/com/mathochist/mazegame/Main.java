@@ -34,6 +34,9 @@ public class Main extends Game {
     public int WIDTH = 0;
     public int HEIGHT = 0;
 
+    public double START_TIME = 0;
+    public static final double TIME_LIMIT = 300; // 5 mins in seconds
+
     /**
      * Initializes the game by setting the initial screen to the TitleScreen.
      */

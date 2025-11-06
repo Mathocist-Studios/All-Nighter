@@ -82,7 +82,9 @@ public class TitleScreen extends DefaultScreen {
             @Override
             public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
                 backgroundMusic.dispose();
+                game.START_TIME = System.currentTimeMillis();
                 game.setScreen(new LibraryScreen(game));
+                // game.setScreen(new EndScreen(game)); // Temporary for testing
             }
         });
         buttonTable.row();

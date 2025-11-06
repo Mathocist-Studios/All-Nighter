@@ -232,7 +232,7 @@ public class Player {
             new RenderObject(
                 playerSprite,
                 screenBatch,
-                (int) Math.ceil(world.pixelCoordsToTileIndex(x, y)[1]) // use y for z-index sorting
+                (int) Math.ceil(world.pixelCoordsToTileIndex(x, y + world.getDeltaViewportHeight())[1]) // use y for z-index sorting
             )
         );
 

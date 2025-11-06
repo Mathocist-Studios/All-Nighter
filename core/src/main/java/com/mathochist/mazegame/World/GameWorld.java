@@ -47,6 +47,7 @@ public class GameWorld {
 
     // For resizing
     private float deltaViewportHeight;
+    private final float blockCollisionPadding = 4f; // pixels
 
     // Debug
     private boolean debug = false;
@@ -622,6 +623,14 @@ public class GameWorld {
             }
         }
         return false; // no interaction occurred
+    }
+
+    public float getDeltaViewportHeight() {
+        return deltaViewportHeight;
+    }
+
+    public Music getBackgroundMusic() {
+        return backgroundMusic;
     }
 
 

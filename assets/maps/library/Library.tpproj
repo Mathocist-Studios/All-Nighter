@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book1.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/Set dressers2.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book4.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/Set dressers1.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book5.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book3.png,type:Input,regionName:null},{path:../../../../../../../../../../../Downloads/drive-download-20251103T201702Z-1-001/book2.png,type:Input,regionName:null}]
+inputFiles=[{path:raw/wall.png,type:Input,regionName:null},{path:raw/floor.png,type:Input,regionName:null},{path:raw/exit_door.png,type:Input,regionName:null},{path:raw/bookshelf_2x2.png,type:Input,regionName:null},{path:raw/bookshelf_top.png,type:Input,regionName:null},{path:raw/book_stack1.png,type:Input,regionName:null},{path:raw/book_stack2.png,type:Input,regionName:null},{path:raw/bookshelf_1x2.png,type:Input,regionName:null},{path:raw/keycard.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

@@ -14,6 +14,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 }
 com.badlogic.gdx.graphics.Color: {
+	RGBA_255_0_0_255: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
 	RGBA_73_73_73_255: {
 		r: 0.28627452
 		g: 0.28627452
@@ -60,6 +66,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	presents_grey: {
 		font: game_font
 		fontColor: RGBA_73_73_73_255
+	}
+	game_font: {
+		font: game_font
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {

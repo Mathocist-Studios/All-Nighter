@@ -13,11 +13,13 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.Entities.PlayerInventory.Inventory;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.Rendering.RenderObject;
 import com.mathochist.mazegame.Screens.Game.BaseGameScreen;
 import com.mathochist.mazegame.Rendering.Shader;
+import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.World.Objects.Utils;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 public class GameWorld {
 
     private final Main game;
+    private final BaseGameScreen parentScreen;
     private final GameMap currentMap;
     private final TextureAtlas textureAtlas;
 
@@ -52,9 +55,10 @@ public class GameWorld {
     // Debug
     private boolean debug = false;
 
-    public GameWorld(Main game, FileHandle mapFile, SpriteBatch gameSpriteBatch) {
+    public GameWorld(Main game, BaseGameScreen parentScreen, FileHandle mapFile, SpriteBatch gameSpriteBatch) {
 
         this.game = game;
+        this.parentScreen = parentScreen;
         screenBatch = gameSpriteBatch;
         this.currentMap = new GameMap(mapFile);
 
@@ -136,6 +140,7 @@ public class GameWorld {
             for (int[] pos : positions) {
                 // Instantiate specific MapEntity subclasses based on entityKey
                 MapEntity entity = Utils.instantiate(entityKey, MapEntity.class,
+                    this.game,
                     screenBatch,
                     this.textureAtlas,
                     pos[0],
@@ -564,6 +569,22 @@ public class GameWorld {
         // then load the map file for that exit tile
         // then set the player's position to the correct spawn point on the new map
         // here we go
+
+        // check exit conditions
+        ExitConditions conditions = targetExit.getConditions();
+        Inventory playerInventory = game.getPlayerInventory();
+
+        // check for required items
+        if (!conditions.hasRequiredItems(playerInventory)) {
+            String[] missingItems = conditions.getMissingItems(playerInventory);
+            String missingItemsList = String.join(", ", missingItems);
+            parentScreen.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
+            parentScreen.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "You need to find your " + missingItemsList + " before you can exit!", 2000);
+            parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() + ((float) getMap().getTileHeight() / 2)); // nudge player back a bit so they dont immediately retrigger
+            return;
+        }
+
+        // TODO: check other conditions (quests, npcs, time) as required
 
         System.out.println("Loading new world: " + targetExit.getTargetMap());
         // load new screen

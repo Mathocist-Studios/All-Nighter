@@ -11,9 +11,11 @@ import com.mathochist.mazegame.World.GameWorld;
 
 public class LibraryScreen extends BaseGameScreen {
 
+    private double timeSinceLastSprintPenalty = 0;
+
     public LibraryScreen(Main game) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
 
         super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
@@ -27,7 +29,7 @@ public class LibraryScreen extends BaseGameScreen {
 
     public LibraryScreen(Main game, Float spawnX, Float spawnY) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library.json"), super.getScreenBatch()));
 
         // Adjust for different screen resizes because of viewport
         // I hate viewports
@@ -77,13 +79,15 @@ public class LibraryScreen extends BaseGameScreen {
             if (super.getPlayer().isSprinting()) {
                 super.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
                 super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Oi, stop running!", 1000);
+                if (timeSinceLastSprintPenalty == 0 || (System.currentTimeMillis() - timeSinceLastSprintPenalty) >= 1000) {
+                    game.getTimerManager().addPenalty(5); // 5 second penalty for sprinting
+                    timeSinceLastSprintPenalty = System.currentTimeMillis();
+                }
             }
 
         } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
 
-        double timeElapsed = (System.currentTimeMillis() - game.START_TIME) / 1000;
-        double timeLeft = Main.TIME_LIMIT - timeElapsed;
-        if (timeLeft <= 0) {
+        if (game.getTimerManager().isTimeUp()) {
             super.getWorld().getBackgroundMusic().stop();
             game.setScreen(new EndScreen(game));
         }

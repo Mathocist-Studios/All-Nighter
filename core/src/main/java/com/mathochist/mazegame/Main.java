@@ -2,7 +2,9 @@ package com.mathochist.mazegame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.mathochist.mazegame.Entities.PlayerInventory.Inventory;
 import com.mathochist.mazegame.Screens.TitleScreen;
+import com.mathochist.mazegame.UI.Timer.TimerManager;
 
 /*
 Mathochist Studios LICENSE 2025
@@ -34,8 +36,8 @@ public class Main extends Game {
     public int WIDTH = 0;
     public int HEIGHT = 0;
 
-    public double START_TIME = 0;
-    public static final double TIME_LIMIT = 300; // 5 mins in seconds
+    private TimerManager timerManager;
+    private Inventory playerInventory;
 
     /**
      * Initializes the game by setting the initial screen to the TitleScreen.
@@ -50,6 +52,9 @@ public class Main extends Game {
         HEIGHT = (WIDTH * 9) / 16;
         Gdx.graphics.setWindowedMode(WIDTH, HEIGHT);
 
+        timerManager = new TimerManager();
+        playerInventory = new Inventory();
+
         // Set the initial screen to the title screen
         setScreen(new TitleScreen(this));
     }
@@ -61,6 +66,14 @@ public class Main extends Game {
     public void dispose() {
         super.dispose();
         Gdx.app.exit();
+    }
+
+    public TimerManager getTimerManager() {
+        return timerManager;
+    }
+
+    public Inventory getPlayerInventory() {
+        return playerInventory;
     }
 
 }

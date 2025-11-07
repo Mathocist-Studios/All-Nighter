@@ -43,7 +43,7 @@ public class Player {
     public final static float MOVE_SPEED = 300; // pixels per second
     public final static float SPRITE_WIDTH = 19;
     public final static float SPRITE_HEIGHT = 25;
-    public final static float INTERACTION_RANGE = 3; // tiles
+    public final static float INTERACTION_RANGE = 2; // tiles
 
     public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, float startX, float startY) {
 

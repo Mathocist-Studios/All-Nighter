@@ -11,7 +11,7 @@ public class OutdoorScreen extends BaseGameScreen {
 
     public OutdoorScreen(Main game) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
 
         super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
@@ -25,7 +25,7 @@ public class OutdoorScreen extends BaseGameScreen {
 
     public OutdoorScreen(Main game, Float spawnX, Float spawnY) {
         super(game);
-        super.setWorld(new GameWorld(game, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/outdoor.json"), super.getScreenBatch()));
 
         // Adjust for different screen resizes because of viewport
         // I hate viewports
@@ -76,9 +76,7 @@ public class OutdoorScreen extends BaseGameScreen {
 
         } catch (Exception ignored) {}
 
-        double timeElapsed = (System.currentTimeMillis() - game.START_TIME) / 1000;
-        double timeLeft = Main.TIME_LIMIT - timeElapsed;
-        if (timeLeft <= 0) {
+        if (game.getTimerManager().isTimeUp()) {
             super.getWorld().getBackgroundMusic().stop();
             game.setScreen(new EndScreen(game));
         }

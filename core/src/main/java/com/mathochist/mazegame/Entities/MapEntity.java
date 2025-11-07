@@ -2,6 +2,7 @@ package com.mathochist.mazegame.Entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.World.GameWorld;
 
@@ -12,8 +13,12 @@ import com.mathochist.mazegame.World.GameWorld;
  */
 public abstract class MapEntity extends Entity {
 
-    public MapEntity(SpriteBatch batch, TextureAtlas atlas, String regionName, float TileX, float TileY, float TileWidth, float TileHeight, boolean collidable) {
+    protected Main game;
+
+    public MapEntity(Main game, SpriteBatch batch, TextureAtlas atlas, String regionName, float TileX, float TileY, float TileWidth, float TileHeight, boolean collidable) {
         super(batch, atlas, regionName, TileX, TileY, TileWidth, TileHeight, collidable);
+
+        this.game = game;
     }
 
     /**

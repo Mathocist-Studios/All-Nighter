@@ -25,6 +25,9 @@ public class EndScreen extends DefaultScreen {
 
     public EndScreen(Main game) {
         super(game);
+
+        game.getTimerManager().resetTimer();
+        game.getPlayerInventory().clear();
     }
 
     @Override
@@ -59,6 +62,7 @@ public class EndScreen extends DefaultScreen {
         backToMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
+                backgroundMusic.stop();
                 game.setScreen(new TitleScreen(game));
             }
         });

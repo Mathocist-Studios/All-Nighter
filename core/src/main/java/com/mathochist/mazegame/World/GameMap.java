@@ -110,6 +110,15 @@ public class GameMap {
         return mapData.get("metadata").getInt("map_entity_number");
     }
 
+    private ExitConditions getExitConditions(JsonValue exitConditionsData) {
+        Json json = new Json();
+        String[] requiredItems = json.readValue(String[].class, exitConditionsData.get("inventory_items_required"));
+        String[] requiredQuests = json.readValue(String[].class, exitConditionsData.get("quests_completed"));
+        String[] npcsInteracted = json.readValue(String[].class, exitConditionsData.get("npcs_interacted"));
+        int minTimeElapsed = exitConditionsData.getInt("min_time_elapsed");
+        return new ExitConditions(requiredItems, requiredQuests, npcsInteracted, minTimeElapsed);
+    }
+
     public ExitTile[] getExitPoints() {
         JsonValue exit_points = mapData.get("metadata").get("exit_points");
         ExitTile[] exitTiles = new ExitTile[exit_points.size];
@@ -121,7 +130,8 @@ public class GameMap {
             int tileY = exitPoint.getInt("y");
             int targetX = exitPoint.getInt("target_x");
             int targetY = exitPoint.getInt("target_y");
-            exitTiles[j] = new ExitTile(tileX, tileY, targetMap, targetX, targetY);
+            ExitConditions conditions = getExitConditions(exitPoint.get("exit_conditions"));
+            exitTiles[j] = new ExitTile(tileX, tileY, targetMap, targetX, targetY, conditions);
         }
         return exitTiles;
     }

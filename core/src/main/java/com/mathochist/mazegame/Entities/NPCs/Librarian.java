@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
+import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.UI.Speech.SpeechType;
@@ -11,8 +12,8 @@ import com.mathochist.mazegame.World.GameWorld;
 
 public class Librarian extends MapEntity implements INPC {
 
-    public Librarian(SpriteBatch batch, TextureAtlas atlas, Integer TileX, Integer TileY, Integer Width, Integer Height, Boolean collidable) {
-        super(batch, atlas, "librarian", TileX, TileY, Width, Height, collidable);
+    public Librarian(Main game, SpriteBatch batch, TextureAtlas atlas, Integer TileX, Integer TileY, Integer Width, Integer Height, Boolean collidable) {
+        super(game, batch, atlas, "librarian", TileX, TileY, Width, Height, collidable);
     }
 
     @Override

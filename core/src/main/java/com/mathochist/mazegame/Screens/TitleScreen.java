@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mathochist.mazegame.Main;
-import com.mathochist.mazegame.Screens.Game.LibraryScreen;
 import com.mathochist.mazegame.UI.ButtonHoverListener;
 import com.mathochist.mazegame.UI.MainMenuUISkin;
 
@@ -81,10 +80,11 @@ public class TitleScreen extends DefaultScreen {
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent changeEvent, Actor actor) {
-                backgroundMusic.dispose();
-                game.START_TIME = System.currentTimeMillis();
-                game.setScreen(new LibraryScreen(game));
+//                backgroundMusic.dispose();
+//                game.getTimerManager().startTimer();
+//                game.setScreen(new LibraryScreen(game));
                 // game.setScreen(new EndScreen(game)); // Temporary for testing
+                game.setScreen(new IntroScreen(game, backgroundMusic));
             }
         });
         buttonTable.row();

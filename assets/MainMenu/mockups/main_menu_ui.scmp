@@ -311,6 +311,16 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
+				r: 1
+				g: 0
+				b: 0
+				a: 1
+			}
+			name: RGBA_255_0_0_255
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
 				r: 0.28627452
 				g: 0.28627452
 				b: 0.28627452
@@ -2186,6 +2196,33 @@ jsonData: {
 						name: fontColor
 						optional: true
 						value: RGBA_73_73_73_255
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: game_font
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: game_font
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: null
 					}
 					background: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable

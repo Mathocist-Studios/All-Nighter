@@ -21,28 +21,46 @@
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
         "target_x": 18,
-        "target_y": 28
+        "target_y": 28,
+        "exit_conditions": {
+          "inventory_items_required": [],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
       },
       {
         "x": 19,
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
         "target_x": 19,
-        "target_y": 28
+        "target_y": 28,
+        "exit_conditions": {
+          "inventory_items_required": [],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
       },
       {
         "x": 20,
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
         "target_x": 20,
-        "target_y": 28
+        "target_y": 28,
+        "exit_conditions": {
+          "inventory_items_required": [],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
       }
     ],
     "map_entity_number": 2,
     "map_objects": {
-      "com.mathochist.mazegame.World.Objects.Bookcase": {
+      "com.mathochist.mazegame.World.Objects.Bookcase2x2": {
         "width": 2,
-        "height": 3,
+        "height": 1,
         "collidable": true,
         "positions": [
           [10, 3]

@@ -7,13 +7,15 @@ public class ExitTile {
     private String targetMap;
     private float targetX;
     private float targetY;
+    private ExitConditions conditions;
 
-    public ExitTile(float x, float y, String targetMap, float targetX, float targetY) {
+    public ExitTile(float x, float y, String targetMap, float targetX, float targetY, ExitConditions conditions) {
         this.x = x;
         this.y = y;
         this.targetMap = targetMap;
         this.targetX = targetX;
         this.targetY = targetY;
+        this.conditions = conditions;
     }
 
     public float getX() {
@@ -54,6 +56,14 @@ public class ExitTile {
 
     public void setTargetY(float targetY) {
         this.targetY = targetY;
+    }
+
+    public ExitConditions getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(ExitConditions conditions) {
+        this.conditions = conditions;
     }
 
     @Override

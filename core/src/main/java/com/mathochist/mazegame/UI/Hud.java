@@ -61,11 +61,7 @@ public class Hud {
         small_font.draw(hudBatch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 2, hudCamera.viewportHeight - 2);
 
         // draw time elapsed in top right corner
-        double timeElapsed = (System.currentTimeMillis() - game.START_TIME) / 1000;
-        double timeLeft = Main.TIME_LIMIT - timeElapsed;
-        double minutesLeft = Math.floor(timeLeft / 60.0);
-        double secondsLeft = Math.floor(timeLeft % 60.0);
-        small_font.draw(hudBatch, "Time: " + (int) minutesLeft + ":" + String.format("%02d", (int) secondsLeft), hudCamera.viewportWidth - 80, hudCamera.viewportHeight - 2);
+        game.getTimerManager().renderToHUD(main_font, hudBatch, hudCamera);
 
         hudBatch.end();
 

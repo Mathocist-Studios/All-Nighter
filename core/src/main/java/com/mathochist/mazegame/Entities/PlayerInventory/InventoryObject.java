@@ -3,6 +3,7 @@ package com.mathochist.mazegame.Entities.PlayerInventory;
 public enum InventoryObject {
 
     KEYCARD(false, "keycard"),
+    ENERGY_DRINK(false, "energy_drink"),
     FLASHLIGHT(true, "flashlight"),
     BATTERY(true, "battery"),
     MAP(false, "map"),

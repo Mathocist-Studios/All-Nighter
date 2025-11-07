@@ -62,7 +62,7 @@
         }
       }
     ],
-    "map_entity_number": 19,
+    "map_entity_number": 20,
     "map_objects": {
       "com.mathochist.mazegame.World.Objects.Bookcase1x2": {
         "width": 1,
@@ -116,6 +116,14 @@
         "collidable": true,
         "positions": [
           [27, 15]
+        ]
+      },
+      "com.mathochist.mazegame.World.Objects.VendingMachine": {
+        "width": 1,
+        "height": 1,
+        "collidable": true,
+        "positions": [
+          [30, 15]
         ]
       }
     }

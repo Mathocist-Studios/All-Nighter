@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.UI.Speech.SpeechBubbleManager;
 
@@ -15,6 +16,8 @@ public class Hud {
     private SpriteBatch hudBatch;
     private BitmapFont small_font;
     private BitmapFont main_font;
+
+    private TextureAtlas gameUIAtlas;
 
     private SpeechBubbleManager speechBubbleManager;
 
@@ -33,6 +36,8 @@ public class Hud {
         main_font.getData().setScale(1.0f);
 
         speechBubbleManager = new SpeechBubbleManager(hudBatch, hudCamera, main_font);
+
+        gameUIAtlas = new TextureAtlas(Gdx.files.internal("game_ui/game_ui.atlas"));
 
     }
 
@@ -62,6 +67,8 @@ public class Hud {
 
         // draw time elapsed in top right corner
         game.getTimerManager().renderToHUD(main_font, hudBatch, hudCamera);
+        game.getPlayerInventory().render(hudBatch, hudCamera, gameUIAtlas);
+        game.getEventsCounter().renderEventsCounterToHUD(hudBatch, hudCamera, small_font);
 
         hudBatch.end();
 

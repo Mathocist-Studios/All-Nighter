@@ -56,11 +56,11 @@ public class IntroScreen extends DefaultScreen {
         textTable.add(settingSceneLabel).padBottom(10);
         textTable.row();
 
-        Label instructionLabel = new Label("Find your way out before you get caught!", uiSkin.getSkin(), "game_font");
+        Label instructionLabel = new Label("Find your lost keycard and get out before you get caught!", uiSkin.getSkin(), "game_font");
         textTable.add(instructionLabel).padBottom(10);
         textTable.row();
 
-        Label timeLabel = new Label("You have 5 minutes to escape!", uiSkin.getSkin(), "game_font");
+        Label timeLabel = new Label("You have 5 minutes to escape the uni!", uiSkin.getSkin(), "game_font");
         textTable.add(timeLabel).padBottom(10);
         textTable.row();
 

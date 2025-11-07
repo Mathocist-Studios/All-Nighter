@@ -24,7 +24,7 @@ public class LibraryScreen extends BaseGameScreen {
         super.getCamera().position.set(spawnPoint[0], spawnPoint[1], 0);
         super.getCamera().update();
 
-        super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPoint[0], spawnPoint[1]));
+        super.setPlayer(new Player(game, super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPoint[0], spawnPoint[1]));
     }
 
     public LibraryScreen(Main game, Float spawnX, Float spawnY) {
@@ -41,7 +41,7 @@ public class LibraryScreen extends BaseGameScreen {
         super.getCamera().position.set(spawnPixels[0], spawnPixels[1], 0);
         super.getCamera().update();
 
-        super.setPlayer(new Player(super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPixels[0], spawnPixels[1]));
+        super.setPlayer(new Player(game, super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPixels[0], spawnPixels[1]));
     }
 
     @Override
@@ -83,6 +83,7 @@ public class LibraryScreen extends BaseGameScreen {
                     game.getTimerManager().addPenalty(5); // 5 second penalty for sprinting
                     timeSinceLastSprintPenalty = System.currentTimeMillis();
                 }
+                game.getEventsCounter().librarySprintEvent();
             }
 
         } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions

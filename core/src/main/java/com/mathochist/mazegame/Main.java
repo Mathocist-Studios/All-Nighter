@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mathochist.mazegame.Entities.PlayerInventory.Inventory;
 import com.mathochist.mazegame.Screens.TitleScreen;
+import com.mathochist.mazegame.UI.EventsCounter;
 import com.mathochist.mazegame.UI.Timer.TimerManager;
 
 /*
@@ -38,6 +39,7 @@ public class Main extends Game {
 
     private TimerManager timerManager;
     private Inventory playerInventory;
+    private EventsCounter eventsCounter;
 
     /**
      * Initializes the game by setting the initial screen to the TitleScreen.
@@ -54,6 +56,7 @@ public class Main extends Game {
 
         timerManager = new TimerManager();
         playerInventory = new Inventory();
+        eventsCounter = new EventsCounter();
 
         // Set the initial screen to the title screen
         setScreen(new TitleScreen(this));
@@ -74,6 +77,10 @@ public class Main extends Game {
 
     public Inventory getPlayerInventory() {
         return playerInventory;
+    }
+
+    public EventsCounter getEventsCounter() {
+        return eventsCounter;
     }
 
 }

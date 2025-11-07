@@ -14,7 +14,7 @@
       "y": 10
     },
     "background_music": "continue",
-    "texture_atlas": "maps/library/Library.atlas",
+    "texture_atlas": "maps/library/Placeholder.atlas",
     "exit_points": [
       {
         "x": 18,
@@ -56,17 +56,8 @@
         }
       }
     ],
-    "map_entity_number": 2,
-    "map_objects": {
-      "com.mathochist.mazegame.World.Objects.Bookcase2x2": {
-        "width": 2,
-        "height": 1,
-        "collidable": true,
-        "positions": [
-          [10, 3]
-        ]
-      }
-    }
+    "map_entity_number": 0,
+    "map_objects": {}
   },
   "shader": {
     "name": "default",

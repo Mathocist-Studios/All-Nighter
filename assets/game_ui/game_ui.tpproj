@@ -1,4 +1,4 @@
-name=Library
+name=game_ui
 filename=
 output=.
 
@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:raw/wall.png,type:Input,regionName:null},{path:raw/floor.png,type:Input,regionName:null},{path:raw/exit_door.png,type:Input,regionName:null},{path:raw/bookshelf_2x2.png,type:Input,regionName:null},{path:raw/bookshelf_top.png,type:Input,regionName:null},{path:raw/book_stack1.png,type:Input,regionName:null},{path:raw/book_stack2.png,type:Input,regionName:null},{path:raw/bookshelf_1x2.png,type:Input,regionName:null},{path:raw/keycard.png,type:Input,regionName:null},{path:raw/vending_machine.png,type:Input,regionName:null}]
+inputFiles=[{path:raw/energy_drink.png,type:Input,regionName:null},{path:raw/keycard.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

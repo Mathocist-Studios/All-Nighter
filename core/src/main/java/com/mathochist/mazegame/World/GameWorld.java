@@ -50,7 +50,6 @@ public class GameWorld {
 
     // For resizing
     private float deltaViewportHeight;
-    private final float blockCollisionPadding = 4f; // pixels
 
     // Debug
     private boolean debug = false;

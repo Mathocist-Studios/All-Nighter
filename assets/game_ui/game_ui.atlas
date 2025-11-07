@@ -1,0 +1,7 @@
+game_ui.png
+size:128,64
+repeat:none
+energy_drink
+bounds:2,2,32,32
+keycard
+bounds:36,3,32,31

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mathochist.mazegame.Entities.PlayerInventory.InventoryObject;
+import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Movement.KeyBinds;
 import com.mathochist.mazegame.Movement.KeyBuffer;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
@@ -20,6 +22,7 @@ import com.mathochist.mazegame.World.GameWorld;
  */
 // TODO: Refactor to extend Entity class
 public class Player {
+
     private Texture spriteSheet;
     private final Animation<TextureRegion> walkUp, walkDown, walkLeft, walkRight;
     private TextureRegion currentFrame;
@@ -37,6 +40,7 @@ public class Player {
 
     private final OrthographicCamera camera;
     private final GameWorld world;
+    private final Main game;
 
     private boolean is_sprinting = false;
 
@@ -45,8 +49,9 @@ public class Player {
     public final static float SPRITE_HEIGHT = 25;
     public final static float INTERACTION_RANGE = 2; // tiles
 
-    public Player(OrthographicCamera camera, SpriteBatch batch, GameWorld world, float startX, float startY) {
+    public Player(Main game, OrthographicCamera camera, SpriteBatch batch, GameWorld world, float startX, float startY) {
 
+        this.game = game;
         this.camera = camera;
         this.screenBatch = batch;
         this.world = world;
@@ -169,6 +174,11 @@ public class Player {
         if (keyBuffer.isKeyPressed(KeyBinds.ESCAPE_GAME)) {
             // escape logic
             Gdx.app.exit();
+        }
+
+        // check if player has energy drink in inventory for speed boost
+        if (game.getPlayerInventory().hasItem(InventoryObject.ENERGY_DRINK)) {
+            moveSpeed += 150; // speed boost from energy drink
         }
 
         float[] move = keyBuffer.getCameraMove();

@@ -34,6 +34,7 @@ public class Keycard extends MapEntity {
         super.game.getPlayerInventory().addItem(InventoryObject.KEYCARD);
         worldHud.getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
         worldHud.getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Keycard collected!", 2000);
+        game.getEventsCounter().foundKeycardEvent();
         return true; // Keycards are collectible
     }
 

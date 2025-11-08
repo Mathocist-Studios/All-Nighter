@@ -10,8 +10,8 @@
     "map_width": 40,
     "map_height": 30,
     "spawn_point": {
-      "x": 20,
-      "y": 10
+      "x": 0,
+      "y": 0
     },
     "background_music": "continue",
     "texture_atlas": "maps/library/Placeholder.atlas",

@@ -13,6 +13,7 @@ public class EventsCounter {
     private boolean librarySprintEventTriggered;
     private boolean foundKeycardEventTriggered;
     private boolean vendingMachineEventTriggered;
+    private boolean fallenIntoBasementEventTriggered;
 
     public EventsCounter() {
         this.positiveEvents = 0;
@@ -44,6 +45,14 @@ public class EventsCounter {
         }
         this.positiveEvents += 1;
         this.vendingMachineEventTriggered = true;
+    }
+
+    public void fallenIntoBasementEvent() {
+        if (fallenIntoBasementEventTriggered) {
+            return;
+        }
+        this.hiddenEvents += 1;
+        this.fallenIntoBasementEventTriggered = true;
     }
 
     public void renderEventsCounterToHUD(SpriteBatch hudBatch, OrthographicCamera camera, BitmapFont font) {

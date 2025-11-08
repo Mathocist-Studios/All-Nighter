@@ -445,7 +445,6 @@ public class GameWorld {
         return new float[]{tileX, tileY};
     }
 
-
     private boolean isTileCollidable(int tileX, int tileY) {
         int tileIndex = currentMap.getMapMatrix()[tileY][tileX];
         return java.util.Arrays.stream(currentMap.getCollisionTiles()).anyMatch(tile -> tile == tileIndex);
@@ -562,6 +561,21 @@ public class GameWorld {
         return output;
     }
 
+    private String[] beautifyItemNames(String[] itemKeys) {
+        String[] beautifiedNames = new String[itemKeys.length];
+        for (int i = 0; i < itemKeys.length; i++) {
+            String item = itemKeys[i];
+            item = item.replace("_", " ");
+            String[] words = item.split(" ");
+            StringBuilder capitalizedItem = new StringBuilder();
+            for (String word : words) {
+                capitalizedItem.append(Character.toUpperCase(word.charAt(0))).append(word.substring(1)).append(" ");
+            }
+            beautifiedNames[i] = capitalizedItem.toString().trim();
+        }
+        return beautifiedNames;
+    }
+
     private void loadNewWorld(ExitTile targetExit) {
         // right dont really know how im gonna do this yet so im gonna comment how i think i should
         // first gotta find the closest exit tile to the player
@@ -575,11 +589,26 @@ public class GameWorld {
 
         // check for required items
         if (!conditions.hasRequiredItems(playerInventory)) {
+            System.out.println("Missing required items to exit");
             String[] missingItems = conditions.getMissingItems(playerInventory);
-            String missingItemsList = String.join(", ", missingItems);
+            // replace underscores with spaces and capitalize first letter of each word
+            String[] beautifiedMissingItems = beautifyItemNames(missingItems);
+            String missingItemsList = String.join(", ", beautifiedMissingItems);
             parentScreen.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
             parentScreen.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "You need to find your " + missingItemsList + " before you can exit!", 2000);
-            parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() + ((float) getMap().getTileHeight() / 2)); // nudge player back a bit so they dont immediately retrigger
+
+            // parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() + ((float) getMap().getTileHeight() / 2)); // nudge player back a bit so they dont immediately retrigger
+
+            if (targetExit.getX() == 0) {
+                parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX() + ((float) getMap().getTileWidth() / 2), parentScreen.getPlayer().getY());
+            } else if (targetExit.getX() == getMap().getMapWidth() - 1) {
+                parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX() - ((float) getMap().getTileWidth() / 2), parentScreen.getPlayer().getY());
+            } else if (targetExit.getY() == 0) {
+                parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() - ((float) getMap().getTileHeight() / 2));
+            } else if (targetExit.getY() == getMap().getMapHeight() - 1) {
+                parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() + ((float) getMap().getTileHeight() / 2));
+            }
+
             return;
         }
 

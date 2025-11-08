@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:raw/energy_drink.png,type:Input,regionName:null},{path:raw/keycard.png,type:Input,regionName:null}]
+inputFiles=[{path:raw/energy_drink.png,type:Input,regionName:null},{path:raw/keycard.png,type:Input,regionName:null},{path:raw/basement_key.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

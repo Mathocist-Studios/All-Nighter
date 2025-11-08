@@ -226,8 +226,8 @@ public class Player {
         keyBuffer.clear();
 
         // Update player position based on camera
-        this.x = camera.position.x - SPRITE_WIDTH / 2f;
-        this.y = camera.position.y - SPRITE_HEIGHT / 2f;
+        this.x = camera.position.x - SPRITE_WIDTH;
+        this.y = camera.position.y - SPRITE_HEIGHT;
 
         this.render(game_delta, renderBuffer);
     }

@@ -4,6 +4,7 @@ public enum InventoryObject {
 
     KEYCARD(false, "keycard"),
     ENERGY_DRINK(false, "energy_drink"),
+    BASEMENT_KEY(false, "basement_key"),
     FLASHLIGHT(true, "flashlight"),
     BATTERY(true, "battery"),
     MAP(false, "map"),

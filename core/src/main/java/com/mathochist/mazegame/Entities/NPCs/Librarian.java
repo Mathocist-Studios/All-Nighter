@@ -1,11 +1,15 @@
 package com.mathochist.mazegame.Entities.NPCs;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mathochist.mazegame.Entities.MapEntity;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
+import com.mathochist.mazegame.Rendering.RenderObject;
 import com.mathochist.mazegame.UI.Hud;
 import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.World.GameWorld;
@@ -18,7 +22,17 @@ public class Librarian extends MapEntity implements INPC {
 
     @Override
     public void render(GameWorld world, RenderBuffer buffer) {
-
+        TextureRegion librarianRegion = super.getAtlas().findRegion(super.getRegionName());
+        Sprite librarianSprite = new Sprite(librarianRegion);
+        librarianSprite.setPosition(
+            super.getTileX() * world.getMap().getTileWidth(),
+            Gdx.graphics.getHeight() - ((super.getTileY() + 1) * world.getMap().getTileHeight() + world.tileDrawYOffset + world.getDeltaViewportHeight())
+        );
+        buffer.addToBuffer(new RenderObject(
+            librarianSprite,
+            super.getBatch(),
+            (int) super.getTileY() + 1
+        ));
     }
 
     @Override

@@ -20,7 +20,7 @@
         "x": 18,
         "y": 29,
         "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
-        "target_x": 18,
+        "target_x": 4,
         "target_y": 1,
         "exit_conditions": {
           "inventory_items_required": [
@@ -35,7 +35,7 @@
         "x": 19,
         "y": 29,
         "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
-        "target_x": 19,
+        "target_x": 5,
         "target_y": 1,
         "exit_conditions": {
           "inventory_items_required": [
@@ -50,7 +50,7 @@
         "x": 20,
         "y": 29,
         "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
-        "target_x": 20,
+        "target_x": 6,
         "target_y": 1,
         "exit_conditions": {
           "inventory_items_required": [
@@ -102,7 +102,7 @@
       "com.mathochist.mazegame.Entities.NPCs.Librarian": {
         "width": 1,
         "height": 1,
-        "collidable": false,
+        "collidable": true,
         "positions": [
           [15, 15]
         ]
@@ -143,8 +143,8 @@
   },
   "shader": {
       "name": "Vingette Shader",
-      "vertex": "shaders/vingette_vertex.glsl",
-      "fragment": "shaders/vingette_fragment.glsl"
+      "vertex": "shaders/vignette_vertex.glsl",
+      "fragment": "shaders/library_vignette_fragment.glsl"
   },
   "tiles": [
     "floor",

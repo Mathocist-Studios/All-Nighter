@@ -61,8 +61,8 @@
   },
   "shader": {
     "name": "Vingette Shader",
-    "vertex": "shaders/vingette_vertex.glsl",
-    "fragment": "shaders/vingette_fragment.glsl"
+    "vertex": "shaders/vignette_vertex.glsl",
+    "fragment": "shaders/basement_vignette_fragment.glsl"
   },
   "tiles": [
     "floor",

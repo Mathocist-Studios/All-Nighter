@@ -1,13 +1,17 @@
 package com.mathochist.mazegame.Screens.Game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.mathochist.mazegame.Entities.Player;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.EndScreen;
+import com.mathochist.mazegame.UI.Timer.TimerManager;
 import com.mathochist.mazegame.World.GameWorld;
 
 public class OutdoorScreen extends BaseGameScreen {
+
+    private double timeSinceLastPauseToggle = 0;
 
     public OutdoorScreen(Main game) {
         super(game);
@@ -47,6 +51,20 @@ public class OutdoorScreen extends BaseGameScreen {
 
     @Override
     public void render(float delta) {
+
+        if (System.currentTimeMillis() - timeSinceLastPauseToggle >= 300) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                this.setPaused(!this.isPaused());
+                timeSinceLastPauseToggle = System.currentTimeMillis();
+            }
+        }
+
+        if (super.isPaused()) {
+            super.getGameHud().renderPauseScreen();
+            TimerManager.START_TIME += delta * 1000; // Freeze timer while paused
+            return;
+        }
+
         try {
             Gdx.gl.glClearColor(0f,0f,0f,1.0f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

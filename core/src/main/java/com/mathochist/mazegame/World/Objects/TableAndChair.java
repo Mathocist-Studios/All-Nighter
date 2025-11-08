@@ -16,7 +16,7 @@ import com.mathochist.mazegame.World.GameWorld;
 public class TableAndChair extends MapEntity {
 
     public TableAndChair(Main game, SpriteBatch batch, TextureAtlas atlas, Integer TileX, Integer TileY, Integer Width, Integer Height, Boolean collidable) {
-        super(game, batch, atlas, "table_and_chair", TileX, TileY, Width, Height, collidable);
+        super(game, batch, atlas, "table_and_chairs", TileX, TileY, Width, Height, collidable);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TableAndChair extends MapEntity {
         Sprite bookcaseSprite = new Sprite(bookcaseRegion);
         bookcaseSprite.setPosition(
             super.getTileX() * world.getMap().getTileWidth(),
-            Gdx.graphics.getHeight() - ((super.getTileY() + 1) * world.getMap().getTileHeight() + world.tileDrawYOffset + world.getDeltaViewportHeight())
+            Gdx.graphics.getHeight() - ((super.getTileY() + 2) * world.getMap().getTileHeight() + world.tileDrawYOffset + world.getDeltaViewportHeight())
         );
         renderBuffer.addToBuffer(new RenderObject(
             bookcaseSprite,

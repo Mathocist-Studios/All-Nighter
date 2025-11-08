@@ -16,6 +16,7 @@ public class Hud {
     private SpriteBatch hudBatch;
     private BitmapFont small_font;
     private BitmapFont main_font;
+    private BitmapFont vlarge_font;
 
     private TextureAtlas gameUIAtlas;
 
@@ -34,6 +35,8 @@ public class Hud {
 
         main_font = new BitmapFont(Gdx.files.internal("fonts/game_font.fnt"), Gdx.files.internal("fonts/game_font.png"), false);
         main_font.getData().setScale(1.0f);
+
+        vlarge_font = new BitmapFont(Gdx.files.internal("fonts/vlarge_game_font.fnt"));
 
         speechBubbleManager = new SpeechBubbleManager(hudBatch, hudCamera, main_font);
 
@@ -77,6 +80,21 @@ public class Hud {
 
     public SpeechBubbleManager getSpeechBubbleManager() {
         return speechBubbleManager;
+    }
+
+    public void renderPauseScreen() {
+        hudCamera.update();
+        hudBatch.setProjectionMatrix(hudCamera.combined);
+
+        hudBatch.begin();
+
+        float centerX = hudCamera.viewportWidth / 2.0f;
+        float centerY = hudCamera.viewportHeight / 2.0f;
+
+        vlarge_font.draw(hudBatch, "Game Paused", centerX - 350, centerY + 100);
+        main_font.draw(hudBatch, "Press ESC to Resume", centerX - 140, centerY - 10);
+
+        hudBatch.end();
     }
 
 }

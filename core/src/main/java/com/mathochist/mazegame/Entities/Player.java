@@ -171,10 +171,6 @@ public class Player {
             // interaction logic
             world.triggerInteractionByPixel(x, y, INTERACTION_RANGE, this);
         }
-        if (keyBuffer.isKeyPressed(KeyBinds.ESCAPE_GAME)) {
-            // escape logic
-            Gdx.app.exit();
-        }
 
         // check if player has energy drink in inventory for speed boost
         if (game.getPlayerInventory().hasItem(InventoryObject.ENERGY_DRINK)) {

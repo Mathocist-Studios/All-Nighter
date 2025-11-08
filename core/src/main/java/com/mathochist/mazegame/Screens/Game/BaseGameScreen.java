@@ -31,6 +31,8 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     private RenderBuffer renderBuffer;
 
+    private boolean isPaused = false;
+
     public BaseGameScreen(Main game) {
         super(game);
         // GDX setup
@@ -147,6 +149,14 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     public RenderBuffer getRenderBuffer() {
         return renderBuffer;
+    }
+
+    public boolean isPaused() {
+        return isPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        isPaused = paused;
     }
 
 }

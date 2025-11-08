@@ -33,6 +33,10 @@ void main() {
     float vignette = smoothstep(0.8, 0.0, dist);
     colour.rgb *= vignette;
 
+    // make greyscale
+//     float grey = dot(colour.rgb, vec3(0.299, 0.587, 0.114));
+//     colour = vec4(vec3(grey), colour.a);
+
     gl_FragColor = colour;
     // gl_FragColor = vec4(uv, 0.0, 1.0);
 }

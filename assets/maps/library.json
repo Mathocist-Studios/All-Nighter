@@ -75,7 +75,7 @@
         }
       }
     ],
-    "map_entity_number": 20,
+    "map_entity_number": 21,
     "map_objects": {
       "com.mathochist.mazegame.World.Objects.Bookcase1x2": {
         "width": 1,
@@ -137,6 +137,14 @@
         "collidable": true,
         "positions": [
           [30, 15]
+        ]
+      },
+      "com.mathochist.mazegame.World.Objects.TableAndChair": {
+        "width": 2,
+        "height": 2,
+        "collidable": true,
+        "positions": [
+          [21, 18]
         ]
       }
     }

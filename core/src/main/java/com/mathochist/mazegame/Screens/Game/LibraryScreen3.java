@@ -3,21 +3,22 @@ package com.mathochist.mazegame.Screens.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mathochist.mazegame.Entities.Player;
-import com.mathochist.mazegame.Entities.PlayerInventory.InventoryObject;
 import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Screens.EndScreen;
 import com.mathochist.mazegame.UI.Speech.SpeechType;
 import com.mathochist.mazegame.UI.Timer.TimerManager;
 import com.mathochist.mazegame.World.GameWorld;
 
-public class LibraryBasementScreen extends BaseGameScreen {
+public class LibraryScreen3 extends BaseGameScreen {
 
+    private double timeSinceLastSprintPenalty = 0;
     private double timeSinceLastPauseToggle = 0;
 
-    public LibraryBasementScreen(Main game) {
+    public LibraryScreen3(Main game) {
         super(game);
-        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library_basement.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library3.json"), super.getScreenBatch()));
 
         super.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         super.getWorld().tileDrawYOffset -= Gdx.graphics.getHeight() - game.HEIGHT;
@@ -27,14 +28,11 @@ public class LibraryBasementScreen extends BaseGameScreen {
         super.getCamera().update();
 
         super.setPlayer(new Player(game, super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPoint[0], spawnPoint[1]));
-
-        game.getEventsCounter().fallenIntoBasementEvent();
-
     }
 
-    public LibraryBasementScreen(Main game, Float spawnX, Float spawnY) {
+    public LibraryScreen3(Main game, Float spawnX, Float spawnY) {
         super(game);
-        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library_basement.json"), super.getScreenBatch()));
+        super.setWorld(new GameWorld(game, this, Gdx.files.internal("maps/library3.json"), super.getScreenBatch()));
 
         // Adjust for different screen resizes because of viewport
         // I hate viewports
@@ -47,19 +45,10 @@ public class LibraryBasementScreen extends BaseGameScreen {
         super.getCamera().update();
 
         super.setPlayer(new Player(game, super.getCamera(), super.getScreenBatch(), super.getWorld(), spawnPixels[0], spawnPixels[1]));
-
-        if (!game.getPlayerInventory().hasItem(InventoryObject.BASEMENT_KEY)) {
-            super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "The floor collapses underneath you and you fall into the basement, find the key to escape!", 3000);
-        }
-
-        game.getEventsCounter().fallenIntoBasementEvent();
-
     }
 
     @Override
-    public void show() {
-
-    }
+    public void show() {}
 
     @Override
     public void render(float delta) {
@@ -104,7 +93,17 @@ public class LibraryBasementScreen extends BaseGameScreen {
 
             super.getGameHud().render(delta);
 
-        } catch (Exception ignored) {}
+            if (super.getPlayer().isSprinting()) {
+                super.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
+                super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Oi, stop running!", 1000);
+                if (timeSinceLastSprintPenalty == 0 || (System.currentTimeMillis() - timeSinceLastSprintPenalty) >= 1000) {
+                    game.getTimerManager().addPenalty(5); // 5 second penalty for sprinting
+                    timeSinceLastSprintPenalty = System.currentTimeMillis();
+                }
+                game.getEventsCounter().librarySprintEvent();
+            }
+
+        } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
 
         if (game.getTimerManager().isTimeUp()) {
             super.getWorld().getBackgroundMusic().stop();

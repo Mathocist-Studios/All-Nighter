@@ -30,7 +30,7 @@ void main() {
     vec2 uv = projectToViewportUV(gl_FragCoord.xy);
 
     float dist = distance(uv, vec2(0.5, 0.5));
-    float vignette = smoothstep(0.8, 0.0, dist);
+    float vignette = smoothstep(0.6, 0.0, dist);
     colour.rgb *= vignette;
 
     // make greyscale

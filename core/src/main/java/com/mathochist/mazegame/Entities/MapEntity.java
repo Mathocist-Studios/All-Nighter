@@ -59,4 +59,12 @@ public abstract class MapEntity extends Entity {
      */
     public abstract void onInteractEnd(Player p, GameWorld world);
 
+    /**
+     * Called when a player collides with this entity.
+     *
+     * @param world The game world context.
+     * @return boolean True if the collision has special handling, false otherwise.
+     */
+    public abstract boolean onCollision(GameWorld world);
+
 }

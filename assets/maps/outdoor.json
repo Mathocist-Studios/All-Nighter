@@ -20,8 +20,8 @@
         "x": 4,
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
-        "target_x": 18,
-        "target_y": 28,
+        "target_x": 7,
+        "target_y": 10,
         "exit_conditions": {
           "inventory_items_required": [],
           "quests_completed": [],
@@ -33,8 +33,8 @@
         "x": 5,
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
-        "target_x": 19,
-        "target_y": 28,
+        "target_x": 8,
+        "target_y": 10,
         "exit_conditions": {
           "inventory_items_required": [],
           "quests_completed": [],
@@ -46,8 +46,8 @@
         "x": 6,
         "y": 0,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
-        "target_x": 20,
-        "target_y": 28,
+        "target_x": 8,
+        "target_y": 10,
         "exit_conditions": {
           "inventory_items_required": [],
           "quests_completed": [],

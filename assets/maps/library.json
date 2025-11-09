@@ -7,24 +7,23 @@
       "tile_width": 128,
       "tile_height": 128
     },
-    "map_width": 40,
-    "map_height": 30,
+    "map_width": 16,
+    "map_height": 12,
     "spawn_point": {
-      "x": 20,
-      "y": 10
+      "x": 4,
+      "y": 3
     },
     "background_music": "audio/library_theme.mp3",
     "texture_atlas": "maps/library/Library.atlas",
     "exit_points": [
       {
-        "x": 18,
-        "y": 29,
-        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
-        "target_x": 4,
-        "target_y": 1,
+        "x": 15,
+        "y": 5,
+        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen3",
+        "target_x": 1,
+        "target_y": 7,
         "exit_conditions": {
           "inventory_items_required": [
-            "keycard"
           ],
           "quests_completed": [],
           "npcs_interacted": [],
@@ -32,14 +31,13 @@
         }
       },
       {
-        "x": 19,
-        "y": 29,
-        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
-        "target_x": 5,
-        "target_y": 1,
+        "x": 15,
+        "y": 6,
+        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen3",
+        "target_x": 1,
+        "target_y": 7,
         "exit_conditions": {
           "inventory_items_required": [
-            "keycard"
           ],
           "quests_completed": [],
           "npcs_interacted": [],
@@ -47,8 +45,8 @@
         }
       },
       {
-        "x": 20,
-        "y": 29,
+        "x": 7,
+        "y": 11,
         "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
         "target_x": 6,
         "target_y": 1,
@@ -62,73 +60,57 @@
         }
       },
       {
-        "x": 12,
-        "y": 5,
-        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryBasementScreen",
-        "target_x": 12,
-        "target_y": 5,
+        "x": 8,
+        "y": 11,
+        "target_map": "com.mathochist.mazegame.Screens.Game.OutdoorScreen",
+        "target_x": 6,
+        "target_y": 1,
         "exit_conditions": {
-          "inventory_items_required": [],
+          "inventory_items_required": [
+            "keycard"
+          ],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryBasementScreen",
+        "target_x": 1,
+        "target_y": 8,
+        "exit_conditions": {
+          "inventory_items_required": [
+            "basement_key"
+          ],
           "quests_completed": [],
           "npcs_interacted": [],
           "min_time_elapsed": -1
         }
       }
     ],
-    "map_entity_number": 21,
+    "map_entity_number": 19,
     "map_objects": {
-      "com.mathochist.mazegame.World.Objects.Bookcase1x2": {
-        "width": 1,
+      "com.mathochist.mazegame.World.Objects.Bookcase2x2": {
+        "width": 2,
         "height": 1,
         "collidable": true,
         "positions": [
-          [10, 3],
-          [11, 3],
-          [12, 3],
+          [13, 0],
+          [11, 0],
+          [9, 0],
+          [7, 0],
           [13, 3],
-          [14, 3],
-          [10, 6],
-          [11, 6],
-          [12, 6],
-          [13, 6],
-          [14, 6],
-          [10, 9],
-          [11, 9],
-          [12, 9],
-          [13, 9],
-          [14, 9]
-        ]
-      },
-      "com.mathochist.mazegame.Entities.NPCs.Librarian": {
-        "width": 1,
-        "height": 1,
-        "collidable": true,
-        "positions": [
-          [15, 15]
-        ]
-      },
-      "com.mathochist.mazegame.World.Objects.Keycard": {
-        "width": 1,
-        "height": 1,
-        "collidable": false,
-        "positions": [
-          [20, 15]
-        ]
-      },
-      "com.mathochist.mazegame.World.Objects.Bookstack1": {
-        "width": 1,
-        "height": 1,
-        "collidable": true,
-        "positions": [
-          [23, 15]
-        ]
-      },
-      "com.mathochist.mazegame.World.Objects.Bookstack2": {
-        "width": 1,
-        "height": 1,
-        "collidable": true,
-        "positions": [
-          [27, 15]
+          [11, 3],
+          [9, 3],
+          [7, 3],
+          [1, 3],
+          [11, 8],
+          [9, 8],
+          [7, 8],
+          [1, 8],
+          [13,8]
         ]
       },
       "com.mathochist.mazegame.World.Objects.VendingMachine": {
@@ -136,7 +118,7 @@
         "height": 1,
         "collidable": true,
         "positions": [
-          [30, 15]
+          [6, 0]
         ]
       },
       "com.mathochist.mazegame.World.Objects.TableAndChair": {
@@ -144,7 +126,17 @@
         "height": 2,
         "collidable": true,
         "positions": [
-          [21, 18]
+          [6, 4],
+          [12, 8],
+          [11, 5]
+        ]
+      },
+      "com.mathochist.mazegame.Entities.NPCs.Librarian": {
+        "width": 1,
+        "height": 1,
+        "collidable": true,
+        "positions": [
+          [4, 9]
         ]
       }
     }
@@ -157,43 +149,28 @@
   "tiles": [
     "floor",
     "wall",
-    "exit_door",
-    "floor_cracked"
+    "tile_table",
+    "tile_book_stack2",
+    "tile_book_stack2",
+    "tile_book_stack1",
+    "tile_book_stack1_flipped",
+    "tile_book_stack2",
+    "set_dressers3",
+    "floor_stair"
   ],
-  "collision_tiles": [1],
+  "collision_tiles": [1,2,3,4,5,6,7,8],
   "map_matrix": [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1]
   ]
 }

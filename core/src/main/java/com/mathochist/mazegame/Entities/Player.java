@@ -32,8 +32,8 @@ public class Player {
 
     private final int FRAME_COLS = 3;
     private final int FRAME_ROWS = 4;
-    private final int PADDING_BELOW = 4;
     private float stateTime = 0f; // time tracker for animation
+    private int direction = 0; // 0=down,1=left,2=right,3=up
 
     private final KeyBuffer keyBuffer;
     private float x, y;
@@ -64,17 +64,17 @@ public class Player {
             spriteSheet.getHeight() / FRAME_ROWS
         );
 
-        // remove padding below frames
-        for (int i = 0; i < FRAME_ROWS; i++) {
-            for (int j = 0; j < FRAME_COLS; j++) {
-                tmp[i][j].setRegion(
-                    tmp[i][j].getRegionX(),
-                    tmp[i][j].getRegionY(),
-                    tmp[i][j].getRegionWidth(),
-                    tmp[i][j].getRegionHeight() - PADDING_BELOW
-                );
-            }
-        }
+//        // remove padding below frames
+//        for (int i = 0; i < FRAME_ROWS; i++) {
+//            for (int j = 0; j < FRAME_COLS; j++) {
+//                tmp[i][j].setRegion(
+//                    tmp[i][j].getRegionX(),
+//                    tmp[i][j].getRegionY(),
+//                    tmp[i][j].getRegionWidth(),
+//                    tmp[i][j].getRegionHeight() - PADDING_BELOW
+//                );
+//            }
+//        }
 
         // Flatten into 1D array
         TextureRegion[] frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
@@ -101,6 +101,7 @@ public class Player {
         y = startY;
 
         playerSprite = new Sprite(spriteSheet);
+        // playerSprite.setScale(0.7f); // TODO: FIX PLAYER SIZE SCALING ISSUES
         keyBuffer = new KeyBuffer();
     }
 
@@ -206,16 +207,25 @@ public class Player {
             // Choose correct frame
             if (move[1] > 0) {
                 currentFrame = walkUp.getKeyFrame(stateTime, true);
-            } else if (move[1] < 0) {
-                currentFrame = walkDown.getKeyFrame(stateTime, true);
+                direction = 3;
             } else if (move[0] < 0) {
                 currentFrame = walkLeft.getKeyFrame(stateTime, true);
+                direction = 1;
             } else if (move[0] > 0) {
                 currentFrame = walkRight.getKeyFrame(stateTime, true);
+                direction = 2;
+            } else if (move[1] < 0) {
+                currentFrame = walkDown.getKeyFrame(stateTime, true);
+                direction = 0;
             }
         } else {
-            stateTime = 0; // reset to first frame when idle
-            currentFrame = walkDown.getKeyFrame(stateTime, true);
+            stateTime = 2; // reset to idle frame
+            switch (direction) {
+                case 3 -> currentFrame = walkUp.getKeyFrame(stateTime, true);
+                case 0 -> currentFrame = walkDown.getKeyFrame(stateTime, true);
+                case 1 -> currentFrame = walkLeft.getKeyFrame(stateTime, true);
+                case 2 -> currentFrame = walkRight.getKeyFrame(stateTime, true);
+            }
         }
         playerSprite.setRegion(currentFrame);
 

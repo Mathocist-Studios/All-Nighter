@@ -31,7 +31,7 @@ public class Librarian extends MapEntity implements INPC {
         buffer.addToBuffer(new RenderObject(
             librarianSprite,
             super.getBatch(),
-            (int) super.getTileY() + 1
+            (int) super.getTileY() + 2
         ));
     }
 
@@ -56,5 +56,10 @@ public class Librarian extends MapEntity implements INPC {
     @Override
     public void onInteractEnd(Player p, GameWorld world) {
         // System.out.println("You are not bothering the librarian.");
+    }
+
+    @Override
+    public boolean onCollision(GameWorld world) {
+        return false; // no collision behavior
     }
 }

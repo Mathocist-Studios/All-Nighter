@@ -65,4 +65,9 @@ public class VendingMachine extends MapEntity {
     @Override
     public void onInteractEnd(Player p, GameWorld world) {} // No action needed on interaction end
 
+    @Override
+    public boolean onCollision(GameWorld world) {
+        return false; // no collision behavior
+    }
+
 }

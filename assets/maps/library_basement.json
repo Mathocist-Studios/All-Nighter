@@ -21,7 +21,7 @@
         "y": 7,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
         "target_x": 1,
-        "target_y": 1,
+        "target_y": 2,
         "exit_conditions": {
           "inventory_items_required": [
             "basement_key"
@@ -36,7 +36,7 @@
         "y": 8,
         "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
         "target_x": 1,
-        "target_y": 3,
+        "target_y": 2,
         "exit_conditions": {
           "inventory_items_required": [
             "basement_key"
@@ -54,7 +54,7 @@
         "height": 1,
         "collidable": false,
         "positions": [
-          [6, 3]
+          [6, 2]
         ]
       }
     }

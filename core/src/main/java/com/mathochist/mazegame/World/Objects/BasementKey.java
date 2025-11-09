@@ -59,4 +59,9 @@ public class BasementKey extends MapEntity {
         ));
     }
 
+    @Override
+    public boolean onCollision(GameWorld world) {
+        return false; // no collision behavior
+    }
+
 }

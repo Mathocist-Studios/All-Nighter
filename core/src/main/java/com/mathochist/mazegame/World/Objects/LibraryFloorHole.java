@@ -12,30 +12,27 @@ import com.mathochist.mazegame.Main;
 import com.mathochist.mazegame.Rendering.RenderBuffer;
 import com.mathochist.mazegame.Rendering.RenderObject;
 import com.mathochist.mazegame.UI.Hud;
-import com.mathochist.mazegame.UI.Speech.SpeechType;
+import com.mathochist.mazegame.World.ExitConditions;
+import com.mathochist.mazegame.World.ExitTile;
 import com.mathochist.mazegame.World.GameWorld;
 
-public class Keycard extends MapEntity {
+/**
+ * Represents a hole in the library floor that leads to the basement.
+ * The hole is only visible and collidable if the player has the keycard item due to game timeline.
+ */
+public class LibraryFloorHole extends MapEntity {
 
-    private boolean collected;
+    private boolean visible;
 
-    public Keycard(Main game, SpriteBatch batch, TextureAtlas atlas, Integer TileX, Integer TileY, Integer Width, Integer Height, Boolean collidable) {
-        super(game, batch, atlas, "keycard", TileX, TileY, Width, Height, collidable);
+    public LibraryFloorHole(Main game, SpriteBatch batch, TextureAtlas atlas, Integer TileX, Integer TileY, Integer Width, Integer Height, Boolean collidable) {
+        super(game, batch, atlas, "hole_floor", TileX, TileY, Width, Height, collidable);
 
-        collected = game.getPlayerInventory().hasItem(InventoryObject.KEYCARD); // If player already has keycard, mark as collected
+        visible = game.getPlayerInventory().hasItem(InventoryObject.KEYCARD); // visible if player has keycard
     }
 
     @Override
     public boolean onInteract(Player p, GameWorld world, Hud worldHud) {
-        if (collected) {
-            return false; // Already collected
-        }
-        collected = true;
-        super.game.getPlayerInventory().addItem(InventoryObject.KEYCARD);
-        worldHud.getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
-        worldHud.getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Keycard collected!", 2000);
-        game.getEventsCounter().foundKeycardEvent();
-        return true; // Keycards are collectible
+        return false; // No interaction behavior
     }
 
     @Override
@@ -43,7 +40,12 @@ public class Keycard extends MapEntity {
 
     @Override
     public void render(GameWorld world, RenderBuffer renderBuffer) {
-        if (collected) {
+
+//        // TESTING: Make visible only if player has keycard
+//        visible = game.getPlayerInventory().hasItem(InventoryObject.KEYCARD); // update visibility each collision check
+//
+
+        if (!visible) {
             return;
         }
         TextureRegion keycardRegion = super.getAtlas().findRegion(super.getRegionName());
@@ -61,7 +63,17 @@ public class Keycard extends MapEntity {
 
     @Override
     public boolean onCollision(GameWorld world) {
-        return false; // no collision behavior
+        visible = game.getPlayerInventory().hasItem(InventoryObject.KEYCARD); // update visibility each collision check
+
+        if (!visible) {
+            return false; // No collision if not visible
+        }
+
+        ExitConditions conditions = new ExitConditions(new String[0], new String[0], new String[0], -1);
+        ExitTile exit = new ExitTile(super.getTileX(), super.getTileY(), "com.mathochist.mazegame.Screens.Game.LibraryBasementScreen", 12, 5, conditions);
+        world.loadNewWorld(exit);
+        return true;
     }
+
 
 }

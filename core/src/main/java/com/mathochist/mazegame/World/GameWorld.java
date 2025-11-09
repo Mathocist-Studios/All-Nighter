@@ -375,10 +375,9 @@ public class GameWorld {
         boolean[] collisionLayer = new boolean[]{false, false, false, false}; // above, below, left, right
 
         for (MapEntity entity : mapEntities) {
+            boolean[] entityCollisionLayer = new boolean[]{false, false, false, false};
+
             if (entity == null) {
-                continue;
-            }
-            if (!entity.isCollidable()) {
                 continue;
             }
 
@@ -396,28 +395,43 @@ public class GameWorld {
             // object on a different axis.
 
             // above
-            collisionLayer[0] = collisionLayer[0] || Math.floor(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
+            entityCollisionLayer[0] = Math.floor(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
                     Math.round(playerTilePos[0]) >= entityBBox[0] &&
                     Math.round(playerTilePos[0]) < entityBBox[0] + entityBBox[2] &&
                     Math.floor(playerTilePos[1]) - 1 >= entityBBox[1];
 
             // below
-            collisionLayer[1] = collisionLayer[1] || Math.floor(playerTilePos[1]) >= entityBBox[1] &&
+            entityCollisionLayer[1] = Math.floor(playerTilePos[1]) >= entityBBox[1] &&
                     Math.round(playerTilePos[0]) >= entityBBox[0] &&
                     Math.round(playerTilePos[0]) < entityBBox[0] + entityBBox[2] &&
                     Math.floor(playerTilePos[1]) + 1 <= entityBBox[1] + entityBBox[3];
 
             // left
-            collisionLayer[2] = collisionLayer[2] || Math.ceil(playerTilePos[0]) <= entityBBox[0] + entityBBox[2] &&
+            entityCollisionLayer[2] = Math.ceil(playerTilePos[0]) <= entityBBox[0] + entityBBox[2] &&
                     Math.round(playerTilePos[1]) > entityBBox[1] &&
                     Math.round(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
                     Math.ceil(playerTilePos[0]) - 1 >= entityBBox[0];
 
             // right
-            collisionLayer[3] = collisionLayer[3] || Math.ceil(playerTilePos[0]) >= entityBBox[0] &&
+            entityCollisionLayer[3] = Math.ceil(playerTilePos[0]) >= entityBBox[0] &&
                     Math.round(playerTilePos[1]) > entityBBox[1] &&
                     Math.round(playerTilePos[1]) <= entityBBox[1] + entityBBox[3] &&
                     Math.ceil(playerTilePos[0]) + 1 <= entityBBox[0] + entityBBox[2];
+
+            // call collision event if any collision detected
+            if (entityCollisionLayer[0] || entityCollisionLayer[1] || entityCollisionLayer[2] || entityCollisionLayer[3]) {
+                entity.onCollision(this);
+            }
+
+            if (!entity.isCollidable()) {
+                continue;
+            }
+
+            // combine with overall collision layer
+            collisionLayer[0] = collisionLayer[0] || entityCollisionLayer[0];
+            collisionLayer[1] = collisionLayer[1] || entityCollisionLayer[1];
+            collisionLayer[2] = collisionLayer[2] || entityCollisionLayer[2];
+            collisionLayer[3] = collisionLayer[3] || entityCollisionLayer[3];
 
         }
 
@@ -576,7 +590,12 @@ public class GameWorld {
         return beautifiedNames;
     }
 
-    private void loadNewWorld(ExitTile targetExit) {
+    /**
+     * Load a new world based on the given exit tile.
+     *
+     * @param targetExit the exit tile to transition to
+     */
+    public void loadNewWorld(ExitTile targetExit) {
         // right dont really know how im gonna do this yet so im gonna comment how i think i should
         // first gotta find the closest exit tile to the player
         // then load the map file for that exit tile
@@ -595,7 +614,7 @@ public class GameWorld {
             String[] beautifiedMissingItems = beautifyItemNames(missingItems);
             String missingItemsList = String.join(", ", beautifiedMissingItems);
             parentScreen.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
-            parentScreen.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "You need to find your " + missingItemsList + " before you can exit!", 2000);
+            parentScreen.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "You need " + missingItemsList + " before you can exit here!", 2000);
 
             // parentScreen.getPlayer().setPosition(parentScreen.getPlayer().getX(), parentScreen.getPlayer().getY() + ((float) getMap().getTileHeight() / 2)); // nudge player back a bit so they dont immediately retrigger
 

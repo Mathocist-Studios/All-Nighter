@@ -1,0 +1,79 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	game_font: {
+		file: game_font.fnt
+		scaledSize: -1
+		markupEnabled: true
+		flip: false
+	}
+	vlarge_game_font: {
+		file: vlarge_game_font.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_255_0_0_255: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
+	RGBA_73_73_73_255: {
+		r: 0.28627452
+		g: 0.28627452
+		b: 0.28627452
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: start
+		down: start_hover
+		over: start_hover
+	}
+	start_button: {
+		up: start
+		down: start_hover
+		over: start_hover
+	}
+	settings_button: {
+		up: settings
+		down: settings_hover
+		over: settings_hover
+	}
+	credits_button: {
+		up: credits
+		down: credits_hover
+		over: credits_hover
+	}
+	exit_button: {
+		up: exit
+		down: exit_hover
+		over: exit_hover
+	}
+	back_to_MM: {
+		up: back_to_MM
+		down: back_to_MM_hover
+		over: back_to_MM_hover
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: vlarge_game_font
+	}
+	presents_grey: {
+		font: game_font
+		fontColor: RGBA_73_73_73_255
+	}
+	game_font: {
+		font: game_font
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}

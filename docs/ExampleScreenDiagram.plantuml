@@ -1,0 +1,78 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class BaseGameScreen {
+  - gameHud: Hud
+  - screenBatch: SpriteBatch
+  - VIEWPORT_WIDTH: float
+  - player: Player
+  - camera: OrthographicCamera
+  - VIEWPORT_HEIGHT: float
+  - world: GameWorld
+  - viewport: FitViewport
+  + dispose(): void
+  + setPlayer(Player): void
+  + getGameHud(): Hud
+  + getWorld(): GameWorld
+  + keyUp(int): boolean
+  + resize(int, int): void
+  + show(): void
+  + keyDown(int): boolean
+  + render(float): void
+  + getScreenBatch(): SpriteBatch
+  + setWorld(GameWorld): void
+  + getPlayer(): Player
+  + getViewport(): FitViewport
+  + getCamera(): OrthographicCamera
+}
+class DefaultScreen {
+  # game: Main
+  + touchCancelled(int, int, int, int): boolean
+  + pause(): void
+  + resume(): void
+  + touchUp(int, int, int, int): boolean
+  + scrolled(float, float): boolean
+  + touchDown(int, int, int, int): boolean
+  + mouseMoved(int, int): boolean
+  + touchDragged(int, int, int): boolean
+  + hide(): void
+  + keyTyped(char): boolean
+}
+interface Disposable << interface >> {
+  + dispose(): void
+}
+interface InputProcessor << interface >> {
+  + keyDown(int): boolean
+  + scrolled(float, float): boolean
+  + keyTyped(char): boolean
+  + touchDown(int, int, int, int): boolean
+  + touchUp(int, int, int, int): boolean
+  + keyUp(int): boolean
+  + touchCancelled(int, int, int, int): boolean
+  + mouseMoved(int, int): boolean
+  + touchDragged(int, int, int): boolean
+}
+class LibraryScreen {
+  + show(): void
+  + render(float): void
+  + dispose(): void
+}
+interface Screen << interface >> {
+  + render(float): void
+  + resize(int, int): void
+  + show(): void
+  + pause(): void
+  + resume(): void
+  + hide(): void
+  + dispose(): void
+}
+
+BaseGameScreen  -[#000082,plain]-^  DefaultScreen  
+DefaultScreen   -[#008200,dashed]-^  InputProcessor 
+DefaultScreen   -[#008200,dashed]-^  Screen         
+LibraryScreen   -[#000082,plain]-^  BaseGameScreen 
+Screen          -[#008200,plain]-^  Disposable     
+@enduml

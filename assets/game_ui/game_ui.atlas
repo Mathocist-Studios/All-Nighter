@@ -1,0 +1,9 @@
+game_ui.png
+size:128,64
+repeat:none
+basement_key
+bounds:2,2,32,32
+energy_drink
+bounds:36,2,32,32
+keycard
+bounds:70,3,32,31

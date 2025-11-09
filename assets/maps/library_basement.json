@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "name": "Library Basement",
+    "author": "Aiden",
+    "version": "1.0",
+    "tilesets": {
+      "tile_width": 128,
+      "tile_height": 128
+    },
+    "map_width": 15,
+    "map_height": 15,
+    "spawn_point": {
+      "x": 0,
+      "y": 0
+    },
+    "background_music": "continue",
+    "texture_atlas": "maps/library/Library.atlas",
+    "exit_points": [
+      {
+        "x": 0,
+        "y": 7,
+        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
+        "target_x": 1,
+        "target_y": 2,
+        "exit_conditions": {
+          "inventory_items_required": [
+            "basement_key"
+          ],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
+      },
+      {
+        "x": 0,
+        "y": 8,
+        "target_map": "com.mathochist.mazegame.Screens.Game.LibraryScreen",
+        "target_x": 1,
+        "target_y": 2,
+        "exit_conditions": {
+          "inventory_items_required": [
+            "basement_key"
+          ],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
+      }
+    ],
+    "map_entity_number": 1,
+    "map_objects": {
+      "com.mathochist.mazegame.World.Objects.BasementKey": {
+        "width": 1,
+        "height": 1,
+        "collidable": false,
+        "positions": [
+          [6, 2]
+        ]
+      }
+    }
+  },
+  "shader": {
+    "name": "Vingette Shader",
+    "vertex": "shaders/vignette_vertex.glsl",
+    "fragment": "shaders/basement_vignette_fragment.glsl"
+  },
+  "tiles": [
+    "floor",
+    "wall",
+    "exit_door"
+  ],
+  "collision_tiles": [1],
+  "map_matrix": [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  ]
+}

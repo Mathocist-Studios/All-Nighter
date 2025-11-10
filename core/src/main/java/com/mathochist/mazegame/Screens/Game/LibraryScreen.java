@@ -53,6 +53,10 @@ public class LibraryScreen extends BaseGameScreen {
     @Override
     public void render(float delta) {
 
+        if (isPrepareTransition()) {
+            return;
+        }
+
         if (System.currentTimeMillis() - timeSinceLastPauseToggle >= 300) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 this.setPaused(!this.isPaused());
@@ -66,44 +70,41 @@ public class LibraryScreen extends BaseGameScreen {
             return;
         }
 
-        try {
-            Gdx.gl.glClearColor(0f,0f,0f,1.0f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f,0f,0f,1.0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            super.getCamera().update();
-            super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
+        super.getCamera().update();
+        super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
 
-            // Draw game elements here
-            super.getWorld().render(super.getViewport(), super.getRenderBuffer());
-            super.getPlayer().update(delta, super.getRenderBuffer());
+        // Draw game elements here
+        super.getWorld().render(super.getViewport(), super.getRenderBuffer());
+        super.getPlayer().update(delta, super.getRenderBuffer());
 
-            // dump render buffer to screen
-            for (var obj : super.getRenderBuffer().getBufferOrderedByZIndex()) {
-                obj.render();
+        // dump render buffer to screen
+        for (var obj : super.getRenderBuffer().getBufferOrderedByZIndex()) {
+            obj.render();
+        }
+
+        super.getRenderBuffer().clearBuffer();
+
+        super.getWorld().renderDebugLayer();
+
+        // TODO: Remove debug render call
+        //  Used to visualize collision layer
+        //  Remove or toggle off in production
+        // super.getWorld().render_collision_layer(super.getPlayer());
+
+        super.getGameHud().render(delta);
+
+        if (super.getPlayer().isSprinting()) {
+            super.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
+            super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Oi, stop running!", 1000);
+            if (timeSinceLastSprintPenalty == 0 || (System.currentTimeMillis() - timeSinceLastSprintPenalty) >= 1000) {
+                game.getTimerManager().addPenalty(5); // 5 second penalty for sprinting
+                timeSinceLastSprintPenalty = System.currentTimeMillis();
             }
-
-            super.getRenderBuffer().clearBuffer();
-
-            super.getWorld().renderDebugLayer();
-
-            // TODO: Remove debug render call
-            //  Used to visualize collision layer
-            //  Remove or toggle off in production
-            // super.getWorld().render_collision_layer(super.getPlayer());
-
-            super.getGameHud().render(delta);
-
-            if (super.getPlayer().isSprinting()) {
-                super.getGameHud().getSpeechBubbleManager().removeBubblesOfType(SpeechType.NPC_SPEECH);
-                super.getGameHud().getSpeechBubbleManager().createSpeechBubble(SpeechType.NPC_SPEECH, "Librarian: Oi, stop running!", 1000);
-                if (timeSinceLastSprintPenalty == 0 || (System.currentTimeMillis() - timeSinceLastSprintPenalty) >= 1000) {
-                    game.getTimerManager().addPenalty(5); // 5 second penalty for sprinting
-                    timeSinceLastSprintPenalty = System.currentTimeMillis();
-                }
-                game.getEventsCounter().librarySprintEvent();
-            }
-
-        } catch (GdxRuntimeException ignored) {} // Ignore GDX runtime exceptions during screen transitions
+            game.getEventsCounter().librarySprintEvent();
+        }
 
         if (game.getTimerManager().isTimeUp()) {
             super.getWorld().getBackgroundMusic().stop();
@@ -115,7 +116,7 @@ public class LibraryScreen extends BaseGameScreen {
     @Override
     public void dispose() {
         super.getGameHud().dispose();
-        super.getScreenBatch().dispose();
+        //super.getScreenBatch().dispose();
         super.getWorld().dispose();
         super.getPlayer().dispose();
     }

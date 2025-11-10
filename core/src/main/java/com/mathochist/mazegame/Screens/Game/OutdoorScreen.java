@@ -65,34 +65,31 @@ public class OutdoorScreen extends BaseGameScreen {
             return;
         }
 
-        try {
-            Gdx.gl.glClearColor(0f,0f,0f,1.0f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0f,0f,0f,1.0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-            super.getCamera().update();
-            super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
+        super.getCamera().update();
+        super.getScreenBatch().setProjectionMatrix(super.getCamera().combined);
 
-            // Draw game elements here
-            super.getWorld().render(super.getViewport(), super.getRenderBuffer());
-            super.getPlayer().update(delta, super.getRenderBuffer());
+        // Draw game elements here
+        super.getWorld().render(super.getViewport(), super.getRenderBuffer());
+        super.getPlayer().update(delta, super.getRenderBuffer());
 
-            // dump render buffer to screen
-            for (var obj : super.getRenderBuffer().getBufferOrderedByZIndex()) {
-                obj.render();
-            }
+        // dump render buffer to screen
+        for (var obj : super.getRenderBuffer().getBufferOrderedByZIndex()) {
+            obj.render();
+        }
 
-            super.getRenderBuffer().clearBuffer();
+        super.getRenderBuffer().clearBuffer();
 
-            super.getWorld().renderDebugLayer();
+        super.getWorld().renderDebugLayer();
 
-            // TODO: Remove debug render call
-            //  Used to visualize collision layer
-            //  Remove or toggle off in production
-            // super.getWorld().render_collision_layer(super.getPlayer());
+        // TODO: Remove debug render call
+        //  Used to visualize collision layer
+        //  Remove or toggle off in production
+        // super.getWorld().render_collision_layer(super.getPlayer());
 
-            super.getGameHud().render(delta);
-
-        } catch (Exception ignored) {}
+        super.getGameHud().render(delta);
 
         if (game.getTimerManager().isTimeUp()) {
             super.getWorld().getBackgroundMusic().stop();
@@ -104,7 +101,7 @@ public class OutdoorScreen extends BaseGameScreen {
     @Override
     public void dispose() {
         super.getGameHud().dispose();
-        super.getScreenBatch().dispose();
+        //  super.getScreenBatch().dispose();
         super.getWorld().dispose();
         super.getPlayer().dispose();
     }

@@ -32,6 +32,7 @@ public abstract class BaseGameScreen extends DefaultScreen {
     private RenderBuffer renderBuffer;
 
     private boolean isPaused = false;
+    private boolean prepareTransition = false;
 
     public BaseGameScreen(Main game) {
         super(game);
@@ -90,10 +91,10 @@ public abstract class BaseGameScreen extends DefaultScreen {
     @Override
     public abstract void show();
 
-    @Override
-    public void hide() {
-        this.dispose();
-    }
+//    @Override
+//    public void hide() {
+//        this.dispose();
+//    }
 
     @Override
     public abstract void render(float delta);
@@ -157,6 +158,14 @@ public abstract class BaseGameScreen extends DefaultScreen {
 
     public void setPaused(boolean paused) {
         isPaused = paused;
+    }
+
+    public boolean isPrepareTransition() {
+        return prepareTransition;
+    }
+
+    public void setPrepareTransition(boolean prepareTransition) {
+        this.prepareTransition = prepareTransition;
     }
 
 }

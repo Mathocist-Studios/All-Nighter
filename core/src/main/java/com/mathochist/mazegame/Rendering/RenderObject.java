@@ -44,4 +44,13 @@ public class RenderObject {
     public void setzIndex(int zIndex) {
         this.zIndex = zIndex;
     }
+
+    @Override
+    public String toString() {
+        return "RenderObject{" +
+                "sprite=" + sprite +
+                ", batch=" + batch +
+                ", zIndex=" + zIndex +
+                '}';
+    }
 }

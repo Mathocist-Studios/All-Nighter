@@ -633,6 +633,16 @@ public class GameWorld {
 
         // TODO: check other conditions (quests, npcs, time) as required
 
+        parentScreen.setPrepareTransition(true);
+        // wait a bit to let thread catch up
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        game.getScreen().dispose();
+
         System.out.println("Loading new world: " + targetExit.getTargetMap());
         // load new screen
         BaseGameScreen newScreen = Utils.instantiate(targetExit.getTargetMap(), BaseGameScreen.class,

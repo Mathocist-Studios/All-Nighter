@@ -53,7 +53,7 @@ public class Hud {
     }
 
     public void dispose() {
-        hudBatch.dispose();
+        //hudBatch.dispose();
         small_font.dispose();
         main_font.dispose();
         speechBubbleManager.dispose();

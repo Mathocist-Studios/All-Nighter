@@ -1,5 +1,3 @@
-#version 120
-
 // Vignette effect fragment shader
 varying vec4 v_color;
 varying vec2 v_texCoords;
@@ -30,8 +28,6 @@ void main() {
     // gl_FragColor = center(gl_FragCoord.xy);
 
     vec2 uv = projectToViewportUV(gl_FragCoord.xy);
-//    vec2 uv = gl_FragCoord.xy / u_resolution.xy - 0.5;
-//    uv.x *= u_resolution.x / u_resolution.y;
 
     float dist = distance(uv, vec2(0.5, 0.5));
     float vignette = smoothstep(0.6, 0.0, dist);

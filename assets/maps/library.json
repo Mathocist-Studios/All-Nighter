@@ -88,6 +88,19 @@
           "npcs_interacted": [],
           "min_time_elapsed": -1
         }
+      },
+      {
+        "x": 0,
+        "y": 5,
+        "target_map": "com.mathochist.mazegame.Screens.Game.CafeScreen",
+        "target_x": 4,
+        "target_y": 2,
+        "exit_conditions": {
+          "inventory_items_required": [],
+          "quests_completed": [],
+          "npcs_interacted": [],
+          "min_time_elapsed": -1
+        }
       }
     ],
     "map_entity_number": 19,
@@ -165,7 +178,7 @@
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],

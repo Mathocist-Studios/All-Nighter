@@ -12,8 +12,8 @@ uniform vec2 u_resolution; // viewport resolution
 
 vec2 projectToViewportUV(vec2 pos) {
     vec2 uv;
-    uv.x = (pos.x) / (1.0 * u_viewport.z);
-    uv.y = (pos.y) / (1.0 * u_viewport.w);
+    uv.x = (pos.x) / (2.0 * u_viewport.z);
+    uv.y = (pos.y) / (2.0 * u_viewport.w);
     uv.x -= u_viewport.x / (u_viewport.z);
     uv.y -= u_viewport.y / (u_viewport.w);
     return uv;
